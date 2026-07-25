@@ -1,0 +1,13 @@
+{
+  "model": "GNN (structure-only)",
+  "dataset": "full_labeled_set",
+  "test_split": "stratified_0.15",
+  "auc_roc": 0.6756978653530378,
+  "auc_pr": 0.8637486772802457,
+  "f1": 0.5614035087719298,
+  "accuracy": 0.5253164556962026,
+  "tp": 48,
+  "tn": 35,
+  "fp": 7,
+  "fn": 68
+}

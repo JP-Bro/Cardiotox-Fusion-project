@@ -1,0 +1,26 @@
+2026-07-23 22:24:28 | 04_build_graphs | INFO | ============================================================
+2026-07-23 22:24:28 | 04_build_graphs | INFO | SCRIPT: 04_build_graphs.py
+2026-07-23 22:24:28 | 04_build_graphs | INFO | PURPOSE: SMILES -> PyTorch Geometric molecular graphs
+2026-07-23 22:24:28 | 04_build_graphs | INFO |   Node feature dim: 14
+2026-07-23 22:24:28 | 04_build_graphs | INFO |   Edge feature dim: 4
+2026-07-23 22:24:28 | 04_build_graphs | INFO | ============================================================
+2026-07-23 22:24:28 | 04_build_graphs | INFO | Total compounds with SMILES: 1048
+2026-07-23 22:24:28 | 04_build_graphs | INFO | LINCS-matched compounds: 562
+2026-07-23 22:24:29 | 04_build_graphs | INFO |   [100 built] TIROFIBAN HYDROCHLORIDE: 30 atoms, 62 edges
+2026-07-23 22:24:29 | 04_build_graphs | INFO |   [200 built] STRONTIUM CHLORIDE SR-89: 1 atoms, 0 edges
+2026-07-23 22:24:30 | 04_build_graphs | INFO |   [300 built] MARIBAVIR: 24 atoms, 52 edges
+2026-07-23 22:24:30 | 04_build_graphs | INFO |   [400 built] INFIGRATINIB: 38 atoms, 82 edges
+2026-07-23 22:24:30 | 04_build_graphs | INFO |   [500 built] uridine triacetate: 26 atoms, 54 edges
+2026-07-23 22:24:31 | 04_build_graphs | INFO |   [600 built] ESTROPIPATE: 24 atoms, 54 edges
+2026-07-23 22:24:31 | 04_build_graphs | INFO |   [700 built] SOTALOL HYDROCHLORIDE: 18 atoms, 36 edges
+2026-07-23 22:24:32 | 04_build_graphs | INFO |   [800 built] RILUZOLE: 15 atoms, 32 edges
+2026-07-23 22:24:32 | 04_build_graphs | INFO |   [900 built] DONEPEZIL HYDROCHLORIDE: 28 atoms, 62 edges
+2026-07-23 22:24:33 | 04_build_graphs | INFO |   [1000 built] exenatide: 295 atoms, 606 edges
+2026-07-23 22:24:33 | 04_build_graphs | INFO | ============================================================
+2026-07-23 22:24:33 | 04_build_graphs | INFO | GRAPH BUILD SUMMARY
+2026-07-23 22:24:33 | 04_build_graphs | INFO |   Built       : 1045
+2026-07-23 22:24:33 | 04_build_graphs | INFO |   Skipped     : 3 (already exist)
+2026-07-23 22:24:33 | 04_build_graphs | INFO |   Failed      : 0
+2026-07-23 22:24:33 | 04_build_graphs | INFO |   Manifest    : C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\graph_manifest.csv
+2026-07-23 22:24:33 | 04_build_graphs | INFO | ============================================================
+2026-07-23 22:24:33 | 04_build_graphs | INFO | 04_build_graphs.py COMPLETE

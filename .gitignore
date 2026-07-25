@@ -1,0 +1,38 @@
+# Cardiotox-Fusion Git Ignore Rules
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Large raw datasets and matched matrix files (prevents GitHub 100MB rejection)
+data/raw/
+data/processed/graphs/
+data/processed/expression_matrix.csv
+data/processed/lincs_matched_compounds.csv
+
+# Large trained checkpoints (PT / PKL)
+models/checkpoints/*.pt
+models/checkpoints/*.pkl
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini

@@ -1,0 +1,14 @@
+{
+  "model": "Transformer (biology-only)",
+  "dataset": "lincs_covered_subset",
+  "test_split": "stratified_0.15",
+  "seal_2023_biology_baseline": 0.76,
+  "auc_roc": 0.5223880597014925,
+  "auc_pr": 0.7997402759443241,
+  "f1": 0.881578947368421,
+  "accuracy": 0.788235294117647,
+  "tp": 67,
+  "tn": 0,
+  "fp": 18,
+  "fn": 0
+}

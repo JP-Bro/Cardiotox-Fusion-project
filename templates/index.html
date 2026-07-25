@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardiotox-Fusion | Predictive Toxicology Suite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #090D16;
+            --bg-card: #111827;
+            --border-color: #1F2937;
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --accent-blue: #3B82F6;
+            --accent-green: #10B981;
+            --accent-amber: #F59E0B;
+            --accent-red: #EF4444;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.25rem 2rem;
+            background-color: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-symbol {
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: 4px;
+            background: linear-gradient(135deg, var(--accent-blue), #6366F1);
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .brand-name {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-tagline {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-left: 0.5rem;
+            border-left: 1px solid var(--border-color);
+            padding-left: 0.5rem;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .badge-green {
+            color: var(--accent-green);
+            background-color: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: currentColor;
+            display: inline-block;
+        }
+
+        main {
+            flex: 1;
+            padding: 2.5rem 2rem;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .input-section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 0.75rem;
+            position: relative;
+        }
+
+        .search-input {
+            flex: 1;
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            color: var(--text-main);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-blue), #4f46e5);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 1.75rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+        }
+
+        .examples-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .example-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .example-chip {
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .example-chip:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: var(--text-muted);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .dashboard-grid.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dashboard-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .predict-results-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 2rem;
+            flex: 1;
+        }
+
+        .radial-progress-container {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        svg.progress-ring {
+            position: absolute;
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle-bg {
+            stroke: var(--border-color);
+            stroke-width: 12;
+            fill: transparent;
+        }
+
+        .progress-ring-circle {
+            stroke: var(--accent-blue);
+            stroke-width: 12;
+            fill: transparent;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .risk-value-text {
+            font-size: 1.75rem;
+            font-weight: 700;
+            position: absolute;
+        }
+
+        .risk-metadata {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .risk-level-badge {
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            text-transform: uppercase;
+            text-align: center;
+            width: max-content;
+        }
+
+        .risk-level-high {
+            color: #FFF;
+            background-color: rgba(239, 68, 68, 0.8);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+        }
+
+        .risk-level-moderate {
+            color: #FFF;
+            background-color: rgba(245, 158, 11, 0.8);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+        }
+
+        .risk-level-low {
+            color: #FFF;
+            background-color: rgba(16, 185, 129, 0.8);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        }
+
+        .risk-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            max-width: 200px;
+        }
+
+        .structure-preview-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .structure-preview-box svg {
+            max-width: 100%;
+            max-height: 180px;
+        }
+
+        .gene-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .gene-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+        }
+
+        .gene-name {
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .gene-val {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .gene-val.up {
+            color: var(--accent-green);
+        }
+
+        .gene-val.down {
+            color: var(--accent-red);
+        }
+
+        .pathway-bar-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .pathway-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .pathway-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .pathway-track {
+            width: 100%;
+            height: 6px;
+            background-color: var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .pathway-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), #818cf8);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.1, 0.8, 0.3, 1);
+        }
+
+        .loading-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand-container">
+            <div class="logo-symbol"></div>
+            <div class="brand-name">Cardiotox-Fusion</div>
+            <div class="brand-tagline">Predictive Toxicology Platform</div>
+        </div>
+        <div class="badge badge-green">
+            <span class="dot"></span>
+            GPU Mode: {% if gpu_active %}CUDA Active (RTX 4050){% else %}CPU Fallback{% endif %}
+        </div>
+    </header>
+
+    <main>
+        <!-- Input section -->
+        <section class="input-section">
+            <div class="input-title">Analyze Molecular Structure</div>
+            <div class="search-bar">
+                <input type="text" id="smiles-input" class="search-input" placeholder="Paste compound SMILES string (e.g. CC(=O)OC1=CC=CC=C1C(=O)O)..." />
+                <button id="analyze-btn" class="btn">Analyze</button>
+            </div>
+            <div class="examples-container">
+                <span class="example-label">Pre-loaded Compounds:</span>
+                <span class="example-chip" data-smiles="CC(=O)OC1=CC=CC=C1C(=O)O" data-name="Aspirin">Aspirin (Low Risk)</span>
+                <span class="example-chip" data-smiles="C1CN(CCC1(C2=CC=C(C=C2)Cl)O)CCCC(=O)C3=CC=CC(=C3)F" data-name="Haloperidol">Haloperidol (High Risk)</span>
+                <span class="example-chip" data-smiles="CC(C)C(CCC(C)(C1=CC(=C(C=C1)OC)OC)C#N)CCCN2CCC3=CC(=C(C=C3CC2)OC)OC" data-name="Verapamil">Verapamil (Moderate Risk)</span>
+            </div>
+        </section>
+
+        <!-- Loading spinner -->
+        <div id="loading" class="loading-container">
+            <div class="spinner"></div>
+            <div style="font-size: 0.95rem; color: var(--text-muted);">Predicting cardiotoxicity risk and simulating stress transcriptomics...</div>
+        </div>
+
+        <!-- Dashboard panel -->
+        <div id="dashboard" class="dashboard-grid">
+            <!-- Left Side: Structure & Classification -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-title">Risk Profile & Chemical Structure</div>
+                    <div class="badge" id="risk-level-badge">LOW RISK</div>
+                </div>
+                
+                <div class="predict-results-container">
+                    <div class="radial-progress-container">
+                        <svg class="progress-ring" width="140" height="140">
+                            <circle class="progress-ring-circle-bg" cx="70" cy="70" r="58"></circle>
+                            <circle id="progress-circle" class="progress-ring-circle" cx="70" cy="70" r="58"></circle>
+                        </svg>
+                        <div id="risk-val" class="risk-value-text">0.0%</div>
+                    </div>
+                    <div class="risk-metadata">
+                        <div style="font-weight: 500; font-size: 0.95rem; color: var(--text-muted);">Toxicity Score</div>
+                        <div id="model-badge" class="risk-level-badge risk-level-low">Safe Clearance</div>
+                        <div class="risk-desc" id="risk-desc-text">This molecule shows a safe cardiac signature under cross-validation.</div>
+                    </div>
+                </div>
+
+                <div class="structure-preview-box" id="structure-preview">
+                    <!-- SVG gets injected here -->
+                </div>
+            </div>
+
+            <!-- Right Side: Pathway Profiler -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-title">Imputed Cellular Stress Pathways</div>
+                    <div class="badge">978 Landmark Genes</div>
+                </div>
+                <div class="pathway-bar-container" id="pathway-container">
+                    <!-- Pathways get injected here -->
+                </div>
+            </div>
+
+            <!-- Bottom Left: Gene Up-regulation -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-title">Top 5 Imputed Activated Genes</div>
+                    <div style="color: var(--accent-green); font-size: 0.85rem; font-weight: 600;">+ Up-regulated</div>
+                </div>
+                <div class="gene-list-container" id="genes-activated">
+                    <!-- Genes get injected here -->
+                </div>
+            </div>
+
+            <!-- Bottom Right: Gene Down-regulation -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-title">Top 5 Imputed Suppressed Genes</div>
+                    <div style="color: var(--accent-red); font-size: 0.85rem; font-weight: 600;">- Down-regulated</div>
+                </div>
+                <div class="gene-list-container" id="genes-suppressed">
+                    <!-- Genes get injected here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 Cardiotox-Fusion Team. L1000 GSE70138 Broad Institute Broad-LINCS Integration.
+    </footer>
+
+    <script>
+        const smilesInput = document.getElementById('smiles-input');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const loading = document.getElementById('loading');
+        const dashboard = document.getElementById('dashboard');
+        const progressCircle = document.getElementById('progress-circle');
+        const riskVal = document.getElementById('risk-val');
+        const modelBadge = document.getElementById('model-badge');
+        const riskLevelBadge = document.getElementById('risk-level-badge');
+        const riskDescText = document.getElementById('risk-desc-text');
+        const structurePreview = document.getElementById('structure-preview');
+        const pathwayContainer = document.getElementById('pathway-container');
+        const genesActivated = document.getElementById('genes-activated');
+        const genesSuppressed = document.getElementById('genes-suppressed');
+
+        // Circular progress calculations
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = radius * 2 * Math.PI;
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+
+        function setProgress(percent) {
+            const offset = circumference - (percent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        // Example buttons listener
+        document.querySelectorAll('.example-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                smilesInput.value = chip.getAttribute('data-smiles');
+                triggerAnalysis();
+            });
+        });
+
+        analyzeBtn.addEventListener('click', triggerAnalysis);
+
+        async function triggerAnalysis() {
+            const smiles = smilesInput.value.trim();
+            if (!smiles) {
+                alert("Please enter or click a SMILES string first.");
+                return;
+            }
+
+            loading.style.display = 'flex';
+            dashboard.classList.remove('active');
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ smiles })
+                });
+
+                const data = await response.json();
+                if (data.error) {
+                    alert(data.error);
+                    loading.style.display = 'none';
+                    return;
+                }
+
+                // Render structure SVG
+                structurePreview.innerHTML = data.svg;
+
+                // Update risk circle & percentages
+                const score = (data.probability * 100).toFixed(1);
+                riskVal.textContent = `${score}%`;
+                setProgress(score);
+
+                // Update risk level colors & text
+                riskLevelBadge.className = 'badge';
+                modelBadge.className = 'risk-level-badge';
+                if (data.risk_level === 'High Risk') {
+                    riskLevelBadge.textContent = 'HIGH TOXICITY';
+                    riskLevelBadge.style.color = 'var(--accent-red)';
+                    modelBadge.textContent = 'ALERT: hERG Signal';
+                    modelBadge.classList.add('risk-level-high');
+                    riskDescText.textContent = "Strong structural alerts matching high-risk cardiotoxic compounds. Keep monitoring.";
+                    progressCircle.style.stroke = 'var(--accent-red)';
+                } else if (data.risk_level === 'Moderate Risk') {
+                    riskLevelBadge.textContent = 'MODERATE RISK';
+                    riskLevelBadge.style.color = 'var(--accent-amber)';
+                    modelBadge.textContent = 'Borderline';
+                    modelBadge.classList.add('risk-level-moderate');
+                    riskDescText.textContent = "Borderline cardiotoxicity probability. Structurally matches potential blockers.";
+                    progressCircle.style.stroke = 'var(--accent-amber)';
+                } else {
+                    riskLevelBadge.textContent = 'SAFE';
+                    riskLevelBadge.style.color = 'var(--accent-green)';
+                    modelBadge.textContent = 'Clearance';
+                    modelBadge.classList.add('risk-level-low');
+                    riskDescText.textContent = "No standard structural alerts. Model cleared this compound for testing.";
+                    progressCircle.style.stroke = 'var(--accent-green)';
+                }
+
+                // Render pathways
+                pathwayContainer.innerHTML = '';
+                Object.entries(data.pathways).forEach(([name, val]) => {
+                    // scale val dynamically for display (average range -1.5 to 1.5 z-score)
+                    const percent = Math.min(Math.max((val + 1.5) / 3 * 100, 0), 100);
+                    const row = document.createElement('div');
+                    row.className = 'pathway-row';
+                    row.innerHTML = `
+                        <div class="pathway-meta">
+                            <span>${name}</span>
+                            <span>${val.toFixed(3)} z</span>
+                        </div>
+                        <div class="pathway-track">
+                            <div class="pathway-fill" style="width: ${percent}%"></div>
+                        </div>
+                    `;
+                    pathwayContainer.appendChild(row);
+                });
+
+                // Render Top Activated Genes
+                genesActivated.innerHTML = '';
+                data.top_activated.forEach(g => {
+                    const row = document.createElement('div');
+                    row.className = 'gene-row';
+                    row.innerHTML = `
+                        <span class="gene-name">${g.name}</span>
+                        <span class="gene-val up">+${g.zscore.toFixed(2)}</span>
+                    `;
+                    genesActivated.appendChild(row);
+                });
+
+                // Render Top Suppressed Genes
+                genesSuppressed.innerHTML = '';
+                data.top_suppressed.forEach(g => {
+                    const row = document.createElement('div');
+                    row.className = 'gene-row';
+                    row.innerHTML = `
+                        <span class="gene-name">${g.name}</span>
+                        <span class="gene-val down">${g.zscore.toFixed(2)}</span>
+                    `;
+                    genesSuppressed.appendChild(row);
+                });
+
+                loading.style.display = 'none';
+                dashboard.classList.add('active');
+
+            } catch (err) {
+                console.error(err);
+                alert("Error during model prediction endpoint request.");
+                loading.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

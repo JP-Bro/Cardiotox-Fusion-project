@@ -1,0 +1,274 @@
+2026-07-23 20:38:06 | 03_match_lincs | INFO | ============================================================
+2026-07-23 20:38:06 | 03_match_lincs | INFO | SCRIPT: 03_match_lincs.py
+2026-07-23 20:38:06 | 03_match_lincs | INFO | PURPOSE: Match compounds against LINCS L1000 GSE70138
+2026-07-23 20:38:06 | 03_match_lincs | INFO | ============================================================
+2026-07-23 20:38:32 | 03_match_lincs | INFO | ============================================================
+2026-07-23 20:38:32 | 03_match_lincs | INFO | SCRIPT: 03_match_lincs.py
+2026-07-23 20:38:32 | 03_match_lincs | INFO | PURPOSE: Match compounds against LINCS L1000 GSE70138
+2026-07-23 20:38:32 | 03_match_lincs | INFO | ============================================================
+2026-07-23 20:38:32 | 03_match_lincs | WARNING | SMILES CSV not found — using labeled_compounds.csv for name-only matching.
+2026-07-23 20:38:32 | 03_match_lincs | WARNING | Run 02_resolve_smiles.py later to enable InChIKey-based matching.
+2026-07-23 20:38:32 | 03_match_lincs | INFO | Loaded 1211 compounds from labels CSV (name-only matching)
+2026-07-23 20:38:32 | 03_match_lincs | INFO | LINCS sig_info: (118050, 8) (118050 unique sigs)
+2026-07-23 20:38:32 | 03_match_lincs | INFO | LINCS pert_info: (2170, 5) (2170 unique compounds)
+2026-07-23 20:38:32 | 03_match_lincs | INFO | Matching compounds against LINCS L1000...
+2026-07-23 20:38:33 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-23 20:38:33 | 03_match_lincs | WARNING |   BRD-M45964048: no HA1E signatures found, trying any cell line
+2026-07-23 20:38:34 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-23 20:38:34 | 03_match_lincs | WARNING |   BRD-K31283835: no HA1E signatures found, trying any cell line
+2026-07-23 20:38:36 | 03_match_lincs | WARNING |   BRD-K69608737: no HA1E signatures found, trying any cell line
+2026-07-23 20:38:40 | 03_match_lincs | INFO | ============================================================
+2026-07-23 20:38:40 | 03_match_lincs | INFO | LINCS COVERAGE REPORT
+2026-07-23 20:38:40 | 03_match_lincs | INFO |   Total compounds (valid SMILES) : 1211
+2026-07-23 20:38:40 | 03_match_lincs | INFO |   Matched to LINCS              : 459 (37.9%)
+2026-07-23 20:38:40 | 03_match_lincs | INFO |   - By direct name              : 287
+2026-07-23 20:38:40 | 03_match_lincs | INFO |   - By salt-stripped name       : 172
+2026-07-23 20:38:40 | 03_match_lincs | INFO |   - By InChIKey only            : 0
+2026-07-23 20:38:40 | 03_match_lincs | INFO |   Coverage — label 0 (no concern): 97/343 (28.3%)
+2026-07-23 20:38:40 | 03_match_lincs | INFO |   Coverage — label 1 (concern)  : 362/868 (41.7%)
+2026-07-23 20:38:40 | 03_match_lincs | INFO |   ⚠ Coverage gap (pos-neg)     : 13.4% more coverage for toxic class
+2026-07-23 20:38:40 | 03_match_lincs | INFO |   → Stratified split REQUIRED to handle imbalance
+2026-07-23 20:38:40 | 03_match_lincs | INFO | ============================================================
+2026-07-23 20:38:40 | 03_match_lincs | INFO | Match results saved to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\lincs_matched_compounds.csv
+2026-07-23 20:38:40 | 03_match_lincs | INFO | 03_match_lincs.py COMPLETE
+2026-07-23 20:39:23 | 03_match_lincs | INFO | ============================================================
+2026-07-23 20:39:23 | 03_match_lincs | INFO | SCRIPT: 03_match_lincs.py
+2026-07-23 20:39:23 | 03_match_lincs | INFO | PURPOSE: Match compounds against LINCS L1000 GSE70138
+2026-07-23 20:39:23 | 03_match_lincs | INFO | ============================================================
+2026-07-23 20:39:23 | 03_match_lincs | WARNING | SMILES CSV not found -- using labeled_compounds.csv for name-only matching.
+2026-07-23 20:39:23 | 03_match_lincs | WARNING | Run 02_resolve_smiles.py later to enable InChIKey-based matching.
+2026-07-23 20:39:23 | 03_match_lincs | INFO | Loaded 1211 compounds from labels CSV (name-only matching)
+2026-07-23 20:39:24 | 03_match_lincs | INFO | LINCS sig_info: (118050, 8) (118050 unique sigs)
+2026-07-23 20:39:24 | 03_match_lincs | INFO | LINCS pert_info: (2170, 5) (2170 unique compounds)
+2026-07-23 20:39:24 | 03_match_lincs | INFO | Matching compounds against LINCS L1000...
+2026-07-23 20:39:25 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-23 20:39:25 | 03_match_lincs | WARNING |   BRD-M45964048: no HA1E signatures found, trying any cell line
+2026-07-23 20:39:25 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-23 20:39:26 | 03_match_lincs | WARNING |   BRD-K31283835: no HA1E signatures found, trying any cell line
+2026-07-23 20:39:28 | 03_match_lincs | WARNING |   BRD-K69608737: no HA1E signatures found, trying any cell line
+2026-07-23 20:39:32 | 03_match_lincs | INFO | ============================================================
+2026-07-23 20:39:32 | 03_match_lincs | INFO | LINCS COVERAGE REPORT
+2026-07-23 20:39:32 | 03_match_lincs | INFO |   Total compounds (valid SMILES) : 1211
+2026-07-23 20:39:32 | 03_match_lincs | INFO |   Matched to LINCS              : 459 (37.9%)
+2026-07-23 20:39:32 | 03_match_lincs | INFO |   - By direct name              : 287
+2026-07-23 20:39:32 | 03_match_lincs | INFO |   - By salt-stripped name       : 172
+2026-07-23 20:39:32 | 03_match_lincs | INFO |   - By InChIKey only            : 0
+2026-07-23 20:39:32 | 03_match_lincs | INFO |   Coverage - label 0 (no concern): 97/343 (28.3%)
+2026-07-23 20:39:32 | 03_match_lincs | INFO |   Coverage - label 1 (concern)  : 362/868 (41.7%)
+2026-07-23 20:39:32 | 03_match_lincs | INFO |   Coverage gap (pos-neg)     : 13.4% more coverage for toxic class
+2026-07-23 20:39:32 | 03_match_lincs | INFO |   => Stratified split REQUIRED to handle imbalance
+2026-07-23 20:39:32 | 03_match_lincs | INFO | ============================================================
+2026-07-23 20:39:32 | 03_match_lincs | INFO | Match results saved to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\lincs_matched_compounds.csv
+2026-07-23 20:39:32 | 03_match_lincs | INFO | 03_match_lincs.py COMPLETE
+2026-07-23 22:23:52 | 03_match_lincs | INFO | ============================================================
+2026-07-23 22:23:52 | 03_match_lincs | INFO | SCRIPT: 03_match_lincs.py
+2026-07-23 22:23:52 | 03_match_lincs | INFO | PURPOSE: Match compounds against LINCS L1000 GSE70138
+2026-07-23 22:23:52 | 03_match_lincs | INFO | ============================================================
+2026-07-23 22:23:52 | 03_match_lincs | INFO | Loaded 1211 compounds from SMILES CSV; 1048 with valid SMILES
+2026-07-23 22:23:52 | 03_match_lincs | INFO | InChIKey-based matching ENABLED (SMILES CSV present)
+2026-07-23 22:23:53 | 03_match_lincs | INFO | LINCS sig_info: (118050, 8) (118050 unique sigs)
+2026-07-23 22:23:53 | 03_match_lincs | INFO | LINCS pert_info: (2170, 5) (2170 unique compounds)
+2026-07-23 22:23:53 | 03_match_lincs | INFO | Matching compounds against LINCS L1000...
+2026-07-23 22:23:54 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-23 22:23:54 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-23 22:23:55 | 03_match_lincs | WARNING |   BRD-K69608737: no HA1E signatures found, trying any cell line
+2026-07-23 22:23:55 | 03_match_lincs | WARNING |   BRD-K31283835: no HA1E signatures found, trying any cell line
+2026-07-23 22:23:57 | 03_match_lincs | WARNING |   BRD-K93468883: no HA1E signatures found, trying any cell line
+2026-07-23 22:23:58 | 03_match_lincs | WARNING |   BRD-K69608737: no HA1E signatures found, trying any cell line
+2026-07-23 22:24:02 | 03_match_lincs | INFO | ============================================================
+2026-07-23 22:24:02 | 03_match_lincs | INFO | LINCS COVERAGE REPORT
+2026-07-23 22:24:02 | 03_match_lincs | INFO |   Total compounds (valid SMILES) : 1048
+2026-07-23 22:24:02 | 03_match_lincs | INFO |   Matched to LINCS              : 562 (53.6%)
+2026-07-23 22:24:02 | 03_match_lincs | INFO |   - By direct name              : 282
+2026-07-23 22:24:02 | 03_match_lincs | INFO |   - By salt-stripped name       : 169
+2026-07-23 22:24:02 | 03_match_lincs | INFO |   - By InChIKey only            : 53
+2026-07-23 22:24:02 | 03_match_lincs | INFO |   Coverage - label 0 (no concern): 117/279 (41.9%)
+2026-07-23 22:24:02 | 03_match_lincs | INFO |   Coverage - label 1 (concern)  : 445/769 (57.9%)
+2026-07-23 22:24:02 | 03_match_lincs | INFO |   Coverage gap (pos-neg)     : 15.9% more coverage for toxic class
+2026-07-23 22:24:02 | 03_match_lincs | INFO |   => Stratified split REQUIRED to handle imbalance
+2026-07-23 22:24:02 | 03_match_lincs | INFO | ============================================================
+2026-07-23 22:24:02 | 03_match_lincs | INFO | Match results saved to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\lincs_matched_compounds.csv
+2026-07-23 22:24:02 | 03_match_lincs | INFO | 03_match_lincs.py COMPLETE
+2026-07-23 23:56:25 | 03_match_lincs | INFO | ============================================================
+2026-07-23 23:56:25 | 03_match_lincs | INFO | SCRIPT: 03_match_lincs.py
+2026-07-23 23:56:25 | 03_match_lincs | INFO | PURPOSE: Match compounds against LINCS L1000 GSE70138
+2026-07-23 23:56:25 | 03_match_lincs | INFO | ============================================================
+2026-07-23 23:56:25 | 03_match_lincs | INFO | Loaded 1211 compounds from SMILES CSV; 1048 with valid SMILES
+2026-07-23 23:56:25 | 03_match_lincs | INFO | InChIKey-based matching ENABLED (SMILES CSV present)
+2026-07-23 23:56:26 | 03_match_lincs | INFO | LINCS sig_info: (118050, 8) (118050 unique sigs)
+2026-07-23 23:56:26 | 03_match_lincs | INFO | LINCS pert_info: (2170, 5) (2170 unique compounds)
+2026-07-23 23:56:26 | 03_match_lincs | INFO | Matching compounds against LINCS L1000...
+2026-07-23 23:56:26 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-23 23:56:27 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-23 23:56:27 | 03_match_lincs | WARNING |   BRD-K69608737: no HA1E signatures found, trying any cell line
+2026-07-23 23:56:28 | 03_match_lincs | WARNING |   BRD-K31283835: no HA1E signatures found, trying any cell line
+2026-07-23 23:56:29 | 03_match_lincs | WARNING |   BRD-K93468883: no HA1E signatures found, trying any cell line
+2026-07-23 23:56:30 | 03_match_lincs | WARNING |   BRD-K69608737: no HA1E signatures found, trying any cell line
+2026-07-23 23:56:34 | 03_match_lincs | INFO | ============================================================
+2026-07-23 23:56:34 | 03_match_lincs | INFO | LINCS COVERAGE REPORT
+2026-07-23 23:56:34 | 03_match_lincs | INFO |   Total compounds (valid SMILES) : 1048
+2026-07-23 23:56:34 | 03_match_lincs | INFO |   Matched to LINCS              : 562 (53.6%)
+2026-07-23 23:56:34 | 03_match_lincs | INFO |   - By direct name              : 282
+2026-07-23 23:56:34 | 03_match_lincs | INFO |   - By salt-stripped name       : 169
+2026-07-23 23:56:34 | 03_match_lincs | INFO |   - By InChIKey only            : 53
+2026-07-23 23:56:34 | 03_match_lincs | INFO |   Coverage - label 0 (no concern): 117/279 (41.9%)
+2026-07-23 23:56:34 | 03_match_lincs | INFO |   Coverage - label 1 (concern)  : 445/769 (57.9%)
+2026-07-23 23:56:34 | 03_match_lincs | INFO |   Coverage gap (pos-neg)     : 15.9% more coverage for toxic class
+2026-07-23 23:56:34 | 03_match_lincs | INFO |   => Stratified split REQUIRED to handle imbalance
+2026-07-23 23:56:34 | 03_match_lincs | INFO | ============================================================
+2026-07-23 23:56:34 | 03_match_lincs | INFO | Match results saved to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\lincs_matched_compounds.csv
+2026-07-23 23:56:34 | 03_match_lincs | INFO | Downloading LINCS Level 5 GCTX from: https://ftp.ncbi.nlm.nih.gov/geo/series/GSE70nnn/GSE70138/suppl/GSE70138_Broad_LINCS_Level5_COMPZ_n118050x978_2017-03-06.gctx.gz
+2026-07-23 23:56:34 | 03_match_lincs | INFO | Destination: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\raw\lincs\GSE70138_Broad_LINCS_Level5_COMPZ_n118050x978_2017-03-06.gctx
+2026-07-23 23:56:34 | 03_match_lincs | INFO | WARNING: This file is ~5 GB and may take 10-30 minutes on a typical connection.
+2026-07-23 23:56:37 | 03_match_lincs | ERROR | Download failed: HTTP Error 404: Not Found
+2026-07-23 23:59:50 | 03_match_lincs | INFO | ============================================================
+2026-07-23 23:59:50 | 03_match_lincs | INFO | SCRIPT: 03_match_lincs.py
+2026-07-23 23:59:50 | 03_match_lincs | INFO | PURPOSE: Match compounds against LINCS L1000 GSE70138
+2026-07-23 23:59:50 | 03_match_lincs | INFO | ============================================================
+2026-07-23 23:59:50 | 03_match_lincs | INFO | Loaded 1211 compounds from SMILES CSV; 1048 with valid SMILES
+2026-07-23 23:59:50 | 03_match_lincs | INFO | InChIKey-based matching ENABLED (SMILES CSV present)
+2026-07-23 23:59:50 | 03_match_lincs | INFO | LINCS sig_info: (118050, 8) (118050 unique sigs)
+2026-07-23 23:59:50 | 03_match_lincs | INFO | LINCS pert_info: (2170, 5) (2170 unique compounds)
+2026-07-23 23:59:50 | 03_match_lincs | INFO | Matching compounds against LINCS L1000...
+2026-07-23 23:59:51 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-23 23:59:52 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-23 23:59:52 | 03_match_lincs | WARNING |   BRD-K69608737: no HA1E signatures found, trying any cell line
+2026-07-23 23:59:53 | 03_match_lincs | WARNING |   BRD-K31283835: no HA1E signatures found, trying any cell line
+2026-07-23 23:59:54 | 03_match_lincs | WARNING |   BRD-K93468883: no HA1E signatures found, trying any cell line
+2026-07-23 23:59:55 | 03_match_lincs | WARNING |   BRD-K69608737: no HA1E signatures found, trying any cell line
+2026-07-23 23:59:59 | 03_match_lincs | INFO | ============================================================
+2026-07-23 23:59:59 | 03_match_lincs | INFO | LINCS COVERAGE REPORT
+2026-07-23 23:59:59 | 03_match_lincs | INFO |   Total compounds (valid SMILES) : 1048
+2026-07-23 23:59:59 | 03_match_lincs | INFO |   Matched to LINCS              : 562 (53.6%)
+2026-07-23 23:59:59 | 03_match_lincs | INFO |   - By direct name              : 282
+2026-07-23 23:59:59 | 03_match_lincs | INFO |   - By salt-stripped name       : 169
+2026-07-23 23:59:59 | 03_match_lincs | INFO |   - By InChIKey only            : 53
+2026-07-23 23:59:59 | 03_match_lincs | INFO |   Coverage - label 0 (no concern): 117/279 (41.9%)
+2026-07-23 23:59:59 | 03_match_lincs | INFO |   Coverage - label 1 (concern)  : 445/769 (57.9%)
+2026-07-23 23:59:59 | 03_match_lincs | INFO |   Coverage gap (pos-neg)     : 15.9% more coverage for toxic class
+2026-07-23 23:59:59 | 03_match_lincs | INFO |   => Stratified split REQUIRED to handle imbalance
+2026-07-23 23:59:59 | 03_match_lincs | INFO | ============================================================
+2026-07-23 23:59:59 | 03_match_lincs | INFO | Match results saved to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\lincs_matched_compounds.csv
+2026-07-23 23:59:59 | 03_match_lincs | INFO | Downloading LINCS Level 5 GCTX from: https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE70138&format=file&file=GSE70138_Broad_LINCS_Level5_COMPZ_n118050x12328_2017-03-06.gctx.gz
+2026-07-23 23:59:59 | 03_match_lincs | INFO | Destination: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\raw\lincs\GSE70138_Broad_LINCS_Level5_COMPZ_n118050x12328_2017-03-06.gctx
+2026-07-23 23:59:59 | 03_match_lincs | INFO | WARNING: This file is ~5 GB and may take 10-30 minutes on a typical connection.
+2026-07-24 00:00:00 | 03_match_lincs | INFO |   Downloaded: 0.00 GB / 5.00 GB (0.0%)
+2026-07-24 00:01:25 | 03_match_lincs | INFO |   Downloaded: 0.10 GB / 5.00 GB (2.0%)
+2026-07-24 00:02:29 | 03_match_lincs | INFO |   Downloaded: 0.20 GB / 5.00 GB (3.9%)
+2026-07-24 00:04:17 | 03_match_lincs | INFO |   Downloaded: 0.29 GB / 5.00 GB (5.9%)
+2026-07-24 00:05:38 | 03_match_lincs | INFO |   Downloaded: 0.39 GB / 5.00 GB (7.8%)
+2026-07-24 00:07:55 | 03_match_lincs | INFO |   Downloaded: 0.49 GB / 5.00 GB (9.8%)
+2026-07-24 00:08:52 | 03_match_lincs | INFO |   Downloaded: 0.59 GB / 5.00 GB (11.7%)
+2026-07-24 00:09:31 | 03_match_lincs | INFO |   Downloaded: 0.68 GB / 5.00 GB (13.7%)
+2026-07-24 00:10:07 | 03_match_lincs | INFO |   Downloaded: 0.78 GB / 5.00 GB (15.6%)
+2026-07-24 00:10:51 | 03_match_lincs | INFO |   Downloaded: 0.88 GB / 5.00 GB (17.6%)
+2026-07-24 00:11:40 | 03_match_lincs | INFO |   Downloaded: 0.98 GB / 5.00 GB (19.5%)
+2026-07-24 00:12:18 | 03_match_lincs | INFO |   Downloaded: 1.07 GB / 5.00 GB (21.5%)
+2026-07-24 00:13:10 | 03_match_lincs | INFO |   Downloaded: 1.17 GB / 5.00 GB (23.5%)
+2026-07-24 00:14:10 | 03_match_lincs | INFO |   Downloaded: 1.27 GB / 5.00 GB (25.4%)
+2026-07-24 00:15:10 | 03_match_lincs | INFO |   Downloaded: 1.37 GB / 5.00 GB (27.4%)
+2026-07-24 00:15:59 | 03_match_lincs | INFO |   Downloaded: 1.46 GB / 5.00 GB (29.3%)
+2026-07-24 00:16:32 | 03_match_lincs | INFO |   Downloaded: 1.56 GB / 5.00 GB (31.3%)
+2026-07-24 00:17:25 | 03_match_lincs | INFO |   Downloaded: 1.66 GB / 5.00 GB (33.2%)
+2026-07-24 00:18:43 | 03_match_lincs | INFO |   Downloaded: 1.76 GB / 5.00 GB (35.2%)
+2026-07-24 00:19:41 | 03_match_lincs | INFO |   Downloaded: 1.86 GB / 5.00 GB (37.1%)
+2026-07-24 00:21:11 | 03_match_lincs | INFO |   Downloaded: 1.95 GB / 5.00 GB (39.1%)
+2026-07-24 00:22:01 | 03_match_lincs | INFO |   Downloaded: 2.05 GB / 5.00 GB (41.0%)
+2026-07-24 00:22:34 | 03_match_lincs | INFO |   Downloaded: 2.15 GB / 5.00 GB (43.0%)
+2026-07-24 00:23:19 | 03_match_lincs | INFO |   Downloaded: 2.25 GB / 5.00 GB (45.0%)
+2026-07-24 00:24:05 | 03_match_lincs | INFO |   Downloaded: 2.34 GB / 5.00 GB (46.9%)
+2026-07-24 00:24:55 | 03_match_lincs | INFO |   Downloaded: 2.44 GB / 5.00 GB (48.9%)
+2026-07-24 00:26:26 | 03_match_lincs | INFO |   Downloaded: 2.54 GB / 5.00 GB (50.8%)
+2026-07-24 00:27:11 | 03_match_lincs | INFO |   Downloaded: 2.64 GB / 5.00 GB (52.8%)
+2026-07-24 00:27:38 | 03_match_lincs | INFO |   Downloaded: 2.73 GB / 5.00 GB (54.7%)
+2026-07-24 00:28:31 | 03_match_lincs | INFO |   Downloaded: 2.83 GB / 5.00 GB (56.7%)
+2026-07-24 00:29:22 | 03_match_lincs | INFO |   Downloaded: 2.93 GB / 5.00 GB (58.6%)
+2026-07-24 00:30:18 | 03_match_lincs | INFO |   Downloaded: 3.03 GB / 5.00 GB (60.6%)
+2026-07-24 00:31:16 | 03_match_lincs | INFO |   Downloaded: 3.12 GB / 5.00 GB (62.5%)
+2026-07-24 00:32:04 | 03_match_lincs | INFO |   Downloaded: 3.22 GB / 5.00 GB (64.5%)
+2026-07-24 00:32:49 | 03_match_lincs | INFO |   Downloaded: 3.32 GB / 5.00 GB (66.4%)
+2026-07-24 00:33:59 | 03_match_lincs | INFO |   Downloaded: 3.42 GB / 5.00 GB (68.4%)
+2026-07-24 00:34:40 | 03_match_lincs | INFO |   Downloaded: 3.52 GB / 5.00 GB (70.4%)
+2026-07-24 00:35:23 | 03_match_lincs | INFO |   Downloaded: 3.61 GB / 5.00 GB (72.3%)
+2026-07-24 00:36:45 | 03_match_lincs | INFO |   Downloaded: 3.71 GB / 5.00 GB (74.3%)
+2026-07-24 00:39:57 | 03_match_lincs | INFO |   Downloaded: 3.81 GB / 5.00 GB (76.2%)
+2026-07-24 00:40:36 | 03_match_lincs | INFO |   Downloaded: 3.91 GB / 5.00 GB (78.2%)
+2026-07-24 00:41:33 | 03_match_lincs | INFO |   Downloaded: 4.00 GB / 5.00 GB (80.1%)
+2026-07-24 00:42:54 | 03_match_lincs | INFO |   Downloaded: 4.10 GB / 5.00 GB (82.1%)
+2026-07-24 00:44:12 | 03_match_lincs | INFO |   Downloaded: 4.20 GB / 5.00 GB (84.0%)
+2026-07-24 00:45:03 | 03_match_lincs | INFO |   Downloaded: 4.30 GB / 5.00 GB (86.0%)
+2026-07-24 00:45:41 | 03_match_lincs | INFO |   Downloaded: 4.39 GB / 5.00 GB (87.9%)
+2026-07-24 00:46:31 | 03_match_lincs | INFO |   Downloaded: 4.49 GB / 5.00 GB (89.9%)
+2026-07-24 00:47:03 | 03_match_lincs | INFO |   Downloaded: 4.59 GB / 5.00 GB (91.9%)
+2026-07-24 00:47:45 | 03_match_lincs | INFO |   Downloaded: 4.69 GB / 5.00 GB (93.8%)
+2026-07-24 00:48:29 | 03_match_lincs | INFO |   Downloaded: 4.79 GB / 5.00 GB (95.8%)
+2026-07-24 00:49:53 | 03_match_lincs | INFO |   Downloaded: 4.88 GB / 5.00 GB (97.7%)
+2026-07-24 00:50:43 | 03_match_lincs | INFO |   Downloaded: 4.98 GB / 5.00 GB (99.7%)
+2026-07-24 00:50:50 | 03_match_lincs | INFO | Decompressing .gz file...
+2026-07-24 00:52:23 | 03_match_lincs | INFO | GCTX ready at: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\raw\lincs\GSE70138_Broad_LINCS_Level5_COMPZ_n118050x12328_2017-03-06.gctx
+2026-07-24 00:52:23 | 03_match_lincs | INFO | Extracting expression for 562 matched compounds...
+2026-07-24 20:16:25 | 03_match_lincs | INFO | ============================================================
+2026-07-24 20:16:25 | 03_match_lincs | INFO | SCRIPT: 03_match_lincs.py
+2026-07-24 20:16:25 | 03_match_lincs | INFO | PURPOSE: Match compounds against LINCS L1000 GSE70138
+2026-07-24 20:16:25 | 03_match_lincs | INFO | ============================================================
+2026-07-24 20:16:25 | 03_match_lincs | INFO | Loaded 1211 compounds from SMILES CSV; 1048 with valid SMILES
+2026-07-24 20:16:25 | 03_match_lincs | INFO | InChIKey-based matching ENABLED (SMILES CSV present)
+2026-07-24 20:16:26 | 03_match_lincs | INFO | LINCS sig_info: (118050, 8) (118050 unique sigs)
+2026-07-24 20:16:26 | 03_match_lincs | INFO | LINCS pert_info: (2170, 5) (2170 unique compounds)
+2026-07-24 20:16:26 | 03_match_lincs | INFO | Matching compounds against LINCS L1000...
+2026-07-24 20:16:26 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-24 20:16:27 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-24 20:16:27 | 03_match_lincs | WARNING |   BRD-K69608737: no HA1E signatures found, trying any cell line
+2026-07-24 20:16:28 | 03_match_lincs | WARNING |   BRD-K31283835: no HA1E signatures found, trying any cell line
+2026-07-24 20:16:29 | 03_match_lincs | WARNING |   BRD-K93468883: no HA1E signatures found, trying any cell line
+2026-07-24 20:16:30 | 03_match_lincs | WARNING |   BRD-K69608737: no HA1E signatures found, trying any cell line
+2026-07-24 20:16:35 | 03_match_lincs | INFO | ============================================================
+2026-07-24 20:16:35 | 03_match_lincs | INFO | LINCS COVERAGE REPORT
+2026-07-24 20:16:35 | 03_match_lincs | INFO |   Total compounds (valid SMILES) : 1048
+2026-07-24 20:16:35 | 03_match_lincs | INFO |   Matched to LINCS              : 562 (53.6%)
+2026-07-24 20:16:35 | 03_match_lincs | INFO |   - By direct name              : 282
+2026-07-24 20:16:35 | 03_match_lincs | INFO |   - By salt-stripped name       : 169
+2026-07-24 20:16:35 | 03_match_lincs | INFO |   - By InChIKey only            : 53
+2026-07-24 20:16:35 | 03_match_lincs | INFO |   Coverage - label 0 (no concern): 117/279 (41.9%)
+2026-07-24 20:16:35 | 03_match_lincs | INFO |   Coverage - label 1 (concern)  : 445/769 (57.9%)
+2026-07-24 20:16:35 | 03_match_lincs | INFO |   Coverage gap (pos-neg)     : 15.9% more coverage for toxic class
+2026-07-24 20:16:35 | 03_match_lincs | INFO |   => Stratified split REQUIRED to handle imbalance
+2026-07-24 20:16:35 | 03_match_lincs | INFO | ============================================================
+2026-07-24 20:16:35 | 03_match_lincs | INFO | Match results saved to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\lincs_matched_compounds.csv
+2026-07-24 20:16:35 | 03_match_lincs | INFO | Extracting expression for 562 matched compounds...
+2026-07-24 20:16:36 | 03_match_lincs | INFO | Extracting expression for 562 signatures from GCTX...
+2026-07-24 20:17:37 | 03_match_lincs | INFO | ============================================================
+2026-07-24 20:17:37 | 03_match_lincs | INFO | SCRIPT: 03_match_lincs.py
+2026-07-24 20:17:37 | 03_match_lincs | INFO | PURPOSE: Match compounds against LINCS L1000 GSE70138
+2026-07-24 20:17:37 | 03_match_lincs | INFO | ============================================================
+2026-07-24 20:17:37 | 03_match_lincs | INFO | Loaded 1211 compounds from SMILES CSV; 1048 with valid SMILES
+2026-07-24 20:17:37 | 03_match_lincs | INFO | InChIKey-based matching ENABLED (SMILES CSV present)
+2026-07-24 20:17:38 | 03_match_lincs | INFO | LINCS sig_info: (118050, 8) (118050 unique sigs)
+2026-07-24 20:17:38 | 03_match_lincs | INFO | LINCS pert_info: (2170, 5) (2170 unique compounds)
+2026-07-24 20:17:38 | 03_match_lincs | INFO | Matching compounds against LINCS L1000...
+2026-07-24 20:17:39 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-24 20:17:39 | 03_match_lincs | WARNING |   BRD-K37798499: no HA1E signatures found, trying any cell line
+2026-07-24 20:17:40 | 03_match_lincs | WARNING |   BRD-K69608737: no HA1E signatures found, trying any cell line
+2026-07-24 20:17:40 | 03_match_lincs | WARNING |   BRD-K31283835: no HA1E signatures found, trying any cell line
+2026-07-24 20:17:42 | 03_match_lincs | WARNING |   BRD-K93468883: no HA1E signatures found, trying any cell line
+2026-07-24 20:17:43 | 03_match_lincs | WARNING |   BRD-K69608737: no HA1E signatures found, trying any cell line
+2026-07-24 20:17:47 | 03_match_lincs | INFO | ============================================================
+2026-07-24 20:17:47 | 03_match_lincs | INFO | LINCS COVERAGE REPORT
+2026-07-24 20:17:47 | 03_match_lincs | INFO |   Total compounds (valid SMILES) : 1048
+2026-07-24 20:17:47 | 03_match_lincs | INFO |   Matched to LINCS              : 562 (53.6%)
+2026-07-24 20:17:47 | 03_match_lincs | INFO |   - By direct name              : 282
+2026-07-24 20:17:47 | 03_match_lincs | INFO |   - By salt-stripped name       : 169
+2026-07-24 20:17:47 | 03_match_lincs | INFO |   - By InChIKey only            : 53
+2026-07-24 20:17:47 | 03_match_lincs | INFO |   Coverage - label 0 (no concern): 117/279 (41.9%)
+2026-07-24 20:17:47 | 03_match_lincs | INFO |   Coverage - label 1 (concern)  : 445/769 (57.9%)
+2026-07-24 20:17:47 | 03_match_lincs | INFO |   Coverage gap (pos-neg)     : 15.9% more coverage for toxic class
+2026-07-24 20:17:47 | 03_match_lincs | INFO |   => Stratified split REQUIRED to handle imbalance
+2026-07-24 20:17:47 | 03_match_lincs | INFO | ============================================================
+2026-07-24 20:17:47 | 03_match_lincs | INFO | Match results saved to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\lincs_matched_compounds.csv
+2026-07-24 20:17:47 | 03_match_lincs | INFO | Extracting expression for 562 matched compounds...
+2026-07-24 20:17:47 | 03_match_lincs | INFO | Extracting expression for 562 signatures from GCTX...
+2026-07-24 20:17:48 | 03_match_lincs | INFO |   Mapped 562 signatures out of 562 requested
+2026-07-24 20:17:48 | 03_match_lincs | INFO |   Fetching 489 unique signature rows from data matrix...
+2026-07-24 20:17:48 | 03_match_lincs | INFO |   Expression matrix extraction complete. Shape: (562, 978)
+2026-07-24 20:17:48 | 03_match_lincs | INFO | Expression matrix saved to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\expression_matrix.csv
+2026-07-24 20:17:48 | 03_match_lincs | INFO | 03_match_lincs.py COMPLETE

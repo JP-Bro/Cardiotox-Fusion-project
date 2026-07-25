@@ -1,0 +1,42 @@
+2026-07-23 22:32:29 | 06_train_gnn | INFO | ============================================================
+2026-07-23 22:32:29 | 06_train_gnn | INFO | SCRIPT: 06_train_gnn.py -- Structure-Only GNN Baseline
+2026-07-23 22:32:29 | 06_train_gnn | INFO | ============================================================
+2026-07-23 22:32:29 | 06_train_gnn | INFO | Graph manifest: 1048 entries, 1048 valid
+2026-07-23 22:32:29 | 06_train_gnn | INFO | Dataset: 1048 compounds
+2026-07-23 22:32:29 | 06_train_gnn | INFO | Label balance: 769 positive (73.4%)
+2026-07-23 22:32:29 | 06_train_gnn | INFO | GNNClassifier parameters: 1,368,581
+2026-07-23 22:32:29 | 06_train_gnn | INFO | Starting GNN training...
+2026-07-23 22:37:39 | 06_train_gnn | INFO | Training history saved to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\results\gnn_training_history.json
+2026-07-23 22:37:39 | 06_train_gnn | INFO | Loaded best checkpoint (epoch 38, val AUC=0.7306)
+2026-07-23 22:37:40 | 06_train_gnn | INFO | ============================================================
+2026-07-23 22:37:40 | 06_train_gnn | INFO | GNN BASELINE -- TEST SET RESULTS
+2026-07-23 22:37:40 | 06_train_gnn | INFO |   AUC-ROC  : 0.7506
+2026-07-23 22:37:40 | 06_train_gnn | INFO |   AUC-PR   : 0.9015
+2026-07-23 22:37:40 | 06_train_gnn | INFO |   F1 Score : 0.4533
+2026-07-23 22:37:40 | 06_train_gnn | INFO |   Accuracy : 0.4810
+2026-07-23 22:37:40 | 06_train_gnn | INFO |   Test Loss: 0.0000
+2026-07-23 22:37:40 | 06_train_gnn | INFO |   TP/TN/FP/FN: 34/42/0/82
+2026-07-23 22:37:40 | 06_train_gnn | INFO | ============================================================
+2026-07-23 22:37:40 | 06_train_gnn | INFO | Test results saved to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\results\gnn_test_results.json
+2026-07-23 22:37:40 | 06_train_gnn | INFO | 06_train_gnn.py COMPLETE
+2026-07-25 18:24:09 | 06_train_gnn | INFO | ============================================================
+2026-07-25 18:24:09 | 06_train_gnn | INFO | SCRIPT: 06_train_gnn.py -- Structure-Only GNN Baseline
+2026-07-25 18:24:09 | 06_train_gnn | INFO | ============================================================
+2026-07-25 18:24:10 | 06_train_gnn | INFO | Graph manifest: 1048 entries, 1048 valid
+2026-07-25 18:24:10 | 06_train_gnn | INFO | Dataset: 1048 compounds
+2026-07-25 18:24:10 | 06_train_gnn | INFO | Label balance: 769 positive (73.4%)
+2026-07-25 18:24:10 | 06_train_gnn | INFO | GNNClassifier parameters: 1,368,581
+2026-07-25 18:24:12 | 06_train_gnn | INFO | Starting GNN training...
+2026-07-25 18:25:29 | 06_train_gnn | INFO | Training history saved to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\results\gnn_training_history.json
+2026-07-25 18:25:29 | 06_train_gnn | INFO | Loaded best checkpoint (epoch 14, val AUC=0.7161)
+2026-07-25 18:25:31 | 06_train_gnn | INFO | ============================================================
+2026-07-25 18:25:31 | 06_train_gnn | INFO | GNN BASELINE -- TEST SET RESULTS
+2026-07-25 18:25:31 | 06_train_gnn | INFO |   AUC-ROC  : 0.6757
+2026-07-25 18:25:31 | 06_train_gnn | INFO |   AUC-PR   : 0.8637
+2026-07-25 18:25:31 | 06_train_gnn | INFO |   F1 Score : 0.5614
+2026-07-25 18:25:31 | 06_train_gnn | INFO |   Accuracy : 0.5253
+2026-07-25 18:25:31 | 06_train_gnn | INFO |   Test Loss: 0.0000
+2026-07-25 18:25:31 | 06_train_gnn | INFO |   TP/TN/FP/FN: 48/35/7/68
+2026-07-25 18:25:31 | 06_train_gnn | INFO | ============================================================
+2026-07-25 18:25:31 | 06_train_gnn | INFO | Test results saved to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\results\gnn_test_results.json
+2026-07-25 18:25:31 | 06_train_gnn | INFO | 06_train_gnn.py COMPLETE

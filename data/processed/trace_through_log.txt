@@ -1,0 +1,148 @@
+
+TRACE-THROUGH LOG — 10 Compound Sample (seed=42)
+==================================================
+
+STEP 1: DICTrank labels
+- Source file: dictrank_dataset_508.xlsx (94,888 bytes, downloaded from FDA)
+- 1318 total rows; after cleaning DICT_Concern column (whitespace/case issues found and fixed)
+- Category counts (post-clean): no=343, less=527, most=341, ambiguous=107
+- NOTE: FDA page states less=528, ambiguous=106 -- off by one from our count.
+  Minor discrepancy, not blocking, logged for awareness.
+- Binarized: no=0, less/most=1, ambiguous dropped -> 1211 labeled compounds
+
+STEP 2: SMILES resolution via ChEMBL
+- All 10/10 sampled compounds resolved successfully via exact pref_name match
+- 1 compound (Propoxyphene) required fallback from Active Ingredient(s) to
+  Generic/Proper Name(s) due to missing data in that row -- NOTE: need to check
+  how common this is across the full 1211, not just this sample of 10.
+- 3/10 (30%) compounds returned multi-component SMILES (salts):
+    - SONIDEGIB PHOSPHATE -> phosphate salt (2 counter-ions)
+    - FLAVOXATE HYDROCHLORIDE -> HCl salt
+    - CARBOPROST TROMETHAMINE -> tromethamine salt
+- DESIGN DECISION: parent molecule = largest fragment by heavy-atom count.
+  Verified correct on all 3 salt cases above by manual inspection.
+  This rule will be applied in 04_build_graphs.py, with every stripped
+  fragment logged per-compound (not silently discarded).
+
+NEXT: LINCS L1000 matching -- not yet attempted.
+
+
+STEP 2b: Missing-name check (full 1211-row dataset)
+- Active Ingredient(s) missing: 27/1211 (2.2%)
+- Generic/Proper Name(s) missing: 0/1211 -- always available as fallback
+- Rows missing BOTH fields: 0 -- no dead-ends, fallback rule is safe to apply universally
+- RULE CONFIRMED: use Active Ingredient(s), fall back to Generic/Proper Name(s)
+  when missing. Safe for full dataset, not just this 10-sample.
+
+NEXT: LINCS L1000 matching -- attempting now.
+
+
+STEP 3: LINCS L1000 matching (GSE70138, Level 5)
+- Metadata files downloaded: sig_info (118,050 total signatures, 2.1MB),
+  pert_info (2,170 unique compounds, 82KB) -- NOT yet downloaded the 5GB
+  Level 5 expression matrix itself, pending this matching check.
+
+- Name-matching results on our 10-compound sample:
+    6/10 matched by name (60%): triamterene, olaparib, chlorthalidone,
+      rufinamide, glasdegib, flavoxate (after stripping "hydrochloride" suffix)
+    2/10 confirmed absent even after salt-suffix stripping AND InChIKey
+      structure-matching (immune to naming issues): sonidegib, carboprost
+      -- genuine LINCS coverage gaps, not a matching bug.
+    2/10 not yet double-checked by InChIKey: Propoxyphene, Entrectinib
+      (Entrectinib likely postdates LINCS Phase II collection window --
+      approved 2019, LINCS data collected ~2015-2017)
+
+- DESIGN DECISION: salt-suffix stripping (phosphate/hydrochloride/etc.)
+  must be applied consistently before LINCS name-matching, same as before
+  RDKit graph construction. Even after stripping, structure-based
+  (InChIKey) matching is the more robust fallback and should be the
+  primary strategy in 03_match_lincs.py, not name-matching alone.
+
+- DOSE/CELL-LINE/TIMEPOINT DECISION (surfaced explicitly, not silent):
+    All 6 matched compounds share a common core panel of 7 cell lines
+    (A375, HA1E, HELA, HT29, MCF7, PC3, YAPC) x 6 doses x 1 timepoint (24h)
+    = 42 signatures minimum per compound.
+    CHOSEN DEFAULT: cell_id=HA1E, highest available dose, pert_itime=24h.
+    Rationale: HA1E is a relatively non-transformed reference line, used
+    consistently across all compounds so far, unlike the 5 cancer lines.
+
+- IMPORTANT CAVEAT FOR WRITE-UP: none of LINCS' core 7 cell lines are
+  cardiomyocytes or cardiac-derived. The biology branch will learn a
+  general cross-tissue transcriptional toxicity signature, not a
+  cardiac-specific one. This matches Seal et al. 2023's own approach and
+  reported ~0.76 AUC-ROC ceiling for biology-only -- must be stated
+  plainly in results/baseline_comparison.md, not glossed over.
+
+STATUS: 60% LINCS coverage in this small sample. Real coverage rate on
+the full 1211-compound dataset still needs to be measured before
+committing to final train/test set sizes.
+
+
+STEP 3b: LINCS coverage across full 1211-compound labeled dataset
+- Name-based matching only (incl. salt-suffix stripping), no InChIKey yet
+  -- pure local pandas join against sig_info/pert_info, no API calls needed
+- Overall coverage: 423/1211 (34.9%)
+- Coverage by label:
+    Label 0 (no concern):   96/343  (28.0%)
+    Label 1 (concern):     327/868  (37.7%)
+- FINDING: ~10 percentage point coverage gap favoring toxic compounds.
+  Final ~423-compound fused-model dataset will likely be MORE imbalanced
+  toward positive labels than the full 1211-set. Must handle explicitly
+  in train/test split (stratified split, and/or report class balance in
+  results/baseline_comparison.md) -- not something to silently absorb.
+- NOTE: this is a name-matching-only estimate. InChIKey-based structure
+  matching would likely add a few more percentage points (as seen with
+  flavoxate case), but requires calling ChEMBL per-compound. Worth doing
+  on the real pipeline run in 03_match_lincs.py, not required to unblock
+  design decisions further.
+
+STATUS: Mandatory trace-through complete for SMILES resolution and
+LINCS matching. Both real failure modes (salts, coverage gaps) surfaced
+and given explicit handling rules. Ready to proceed to full pipeline
+scripts, starting with 05_trace_ten_compounds.py (formalizing everything
+done in this notebook) and 01_fetch_labels.py.
+TRACE-THROUGH SCRIPT RUN
+==================================================
+Triamterene / TRIAMTERENE (label=0)
+  SMILES resolved (exact_pref_name_match), 1 fragment(s)
+  LINCS match: True (direct=True, via_salt_strip=True)
+
+Odomzo / SONIDEGIB PHOSPHATE (label=0)
+  SMILES resolved (exact_pref_name_match), 3 fragment(s)
+    Stripped salt fragments: ['O=P(O)(O)O', 'O=P(O)(O)O']
+  LINCS match: False (direct=False, via_salt_strip=False)
+
+Lynparza / OLAPARIB (label=0)
+  SMILES resolved (exact_pref_name_match), 1 fragment(s)
+  LINCS match: True (direct=True, via_salt_strip=True)
+
+Chlorthalidone / CHLORTHALIDONE (label=1)
+  SMILES resolved (exact_pref_name_match), 1 fragment(s)
+  LINCS match: True (direct=True, via_salt_strip=True)
+
+FLAVOXATE HYDROCHLORIDE / FLAVOXATE HYDROCHLORIDE (label=1)
+  SMILES resolved (exact_pref_name_match), 2 fragment(s)
+    Stripped salt fragments: ['Cl']
+  LINCS match: True (direct=False, via_salt_strip=True)
+
+carboprost tromethamine / CARBOPROST TROMETHAMINE (label=1)
+  SMILES resolved (exact_pref_name_match), 2 fragment(s)
+    Stripped salt fragments: ['NC(CO)(CO)CO']
+  LINCS match: False (direct=False, via_salt_strip=False)
+
+Rufinamide / RUFINAMIDE (label=1)
+  SMILES resolved (exact_pref_name_match), 1 fragment(s)
+  LINCS match: True (direct=True, via_salt_strip=True)
+
+nan / Propoxyphene (label=1)
+  SMILES resolved (exact_pref_name_match), 1 fragment(s)
+  LINCS match: False (direct=False, via_salt_strip=False)
+
+Daurismo / GLASDEGIB (label=1)
+  SMILES resolved (exact_pref_name_match), 1 fragment(s)
+  LINCS match: True (direct=True, via_salt_strip=True)
+
+Rozlytrek / ENTRECTINIB (label=1)
+  SMILES resolved (exact_pref_name_match), 1 fragment(s)
+  LINCS match: False (direct=False, via_salt_strip=False)
+
