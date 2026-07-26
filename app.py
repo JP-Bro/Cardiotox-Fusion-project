@@ -154,7 +154,7 @@ _EXPERT_TABLE = {
     _canon("CN1C=NC2=C1C(=O)N(C)C(=O)N2C"):                   0.080,   # Caffeine
     _canon("CC(C)Cc1ccc(cc1)C(C)C(=O)O"):                     0.050,   # Ibuprofen
     _canon("CN(C)C(=N)NC(=N)N"):                               0.020,   # Metformin
-    _canon("C1CN(CCC1(c2ccc(Cl)cc2)O)CCCC(=O)c3cccc(F)c3"):   0.836,   # Haloperidol
+    _canon("C1CN(CCC1(c2ccc(Cl)cc2)O)CCCC(=O)c3ccc(F)cc3"):   0.836,   # Haloperidol
     _canon("N#CC(C(C)C)(CCCN(C)CCc1ccc(OC)c(OC)c1)c2ccc(OC)c(OC)c2"): 0.868, # Verapamil
     _canon("CC(C)(C)c1ccc(cc1)C(O)CCCN2CCC(CC2)C(O)(c3ccccc3)c4ccccc4"): 0.950, # Terfenadine
     _canon("COc1ccc(cc1)CCN2CCC(CC2)Nc3nc4ccccc4n3Cc5ccc(F)cc5"): 0.980, # Astemizole

@@ -57,7 +57,7 @@ CONTROLS = [
     ("Caffeine",    "CN1C=NC2=C1C(=O)N(C)C(=O)N2C",                            "Low Risk"),
     ("Ibuprofen",   "CC(C)Cc1ccc(cc1)C(C)C(=O)O",                              "Low Risk"),
     ("Metformin",   "CN(C)C(=N)NC(=N)N",                                        "Low Risk"),
-    ("Haloperidol", "C1CN(CCC1(c2ccc(Cl)cc2)O)CCCC(=O)c3cccc(F)c3",            "High Risk"),
+    ("Haloperidol", "C1CN(CCC1(c2ccc(Cl)cc2)O)CCCC(=O)c3ccc(F)cc3",            "High Risk"),
     ("Verapamil",   "N#CC(C(C)C)(CCCN(C)CCc1ccc(OC)c(OC)c1)c2ccc(OC)c(OC)c2", "High Risk"),
     ("Terfenadine", "CC(C)(C)c1ccc(cc1)C(O)CCCN2CCC(CC2)C(O)(c3ccccc3)c4ccccc4","High Risk"),
     ("Astemizole",  "COc1ccc(cc1)CCN2CCC(CC2)Nc3nc4ccccc4n3Cc5ccc(F)cc5",      "High Risk"),
@@ -132,7 +132,7 @@ def test_group_D():
     print("\n--- Group D: Gene List Health ---")
 
     # D1 disjointness
-    r = post("C1CN(CCC1(c2ccc(Cl)cc2)O)CCCC(=O)c3cccc(F)c3")
+    r = post("C1CN(CCC1(c2ccc(Cl)cc2)O)CCCC(=O)c3ccc(F)cc3")
     if r.status_code == 200:
         d = r.json()
         up   = {g["name"] for g in d["top_activated"]}
@@ -171,7 +171,7 @@ def test_group_E():
     print("\n--- Group E: Determinism -- Same Compound x3 ---")
     cases = [
         ("Aspirin",     "CC(=O)Oc1ccccc1C(=O)O"),
-        ("Haloperidol", "C1CN(CCC1(c2ccc(Cl)cc2)O)CCCC(=O)c3cccc(F)c3"),
+        ("Haloperidol", "C1CN(CCC1(c2ccc(Cl)cc2)O)CCCC(=O)c3ccc(F)cc3"),
         ("Nicotine",    "CN1CCC[C@H]1c2cccnc2"),
     ]
     for name, smi in cases:
