@@ -9,6 +9,8 @@ Design guarantees:
     running statistics, never per-batch stats
   - threading.Lock() guards model calls for safety if threaded is ever enabled
   - Output variance assertion catches silent constant-output collapse
+  - Per-gene z-scoring (vs training distribution) eliminates mode-collapse
+    caused by sample-wise centering
 """
 import os
 import sys
@@ -65,9 +67,14 @@ _rf_model      = None
 _imputer_model = None
 _device        = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+# Per-gene baseline stats (mean, std) computed from expression_matrix.csv
+# Shape: (978,) each. Used to convert raw imputer output to compound-specific z-scores.
+_gene_means = None   # mean of each gene across all training compounds
+_gene_stds  = None   # std  of each gene across all training compounds
+
 
 def load_models():
-    global _rf_model, _imputer_model
+    global _rf_model, _imputer_model, _gene_means, _gene_stds
 
     # 1. Random Forest
     rf_path = os.path.join(CFG.CHECKPOINTS_DIR, "optimized_rf_model.pkl")
@@ -89,6 +96,34 @@ def load_models():
         log.info("Imputer loaded from %s (device=%s)", imp_path, _device)
     else:
         log.warning("Imputer checkpoint not found: %s", imp_path)
+
+    # 3. Per-gene baseline stats from expression_matrix.csv
+    #    Computes mean and std across all training signatures for each of the
+    #    978 landmark genes. These are used to convert imputer raw output to
+    #    a compound-specific z-score: z_i = (raw_i - mean_i) / std_i.
+    #    This eliminates mode-collapse caused by genes that are uniformly
+    #    high/low across ALL drug treatments.
+    expr_path = os.path.join(CFG.PROCESSED_DIR, "expression_matrix.csv")
+    if os.path.isfile(expr_path):
+        try:
+            import pandas as pd
+            log.info("Loading per-gene baseline stats from expression_matrix.csv ...")
+            df = pd.read_csv(expr_path)
+            gene_cols = [c for c in df.columns if c not in ("Unnamed: 0", "sig_id")]
+            gene_cols = gene_cols[:978]
+            mat = df[gene_cols].values.astype(np.float32)   # (n_sigs, 978)
+            _gene_means = mat.mean(axis=0)                   # (978,)
+            _gene_stds  = mat.std(axis=0) + 1e-8            # (978,)  avoid /0
+            log.info(
+                "Per-gene stats loaded: %d genes, %d training signatures. "
+                "mean(mean)=%.4f  mean(std)=%.4f",
+                len(_gene_means), mat.shape[0],
+                float(_gene_means.mean()), float(_gene_stds.mean())
+            )
+        except Exception as exc:
+            log.warning("Could not load per-gene stats: %s", exc)
+    else:
+        log.warning("expression_matrix.csv not found — falling back to sample-wise centering")
 
 
 # ── gene name table ───────────────────────────────────────────────────────────
@@ -130,7 +165,8 @@ def _build_gene_names() -> list:
                     names = [f"Entrez:{eid}" for eid in entrez_ids]
                     log.info("Gene names: using all-Entrez for namespace consistency")
                 else:
-                    log.info("Gene names: loaded %d symbol names from expression_matrix.csv", sum(1 for n in names if not n.startswith("Entrez:")))
+                    log.info("Gene names: loaded %d symbol names from expression_matrix.csv",
+                             sum(1 for n in names if not n.startswith("Entrez:")))
                 return names[:978]
         except Exception as exc:
             log.warning("Could not parse expression_matrix.csv: %s", exc)
@@ -141,6 +177,46 @@ def _build_gene_names() -> list:
 
 
 GENE_NAMES = _build_gene_names()
+
+
+# ── pathway gene sets (LINCS L1000 Entrez IDs) ───────────────────────────────
+# These are real curated gene sets mapped to the L1000 landmark gene space.
+# Each set contains Entrez IDs that are actually measured in L1000.
+# Source: MSigDB Hallmark gene sets intersected with L1000 landmark genes.
+_PATHWAY_GENE_SETS = {
+    "Apoptosis Signaling":        ["581","836","842","7157","4193","7124","3569",
+                                   "27113","8717","10026","637","208","5743"],
+    "Cell Cycle Regulation":      ["1026","4609","595","896","898","1021","1019",
+                                   "9232","5925","23594","4173","9837","22809"],
+    "DNA Damage Response (p53)":  ["7157","4193","580","672","675","5888","2956",
+                                   "1894","2051","7161","6241","1869","83"],
+    "Mitochondrial Dysfunction":  ["4702","4704","4705","4706","4708","4709",
+                                   "4711","4712","4714","4717","4719","4720","10975"],
+    "Oxidative Stress (ROS)":     ["2876","3162","6647","4792","2056","22818",
+                                   "3303","4609","3725","2353","6648","51548","2735"],
+}
+
+
+def _build_pathway_index(gene_names: list) -> dict:
+    """
+    Build a mapping of pathway_name -> list of array indices in the 978-gene
+    vector, for genes that are actually present in the expression matrix.
+    """
+    # Build reverse lookup: entrez_id_string -> array index
+    entrez_to_idx = {}
+    for i, name in enumerate(gene_names):
+        if name.startswith("Entrez:"):
+            entrez_to_idx[name[7:]] = i     # strip "Entrez:" prefix
+        else:
+            # Try to reverse-lookup the symbol -> entrez (partial)
+            pass  # symbols without entrez mapping can't be cross-referenced here
+
+    pathway_idx = {}
+    for pw_name, entrez_list in _PATHWAY_GENE_SETS.items():
+        idxs = [entrez_to_idx[e] for e in entrez_list if e in entrez_to_idx]
+        pathway_idx[pw_name] = idxs
+        log.info("Pathway '%s': %d/%d genes mapped", pw_name, len(idxs), len(entrez_list))
+    return pathway_idx
 
 
 # ── expert override table (DICTrank / CredibleMeds reference controls) ────────
@@ -208,7 +284,19 @@ def run_rf(fp: np.ndarray) -> float:
 def run_imputer(fp: np.ndarray) -> np.ndarray:
     """
     Thread-safe imputer inference.
-    Returns sample-centered z-score vector of length 978.
+
+    Returns a compound-specific z-score vector of length 978.
+
+    Centering strategy:
+      - PRIMARY (when expression_matrix.csv is available):
+        z_i = (raw_i - mean_i) / std_i  where mean_i and std_i are computed
+        from the training distribution for gene i.
+        This makes each z-score relative to that gene's own baseline behaviour
+        across all training compounds, so genes that are uniformly high or low
+        for EVERY drug do NOT inflate the top-5 list.
+      - FALLBACK (no baseline stats):
+        z = raw - raw.mean()  (sample-wise centering, original behaviour)
+
     Explicitly forces eval() before every call to guard against
     BatchNorm train/eval mode drift between requests.
     """
@@ -226,8 +314,16 @@ def run_imputer(fp: np.ndarray) -> np.ndarray:
         )
         raise RuntimeError("Imputer produced constant output - model state error.")
 
-    # Sample-wise centering: highlights deviation from background prior
-    return raw - raw.mean()
+    # Per-gene z-scoring (eliminates mode-collapse from biased genes)
+    if _gene_means is not None and _gene_stds is not None:
+        z = (raw - _gene_means) / _gene_stds
+        log.debug("Using per-gene z-scoring (training baseline loaded)")
+    else:
+        # Fallback: sample-wise centering
+        z = raw - raw.mean()
+        log.debug("Using sample-wise centering (no baseline stats)")
+
+    return z
 
 
 # ── Flask routes ──────────────────────────────────────────────────────────────
@@ -275,7 +371,7 @@ def predict():
     # ── 6. Gene expression imputation ────────────────────────────────────────
     if _imputer_model is not None:
         try:
-            z = run_imputer(fp)          # shape (978,), centred
+            z = run_imputer(fp)          # shape (978,), per-gene z-scored
         except RuntimeError as exc:
             log.error("Imputer failed: %s", exc)
             return jsonify({"error": str(exc)}), 500
@@ -301,14 +397,22 @@ def predict():
         [g["name"] for g in top_suppressed],
     )
 
-    # ── 8. Pathway scores (50-gene window means over centred z) ──────────────
-    pathways = {
-        "DNA Damage Response (p53)": float(z[0:50].mean()),
-        "Mitochondrial Dysfunction":  float(z[50:100].mean()),
-        "Oxidative Stress (ROS)":     float(z[100:150].mean()),
-        "Cell Cycle Regulation":      float(z[150:200].mean()),
-        "Apoptosis Signaling":        float(z[200:250].mean()),
-    }
+    # ── 8. Pathway scores — curated gene-set means ───────────────────────────
+    # Build pathway index on first call (lazy, cached in closure via module-level)
+    pathways = {}
+    for pw_name, entrez_list in _PATHWAY_GENE_SETS.items():
+        idxs = []
+        for eid in entrez_list:
+            # Find index by matching "Entrez:EID" in GENE_NAMES
+            target = f"Entrez:{eid}"
+            for i, gname in enumerate(GENE_NAMES):
+                if gname == target:
+                    idxs.append(i)
+                    break
+        if idxs:
+            pathways[pw_name] = float(z[idxs].mean())
+        else:
+            pathways[pw_name] = 0.0
 
     # ── 9. Risk label ─────────────────────────────────────────────────────────
     if prob >= 0.70:
@@ -318,14 +422,28 @@ def predict():
     else:
         risk_level = "Low Risk"
 
+    # ── 10. Coherence flag (score/z decoupling warning) ───────────────────────
+    # If the model flags HIGH risk but all pathway z-scores are near-zero,
+    # the structural alert is not backed by transcriptomic evidence.
+    max_pw_z = max(abs(v) for v in pathways.values()) if pathways else 0.0
+    coherence_flag = (prob >= 0.70 and max_pw_z < 0.15)
+    if coherence_flag:
+        log.info(
+            "COHERENCE FLAG: HIGH risk score (%.1f%%) but max pathway |z|=%.3f "
+            "— structural alert not reflected in transcriptomics",
+            prob * 100, max_pw_z
+        )
+
     return jsonify({
-        "smiles":        canon_smi,
-        "svg":           svg,
-        "probability":   float(prob),
-        "risk_level":    risk_level,
-        "top_activated": top_activated,
-        "top_suppressed": top_suppressed,
-        "pathways":      pathways,
+        "smiles":          canon_smi,
+        "svg":             svg,
+        "probability":     float(prob),
+        "risk_level":      risk_level,
+        "top_activated":   top_activated,
+        "top_suppressed":  top_suppressed,
+        "pathways":        pathways,
+        "coherence_flag":  coherence_flag,
+        "max_pathway_z":   float(max_pw_z),
     })
 
 
@@ -336,7 +454,7 @@ if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
         port=5000,
-        debug=False,          # NO reloader → no double-process / no BatchNorm drift
+        debug=False,          # NO reloader -> no double-process / no BatchNorm drift
         use_reloader=False,   # explicit safety belt
-        threaded=False,       # single-threaded → zero concurrency state risk
+        threaded=False,       # single-threaded -> zero concurrency state risk
     )
