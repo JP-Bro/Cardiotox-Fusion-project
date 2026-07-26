@@ -1,704 +1,1203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardiotox-Fusion | Predictive Toxicology Suite</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-main: #090D16;
-            --bg-card: #111827;
-            --border-color: #1F2937;
-            --text-main: #F3F4F6;
-            --text-muted: #9CA3AF;
-            --accent-blue: #3B82F6;
-            --accent-green: #10B981;
-            --accent-amber: #F59E0B;
-            --accent-red: #EF4444;
-            --accent-glow: rgba(59, 130, 246, 0.15);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cardiotox-Fusion | AI Cardiotoxicity Prediction Platform</title>
+  <meta name="description" content="GNN + Transformer fusion model for hERG cardiotoxicity prediction with L1000 gene-expression imputation. Research-grade drug safety screening." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── design tokens ─────────────────────────────────────────────────── */
+    :root {
+      --bg:           #04080f;
+      --bg-1:         #080d17;
+      --bg-2:         #0c1220;
+      --bg-3:         #111827;
+      --border:       rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14);
+      --text:         #e8eaf0;
+      --text-2:       #94a3b8;
+      --text-3:       #4b5563;
+      --blue:         #3b82f6;
+      --blue-2:       #60a5fa;
+      --indigo:       #6366f1;
+      --green:        #10b981;
+      --green-2:      #34d399;
+      --amber:        #f59e0b;
+      --red:          #ef4444;
+      --red-2:        #f87171;
+      --cyan:         #06b6d4;
+      --glow-blue:    rgba(59,130,246,0.18);
+      --glow-green:   rgba(16,185,129,0.18);
+      --glow-red:     rgba(239,68,68,0.18);
+      --glow-amber:   rgba(245,158,11,0.18);
+      --r-sm:         8px;
+      --r-md:         14px;
+      --r-lg:         20px;
+      --r-xl:         28px;
+      --shadow:       0 4px 32px rgba(0,0,0,0.4);
+      --shadow-lg:    0 8px 64px rgba(0,0,0,0.5);
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    /* ─── reset ─────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
+    /* ─── canvas particles background ───────────────────────────────────── */
+    #particle-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.35;
+    }
 
-        header {
-            border-bottom: 1px solid var(--border-color);
-            padding: 1.25rem 2rem;
-            background-color: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(12px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+    /* ─── nav ────────────────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 64px;
+      background: rgba(4,8,15,0.82);
+      backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
+    }
 
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
 
-        .logo-symbol {
-            width: 1.75rem;
-            height: 1.75rem;
-            border-radius: 4px;
-            background: linear-gradient(135deg, var(--accent-blue), #6366F1);
-            box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
-        }
+    .nav-logo {
+      width: 34px; height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--blue), var(--indigo));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.85rem; color: #fff;
+      box-shadow: 0 0 18px rgba(99,102,241,0.45);
+      flex-shrink: 0;
+    }
 
-        .brand-name {
-            font-size: 1.15rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
+    .nav-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
 
-        .brand-tagline {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-left: 0.5rem;
-            border-left: 1px solid var(--border-color);
-            padding-left: 0.5rem;
-        }
+    .nav-sep {
+      width: 1px; height: 16px;
+      background: var(--border);
+      margin: 0 0.5rem;
+    }
 
-        .badge {
-            font-size: 0.75rem;
-            font-weight: 500;
-            padding: 0.25rem 0.6rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background-color: rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-        }
+    .nav-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-2);
+      font-weight: 400;
+    }
 
-        .badge-green {
-            color: var(--accent-green);
-            background-color: rgba(16, 185, 129, 0.08);
-            border-color: rgba(16, 185, 129, 0.2);
-        }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
 
-        .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: currentColor;
-            display: inline-block;
-        }
+    .pill {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.75rem; font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-2);
+    }
 
-        main {
-            flex: 1;
-            padding: 2.5rem 2rem;
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
+    .pill-green {
+      color: var(--green-2);
+      border-color: rgba(52,211,153,0.25);
+      background: rgba(16,185,129,0.06);
+    }
 
-        .input-section {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
+    .pulse-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green-2);
+      box-shadow: 0 0 6px var(--green);
+      animation: pulse-anim 2s ease-in-out infinite;
+    }
 
-        .input-title {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+    @keyframes pulse-anim {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.5; transform: scale(0.7); }
+    }
 
-        .search-bar {
-            display: flex;
-            gap: 0.75rem;
-            position: relative;
-        }
+    /* ─── hero ───────────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 4.5rem 2.5rem 3.5rem;
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto;
+    }
 
-        .search-input {
-            flex: 1;
-            background-color: var(--bg-main);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1rem 1.25rem;
-            color: var(--text-main);
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-        }
+    .hero-kicker {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--blue-2);
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      margin-bottom: 1.5rem;
+    }
 
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px var(--accent-glow);
-        }
+    .hero-kicker .kicker-dot {
+      width: 5px; height: 5px;
+      background: var(--blue-2);
+      border-radius: 50%;
+    }
 
-        .btn {
-            background: linear-gradient(135deg, var(--accent-blue), #4f46e5);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 0 1.75rem;
-            font-weight: 500;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        .btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
-        }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+      font-weight: 400;
+    }
 
-        .examples-container {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
+    /* ─── input card ─────────────────────────────────────────────────────── */
+    .input-card {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2.5rem 3rem;
+    }
 
-        .example-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
+    .glass-card {
+      background: rgba(8,13,23,0.75);
+      backdrop-filter: blur(24px);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      box-shadow: var(--shadow-lg);
+      transition: border-color 0.3s;
+    }
 
-        .example-chip {
-            background-color: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 0.35rem 0.75rem;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
+    .glass-card:hover { border-color: var(--border-hover); }
 
-        .example-chip:hover {
-            background-color: rgba(255, 255, 255, 0.08);
-            border-color: var(--text-muted);
-        }
+    .input-inner { padding: 2rem; }
 
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s ease;
-        }
+    .input-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: 0.75rem;
+    }
 
-        .dashboard-grid.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .smiles-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
 
-        .dashboard-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        }
+    .smiles-input {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 0.9rem 1.2rem;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
-        }
+    .smiles-input::placeholder { color: var(--text-3); }
 
-        .card-title {
-            font-size: 1.05rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
+    .smiles-input:focus {
+      border-color: var(--blue);
+      background: rgba(59,130,246,0.05);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+    }
 
-        .predict-results-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            gap: 2rem;
-            flex: 1;
-        }
+    .analyze-btn {
+      padding: 0 2rem;
+      border: none;
+      border-radius: var(--r-md);
+      background: linear-gradient(135deg, var(--blue), var(--indigo));
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 0.5rem;
+      white-space: nowrap;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      box-shadow: 0 2px 18px rgba(59,130,246,0.3);
+    }
 
-        .radial-progress-container {
-            position: relative;
-            width: 140px;
-            height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .analyze-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(59,130,246,0.45);
+    }
 
-        svg.progress-ring {
-            position: absolute;
-            transform: rotate(-90deg);
-        }
+    .analyze-btn:active:not(:disabled) { transform: translateY(0); }
+    .analyze-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .progress-ring-circle-bg {
-            stroke: var(--border-color);
-            stroke-width: 12;
-            fill: transparent;
-        }
+    .btn-icon { font-size: 1.1rem; }
 
-        .progress-ring-circle {
-            stroke: var(--accent-blue);
-            stroke-width: 12;
-            fill: transparent;
-            stroke-linecap: round;
-            transition: stroke-dashoffset 0.5s ease;
-        }
+    .chips-row {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem;
+    }
 
-        .risk-value-text {
-            font-size: 1.75rem;
-            font-weight: 700;
-            position: absolute;
-        }
+    .chips-label {
+      font-size: 0.78rem;
+      color: var(--text-3);
+      font-weight: 500;
+    }
 
-        .risk-metadata {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
+    .chip {
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--text-2);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
 
-        .risk-level-badge {
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 0.35rem 0.75rem;
-            border-radius: 6px;
-            text-transform: uppercase;
-            text-align: center;
-            width: max-content;
-        }
+    .chip:hover {
+      background: rgba(59,130,246,0.1);
+      border-color: rgba(59,130,246,0.3);
+      color: var(--blue-2);
+    }
 
-        .risk-level-high {
-            color: #FFF;
-            background-color: rgba(239, 68, 68, 0.8);
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
-        }
+    /* ─── main content area ─────────────────────────────────────────────── */
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2.5rem 4rem;
+    }
 
-        .risk-level-moderate {
-            color: #FFF;
-            background-color: rgba(245, 158, 11, 0.8);
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
-        }
+    /* ─── loading ────────────────────────────────────────────────────────── */
+    #loading-panel {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 5rem 2rem;
+    }
 
-        .risk-level-low {
-            color: #FFF;
-            background-color: rgba(16, 185, 129, 0.8);
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
-        }
+    .loader-ring {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 3px solid var(--border);
+      border-top-color: var(--blue);
+      animation: spin 0.8s linear infinite;
+    }
 
-        .risk-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-            max-width: 200px;
-        }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-        .structure-preview-box {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 180px;
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px dashed var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-        }
+    .loader-text {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      text-align: center;
+      max-width: 320px;
+      line-height: 1.6;
+    }
 
-        .structure-preview-box svg {
-            max-width: 100%;
-            max-height: 180px;
-        }
+    .loader-dots span {
+      animation: blink 1.4s ease-in-out infinite;
+      opacity: 0;
+    }
+    .loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink { 0%,80%,100%{opacity:0} 40%{opacity:1} }
 
-        .gene-list-container {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
+    /* ─── error toast ────────────────────────────────────────────────────── */
+    #error-toast {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: var(--r-md);
+      color: var(--red-2);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      animation: slideIn 0.3s ease;
+    }
 
-        .gene-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-color);
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
-        }
+    @keyframes slideIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
 
-        .gene-name {
-            font-family: 'Roboto Mono', monospace;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
+    /* ─── dashboard grid ─────────────────────────────────────────────────── */
+    #dashboard {
+      display: none;
+      flex-direction: column;
+      gap: 1.5rem;
+      animation: fadeUp 0.5s ease both;
+    }
 
-        .gene-val {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
 
-        .gene-val.up {
-            color: var(--accent-green);
-        }
+    .row { display: grid; gap: 1.5rem; }
+    .row-2 { grid-template-columns: 1fr 1fr; }
+    .row-3 { grid-template-columns: 1fr 1fr 1fr; }
 
-        .gene-val.down {
-            color: var(--accent-red);
-        }
+    @media (max-width: 900px) {
+      .row-3 { grid-template-columns: 1fr 1fr; }
+    }
 
-        .pathway-bar-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+    @media (max-width: 640px) {
+      .row-2, .row-3 { grid-template-columns: 1fr; }
+      nav { padding: 0 1.25rem; }
+      .nav-subtitle { display: none; }
+      .hero { padding: 3rem 1.25rem 2rem; }
+      .input-card { padding: 0 1.25rem 2rem; }
+      .content { padding: 0 1.25rem 3rem; }
+      .smiles-row { flex-direction: column; }
+      .analyze-btn { padding: 0.9rem 1.5rem; }
+    }
 
-        .pathway-row {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
+    /* ─── card base ──────────────────────────────────────────────────────── */
+    .card {
+      background: rgba(8,13,23,0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      transition: border-color 0.3s, transform 0.2s, box-shadow 0.2s;
+    }
 
-        .pathway-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
+    .card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
 
-        .pathway-track {
-            width: 100%;
-            height: 6px;
-            background-color: var(--border-color);
-            border-radius: 10px;
-            overflow: hidden;
-        }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.1rem;
+      border-bottom: 1px solid var(--border);
+    }
 
-        .pathway-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-blue), #818cf8);
-            border-radius: 10px;
-            width: 0%;
-            transition: width 0.6s cubic-bezier(0.1, 0.8, 0.3, 1);
-        }
+    .card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.1px;
+    }
 
-        .loading-container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            padding: 3rem;
-        }
+    .card-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
+    }
 
-        .spinner {
-            width: 2.5rem;
-            height: 2.5rem;
-            border: 3px solid var(--border-color);
-            border-top-color: var(--accent-blue);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
+    /* ─── risk gauge card ────────────────────────────────────────────────── */
+    .gauge-card { align-items: center; }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+    .gauge-wrap {
+      position: relative;
+      width: 160px; height: 160px;
+      display: flex; align-items: center; justify-content: center;
+    }
 
-        footer {
-            margin-top: auto;
-            border-top: 1px solid var(--border-color);
-            padding: 1.5rem 2rem;
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
+    .gauge-svg {
+      position: absolute;
+      transform: rotate(-90deg);
+      filter: drop-shadow(0 0 8px var(--gauge-color, var(--blue)));
+    }
 
-        @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    .gauge-bg { stroke: rgba(255,255,255,0.06); stroke-width: 14; fill: none; }
+
+    .gauge-ring {
+      fill: none;
+      stroke: var(--gauge-color, var(--blue));
+      stroke-width: 14;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.25,0.8,0.25,1),
+                  stroke 0.4s ease;
+    }
+
+    .gauge-center {
+      position: absolute;
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+    }
+
+    .gauge-pct {
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .gauge-unit {
+      font-size: 0.72rem;
+      color: var(--text-2);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .risk-badge {
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.45rem 1.2rem;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .risk-high   { background: rgba(239,68,68,0.15);  color: var(--red-2);   border: 1px solid rgba(239,68,68,0.3); }
+    .risk-mod    { background: rgba(245,158,11,0.15); color: #fbbf24;         border: 1px solid rgba(245,158,11,0.3); }
+    .risk-low    { background: rgba(16,185,129,0.15); color: var(--green-2);  border: 1px solid rgba(16,185,129,0.3); }
+
+    .risk-description {
+      font-size: 0.83rem;
+      color: var(--text-2);
+      text-align: center;
+      line-height: 1.6;
+      max-width: 220px;
+    }
+
+    /* ─── molecule preview ───────────────────────────────────────────────── */
+    .mol-box {
+      flex: 1;
+      min-height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.02);
+      border: 1px dashed rgba(255,255,255,0.08);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+
+    .mol-box svg { max-width: 100%; max-height: 200px; }
+
+    .mol-placeholder {
+      display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+      color: var(--text-3); font-size: 0.85rem;
+    }
+
+    .mol-placeholder-icon {
+      font-size: 2.5rem; opacity: 0.4;
+    }
+
+    /* ─── pathway bars ───────────────────────────────────────────────────── */
+    .pathways { display: flex; flex-direction: column; gap: 1.1rem; }
+
+    .pw-row { display: flex; flex-direction: column; gap: 0.45rem; }
+
+    .pw-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem; font-weight: 500; color: var(--text-2);
+    }
+
+    .pw-val { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-3); }
+
+    .pw-track {
+      height: 5px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .pw-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), var(--indigo));
+      width: 0%;
+      transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .pw-fill.negative { background: linear-gradient(90deg, var(--red), #f87171); }
+    .pw-fill.positive { background: linear-gradient(90deg, var(--green), #34d399); }
+
+    /* ─── gene tables ────────────────────────────────────────────────────── */
+    .gene-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    .gene-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.7rem 0.9rem;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .gene-row:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: var(--border-hover);
+    }
+
+    .gene-name-wrap { display: flex; align-items: center; gap: 0.6rem; }
+
+    .gene-rank {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-3);
+      width: 18px;
+      text-align: right;
+    }
+
+    .gene-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .gene-bar-wrap { display: flex; align-items: center; gap: 0.6rem; }
+
+    .gene-mini-bar {
+      width: 60px; height: 4px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .gene-mini-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+
+    .gene-mini-fill.up   { background: var(--green); }
+    .gene-mini-fill.down { background: var(--red); }
+
+    .gene-val {
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      min-width: 52px;
+      text-align: right;
+    }
+
+    .gene-val.up   { color: var(--green-2); }
+    .gene-val.down { color: var(--red-2); }
+
+    /* ─── stats strip ────────────────────────────────────────────────────── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+
+    .stat-cell {
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-2);
+      display: flex; flex-direction: column; gap: 0.3rem;
+      transition: background 0.2s;
+    }
+
+    .stat-cell:hover { background: var(--bg-3); }
+
+    .stat-val {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.73rem;
+      color: var(--text-3);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 640px) {
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ─── footer ─────────────────────────────────────────────────────────── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.75rem;
+    }
+
+    .footer-left { font-size: 0.78rem; color: var(--text-3); }
+    .footer-right { display: flex; align-items: center; gap: 1.5rem; }
+
+    .footer-link {
+      font-size: 0.78rem; color: var(--text-3);
+      text-decoration: none; transition: color 0.15s;
+    }
+
+    .footer-link:hover { color: var(--text-2); }
+
+    /* ─── section divider ────────────────────────────────────────────────── */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-3);
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── utility ────────────────────────────────────────────────────────── */
+    .mt-6 { margin-top: 1.5rem; }
+    .hidden { display: none !important; }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-1); }
+    ::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 3px; }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="brand-container">
-            <div class="logo-symbol"></div>
-            <div class="brand-name">Cardiotox-Fusion</div>
-            <div class="brand-tagline">Predictive Toxicology Platform</div>
+
+<!-- particle canvas background -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- ─── navigation ───────────────────────────────────────────────────────── -->
+<nav>
+  <a class="nav-brand" href="#">
+    <div class="nav-logo">CF</div>
+    <span class="nav-title">Cardiotox-Fusion</span>
+    <div class="nav-sep"></div>
+    <span class="nav-subtitle">AI Drug Safety Platform</span>
+  </a>
+  <div class="nav-right">
+    <div class="pill">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M6 3.5v2.5l1.5 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      hERG · L1000 Fusion
+    </div>
+    <div class="pill pill-green">
+      <div class="pulse-dot"></div>
+      {% if gpu_active %}CUDA Active{% else %}CPU Mode{% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- ─── hero ─────────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-kicker">
+    <div class="kicker-dot"></div>
+    GNN + Transformer · LINCS L1000 · RF Classifier
+  </div>
+  <h1 class="hero-title">
+    Predict Cardiotoxicity<br/>with Molecular Precision
+  </h1>
+  <p class="hero-desc">
+    Paste any SMILES string to get an instant hERG channel blockade risk score,
+    imputed gene-expression stress profile from 978 landmark genes,
+    and pathway-level biological signatures.
+  </p>
+</div>
+
+<!-- ─── input card ───────────────────────────────────────────────────────── -->
+<div class="input-card">
+  <div class="glass-card">
+    <div class="input-inner">
+      <div class="input-label">SMILES Input</div>
+      <div class="smiles-row">
+        <input
+          id="smiles-input"
+          type="text"
+          class="smiles-input"
+          placeholder="e.g. CC(=O)Oc1ccccc1C(=O)O  (Aspirin)"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button id="analyze-btn" class="analyze-btn">
+          <span class="btn-icon">⚡</span>
+          Analyze
+        </button>
+      </div>
+      <div class="chips-row">
+        <span class="chips-label">Quick load:</span>
+        <span class="chip" data-smiles="CC(=O)Oc1ccccc1C(=O)O" data-name="Aspirin">Aspirin <span style="opacity:.5">Low Risk</span></span>
+        <span class="chip" data-smiles="CN1C=NC2=C1C(=O)N(C)C(=O)N2C" data-name="Caffeine">Caffeine <span style="opacity:.5">Low Risk</span></span>
+        <span class="chip" data-smiles="C1CN(CCC1(c2ccc(Cl)cc2)O)CCCC(=O)c3cccc(F)c3" data-name="Haloperidol">Haloperidol <span style="color:var(--red-2);opacity:.8">High Risk</span></span>
+        <span class="chip" data-smiles="N#CC(C(C)C)(CCCN(C)CCc1ccc(OC)c(OC)c1)c2ccc(OC)c(OC)c2" data-name="Verapamil">Verapamil <span style="color:var(--red-2);opacity:.8">High Risk</span></span>
+        <span class="chip" data-smiles="CNS(=O)(=O)c1ccc(CCN(C)CCc2ccc(NS(C)(=O)=O)cc2)cc1" data-name="Dofetilide">Dofetilide <span style="color:var(--red-2);opacity:.8">High Risk</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── results area ─────────────────────────────────────────────────────── -->
+<div class="content">
+
+  <!-- error -->
+  <div id="error-toast">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M9 5.5v4M9 12h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <span id="error-msg">Error</span>
+  </div>
+
+  <!-- loading -->
+  <div id="loading-panel">
+    <div class="loader-ring"></div>
+    <div class="loader-text">
+      Running fusion model inference<span class="loader-dots"><span>.</span><span>.</span><span>.</span></span><br/>
+      <span style="font-size:0.8rem;color:var(--text-3)">GNN fingerprint · RF classifier · L1000 imputation</span>
+    </div>
+  </div>
+
+  <!-- dashboard -->
+  <div id="dashboard">
+
+    <!-- row 1: stats strip -->
+    <div class="stats-strip" id="stats-strip">
+      <div class="stat-cell">
+        <div class="stat-val" id="stat-score">—</div>
+        <div class="stat-label">Tox Score</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val" id="stat-risk">—</div>
+        <div class="stat-label">Risk Class</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val">978</div>
+        <div class="stat-label">Landmark Genes</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val" id="stat-model">RF</div>
+        <div class="stat-label">Model</div>
+      </div>
+    </div>
+
+    <!-- row 2: gauge + structure -->
+    <div class="row row-2">
+
+      <!-- gauge card -->
+      <div class="card gauge-card" id="gauge-card">
+        <div class="card-header">
+          <div class="card-title">hERG Toxicity Score</div>
+          <div class="card-badge" id="risk-badge-header" style="background:rgba(59,130,246,0.1);color:var(--blue-2);border:1px solid rgba(59,130,246,0.2);">—</div>
         </div>
-        <div class="badge badge-green">
-            <span class="dot"></span>
-            GPU Mode: {% if gpu_active %}CUDA Active (RTX 4050){% else %}CPU Fallback{% endif %}
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" width="160" height="160" id="gauge-svg">
+            <circle class="gauge-bg" cx="80" cy="80" r="65"/>
+            <circle class="gauge-ring" cx="80" cy="80" r="65" id="gauge-ring"
+              style="--gauge-color: var(--blue)"/>
+          </svg>
+          <div class="gauge-center">
+            <div class="gauge-pct" id="gauge-pct">0%</div>
+            <div class="gauge-unit">Risk</div>
+          </div>
         </div>
-    </header>
+        <div class="risk-badge risk-low" id="risk-badge">—</div>
+        <div class="risk-description" id="risk-desc">Submit a compound to see the risk assessment.</div>
+      </div>
 
-    <main>
-        <!-- Input section -->
-        <section class="input-section">
-            <div class="input-title">Analyze Molecular Structure</div>
-            <div class="search-bar">
-                <input type="text" id="smiles-input" class="search-input" placeholder="Paste compound SMILES string (e.g. CC(=O)OC1=CC=CC=C1C(=O)O)..." />
-                <button id="analyze-btn" class="btn">Analyze</button>
-            </div>
-            <div class="examples-container">
-                <span class="example-label">Pre-loaded Compounds:</span>
-                <span class="example-chip" data-smiles="CC(=O)OC1=CC=CC=C1C(=O)O" data-name="Aspirin">Aspirin (Low Risk)</span>
-                <span class="example-chip" data-smiles="C1CN(CCC1(C2=CC=C(C=C2)Cl)O)CCCC(=O)C3=CC=CC(=C3)F" data-name="Haloperidol">Haloperidol (High Risk)</span>
-                <span class="example-chip" data-smiles="N#CC(C(C)C)(CCCN(C)CCc1ccc(OC)c(OC)c1)c2ccc(OC)c(OC)c2" data-name="Verapamil">Verapamil (High Risk)</span>
-            </div>
-        </section>
-
-        <!-- Loading spinner -->
-        <div id="loading" class="loading-container">
-            <div class="spinner"></div>
-            <div style="font-size: 0.95rem; color: var(--text-muted);">Predicting cardiotoxicity risk and simulating stress transcriptomics...</div>
+      <!-- molecule structure card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Molecular Structure</div>
+          <div class="pill" id="smiles-display" style="font-family:monospace;font-size:0.68rem;max-width:180px;overflow:hidden;text-overflow:ellipsis;">SMILES</div>
         </div>
-
-        <!-- Dashboard panel -->
-        <div id="dashboard" class="dashboard-grid">
-            <!-- Left Side: Structure & Classification -->
-            <div class="dashboard-card">
-                <div class="card-header">
-                    <div class="card-title">Risk Profile & Chemical Structure</div>
-                    <div class="badge" id="risk-level-badge">LOW RISK</div>
-                </div>
-                
-                <div class="predict-results-container">
-                    <div class="radial-progress-container">
-                        <svg class="progress-ring" width="140" height="140">
-                            <circle class="progress-ring-circle-bg" cx="70" cy="70" r="58"></circle>
-                            <circle id="progress-circle" class="progress-ring-circle" cx="70" cy="70" r="58"></circle>
-                        </svg>
-                        <div id="risk-val" class="risk-value-text">0.0%</div>
-                    </div>
-                    <div class="risk-metadata">
-                        <div style="font-weight: 500; font-size: 0.95rem; color: var(--text-muted);">Toxicity Score</div>
-                        <div id="model-badge" class="risk-level-badge risk-level-low">Safe Clearance</div>
-                        <div class="risk-desc" id="risk-desc-text">This molecule shows a safe cardiac signature under cross-validation.</div>
-                    </div>
-                </div>
-
-                <div class="structure-preview-box" id="structure-preview">
-                    <!-- SVG gets injected here -->
-                </div>
-            </div>
-
-            <!-- Right Side: Pathway Profiler -->
-            <div class="dashboard-card">
-                <div class="card-header">
-                    <div class="card-title">Imputed Cellular Stress Pathways</div>
-                    <div class="badge">978 Landmark Genes</div>
-                </div>
-                <div class="pathway-bar-container" id="pathway-container">
-                    <!-- Pathways get injected here -->
-                </div>
-            </div>
-
-            <!-- Bottom Left: Gene Up-regulation -->
-            <div class="dashboard-card">
-                <div class="card-header">
-                    <div class="card-title">Top 5 Imputed Activated Genes</div>
-                    <div style="color: var(--accent-green); font-size: 0.85rem; font-weight: 600;">+ Up-regulated</div>
-                </div>
-                <div class="gene-list-container" id="genes-activated">
-                    <!-- Genes get injected here -->
-                </div>
-            </div>
-
-            <!-- Bottom Right: Gene Down-regulation -->
-            <div class="dashboard-card">
-                <div class="card-header">
-                    <div class="card-title">Top 5 Imputed Suppressed Genes</div>
-                    <div style="color: var(--accent-red); font-size: 0.85rem; font-weight: 600;">- Down-regulated</div>
-                </div>
-                <div class="gene-list-container" id="genes-suppressed">
-                    <!-- Genes get injected here -->
-                </div>
-            </div>
+        <div class="mol-box" id="mol-box">
+          <div class="mol-placeholder">
+            <div class="mol-placeholder-icon">⬡</div>
+            <div>Structure will appear here</div>
+          </div>
         </div>
-    </main>
+      </div>
+    </div>
 
-    <footer>
-        &copy; 2026 Cardiotox-Fusion Team. L1000 GSE70138 Broad Institute Broad-LINCS Integration.
-    </footer>
+    <!-- row 3: pathways + genes up + genes down -->
+    <div class="section-label mt-6">Gene Expression Profile · L1000 Imputation</div>
+    <div class="row row-3">
 
-    <script>
-        const smilesInput = document.getElementById('smiles-input');
-        const analyzeBtn = document.getElementById('analyze-btn');
-        const loading = document.getElementById('loading');
-        const dashboard = document.getElementById('dashboard');
-        const progressCircle = document.getElementById('progress-circle');
-        const riskVal = document.getElementById('risk-val');
-        const modelBadge = document.getElementById('model-badge');
-        const riskLevelBadge = document.getElementById('risk-level-badge');
-        const riskDescText = document.getElementById('risk-desc-text');
-        const structurePreview = document.getElementById('structure-preview');
-        const pathwayContainer = document.getElementById('pathway-container');
-        const genesActivated = document.getElementById('genes-activated');
-        const genesSuppressed = document.getElementById('genes-suppressed');
+      <!-- pathways -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Cellular Stress Pathways</div>
+          <div class="pill">z-score</div>
+        </div>
+        <div class="pathways" id="pathway-container">
+          <!-- injected -->
+        </div>
+      </div>
 
-        // Circular progress calculations
-        const radius = progressCircle.r.baseVal.value;
-        const circumference = radius * 2 * Math.PI;
-        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+      <!-- activated genes -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Top 5 Activated Genes</div>
+          <div style="font-size:0.78rem;font-weight:600;color:var(--green-2);">▲ Up-regulated</div>
+        </div>
+        <div class="gene-list" id="genes-activated">
+          <!-- injected -->
+        </div>
+      </div>
 
-        function setProgress(percent) {
-            const offset = circumference - (percent / 100) * circumference;
-            progressCircle.style.strokeDashoffset = offset;
+      <!-- suppressed genes -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Top 5 Suppressed Genes</div>
+          <div style="font-size:0.78rem;font-weight:600;color:var(--red-2);">▼ Down-regulated</div>
+        </div>
+        <div class="gene-list" id="genes-suppressed">
+          <!-- injected -->
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /dashboard -->
+</div><!-- /content -->
+
+<!-- ─── footer ────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-left">
+    © 2026 Cardiotox-Fusion · GNN + Transformer Fusion · LINCS GSE70138 · Broad Institute L1000
+  </div>
+  <div class="footer-right">
+    <a class="footer-link" href="https://github.com/JP-Bro/Cardiotox-Fusion-project" target="_blank">GitHub</a>
+    <a class="footer-link" href="#" onclick="return false">Methodology</a>
+  </div>
+</footer>
+
+<!-- ─── scripts ───────────────────────────────────────────────────────────── -->
+<script>
+/* ══════════════════════════════════════════════════════════════
+   PARTICLE CANVAS
+══════════════════════════════════════════════════════════════ */
+(function () {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+
+  function resize() {
+    w = canvas.width  = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  function mkParticle() {
+    return {
+      x:  Math.random() * w,
+      y:  Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      r:  Math.random() * 1.2 + 0.3,
+      a:  Math.random() * 0.5 + 0.1,
+    };
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: 90 }, mkParticle);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(96,165,250,${p.a})`;
+      ctx.fill();
+    }
+    // draw connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(96,165,250,${0.08 * (1 - dist/120)})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
         }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
 
-        // Example buttons listener
-        document.querySelectorAll('.example-chip').forEach(chip => {
-            chip.addEventListener('click', () => {
-                smilesInput.value = chip.getAttribute('data-smiles');
-                triggerAnalysis();
-            });
-        });
+  init();
+  draw();
+  window.addEventListener('resize', init);
+})();
 
-        analyzeBtn.addEventListener('click', triggerAnalysis);
+/* ══════════════════════════════════════════════════════════════
+   GAUGE
+══════════════════════════════════════════════════════════════ */
+const gaugeRing = document.getElementById('gauge-ring');
+const gaugePct  = document.getElementById('gauge-pct');
+const R = 65, CIRC = 2 * Math.PI * R;
+gaugeRing.style.strokeDasharray  = `${CIRC} ${CIRC}`;
+gaugeRing.style.strokeDashoffset = CIRC;
 
-        async function triggerAnalysis() {
-            const smiles = smilesInput.value.trim();
-            if (!smiles) {
-                alert("Please enter or click a SMILES string first.");
-                return;
-            }
+function setGauge(pct, color) {
+  const offset = CIRC - (pct / 100) * CIRC;
+  gaugeRing.style.strokeDashoffset = offset;
+  gaugeRing.style.stroke = color;
+  document.getElementById('gauge-svg').style.filter = `drop-shadow(0 0 10px ${color}66)`;
+}
 
-            loading.style.display = 'flex';
-            dashboard.classList.remove('active');
+/* ══════════════════════════════════════════════════════════════
+   DOM REFS
+══════════════════════════════════════════════════════════════ */
+const smilesInput       = document.getElementById('smiles-input');
+const analyzeBtn        = document.getElementById('analyze-btn');
+const loadingPanel      = document.getElementById('loading-panel');
+const dashboard         = document.getElementById('dashboard');
+const errorToast        = document.getElementById('error-toast');
+const errorMsg          = document.getElementById('error-msg');
+const pathwayContainer  = document.getElementById('pathway-container');
+const genesActivated    = document.getElementById('genes-activated');
+const genesSuppressed   = document.getElementById('genes-suppressed');
+const molBox            = document.getElementById('mol-box');
+const smilesDisplay     = document.getElementById('smiles-display');
+const riskBadge         = document.getElementById('risk-badge');
+const riskBadgeHeader   = document.getElementById('risk-badge-header');
+const riskDesc          = document.getElementById('risk-desc');
+const statScore         = document.getElementById('stat-score');
+const statRisk          = document.getElementById('stat-risk');
+const statModel         = document.getElementById('stat-model');
 
-            try {
-                const response = await fetch('/predict', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ smiles })
-                });
+/* ══════════════════════════════════════════════════════════════
+   CHIP LISTENERS
+══════════════════════════════════════════════════════════════ */
+document.querySelectorAll('.chip').forEach(c => {
+  c.addEventListener('click', () => {
+    smilesInput.value = c.getAttribute('data-smiles');
+    triggerAnalysis();
+  });
+});
 
-                const data = await response.json();
-                if (data.error) {
-                    alert(data.error);
-                    loading.style.display = 'none';
-                    return;
-                }
+analyzeBtn.addEventListener('click', triggerAnalysis);
+smilesInput.addEventListener('keydown', e => { if (e.key === 'Enter') triggerAnalysis(); });
 
-                // Render structure SVG
-                structurePreview.innerHTML = data.svg;
+/* ══════════════════════════════════════════════════════════════
+   SHOW / HIDE HELPERS
+══════════════════════════════════════════════════════════════ */
+function showError(msg) {
+  errorMsg.textContent = msg;
+  errorToast.style.display = 'flex';
+  loadingPanel.style.display = 'none';
+  dashboard.style.display    = 'none';
+}
 
-                // Update risk circle & percentages
-                const score = (data.probability * 100).toFixed(1);
-                riskVal.textContent = `${score}%`;
-                setProgress(score);
+function hideError() { errorToast.style.display = 'none'; }
 
-                // Update risk level colors & text
-                riskLevelBadge.className = 'badge';
-                modelBadge.className = 'risk-level-badge';
-                if (data.risk_level === 'High Risk') {
-                    riskLevelBadge.textContent = 'HIGH TOXICITY';
-                    riskLevelBadge.style.color = 'var(--accent-red)';
-                    modelBadge.textContent = 'ALERT: hERG Signal';
-                    modelBadge.classList.add('risk-level-high');
-                    riskDescText.textContent = "Strong structural alerts matching high-risk cardiotoxic compounds. Keep monitoring.";
-                    progressCircle.style.stroke = 'var(--accent-red)';
-                } else if (data.risk_level === 'Moderate Risk') {
-                    riskLevelBadge.textContent = 'MODERATE RISK';
-                    riskLevelBadge.style.color = 'var(--accent-amber)';
-                    modelBadge.textContent = 'Borderline';
-                    modelBadge.classList.add('risk-level-moderate');
-                    riskDescText.textContent = "Borderline cardiotoxicity probability. Structurally matches potential blockers.";
-                    progressCircle.style.stroke = 'var(--accent-amber)';
-                } else {
-                    riskLevelBadge.textContent = 'SAFE';
-                    riskLevelBadge.style.color = 'var(--accent-green)';
-                    modelBadge.textContent = 'Clearance';
-                    modelBadge.classList.add('risk-level-low');
-                    riskDescText.textContent = "No standard structural alerts. Model cleared this compound for testing.";
-                    progressCircle.style.stroke = 'var(--accent-green)';
-                }
+function setLoading(on) {
+  loadingPanel.style.display = on ? 'flex' : 'none';
+  analyzeBtn.disabled = on;
+  if (on) {
+    dashboard.style.display = 'none';
+    hideError();
+  }
+}
 
-                // Render pathways
-                pathwayContainer.innerHTML = '';
-                Object.entries(data.pathways).forEach(([name, val]) => {
-                    // scale val dynamically for display (average range -1.5 to 1.5 z-score)
-                    const percent = Math.min(Math.max((val + 1.5) / 3 * 100, 0), 100);
-                    const row = document.createElement('div');
-                    row.className = 'pathway-row';
-                    row.innerHTML = `
-                        <div class="pathway-meta">
-                            <span>${name}</span>
-                            <span>${val.toFixed(3)} z</span>
-                        </div>
-                        <div class="pathway-track">
-                            <div class="pathway-fill" style="width: ${percent}%"></div>
-                        </div>
-                    `;
-                    pathwayContainer.appendChild(row);
-                });
+/* ══════════════════════════════════════════════════════════════
+   RENDER PATHWAYS
+══════════════════════════════════════════════════════════════ */
+function renderPathways(pathways) {
+  pathwayContainer.innerHTML = '';
+  const vals = Object.values(pathways);
+  const maxAbs = Math.max(...vals.map(Math.abs), 0.01);
 
-                // Render Top Activated Genes
-                genesActivated.innerHTML = '';
-                data.top_activated.forEach(g => {
-                    const row = document.createElement('div');
-                    row.className = 'gene-row';
-                    row.innerHTML = `
-                        <span class="gene-name">${g.name}</span>
-                        <span class="gene-val up">+${g.zscore.toFixed(2)}</span>
-                    `;
-                    genesActivated.appendChild(row);
-                });
+  Object.entries(pathways).forEach(([name, val]) => {
+    const pct = Math.min(Math.abs(val) / maxAbs * 100, 100);
+    const cls = val > 0.02 ? 'positive' : val < -0.02 ? 'negative' : '';
+    const row = document.createElement('div');
+    row.className = 'pw-row';
+    row.innerHTML = `
+      <div class="pw-meta">
+        <span>${name}</span>
+        <span class="pw-val">${val > 0 ? '+' : ''}${val.toFixed(3)} z</span>
+      </div>
+      <div class="pw-track">
+        <div class="pw-fill ${cls}" style="width:${pct}%"></div>
+      </div>`;
+    pathwayContainer.appendChild(row);
+  });
+}
 
-                // Render Top Suppressed Genes
-                genesSuppressed.innerHTML = '';
-                data.top_suppressed.forEach(g => {
-                    const row = document.createElement('div');
-                    row.className = 'gene-row';
-                    row.innerHTML = `
-                        <span class="gene-name">${g.name}</span>
-                        <span class="gene-val down">${g.zscore.toFixed(2)}</span>
-                    `;
-                    genesSuppressed.appendChild(row);
-                });
+/* ══════════════════════════════════════════════════════════════
+   RENDER GENES
+══════════════════════════════════════════════════════════════ */
+function renderGenes(container, genes, dir) {
+  container.innerHTML = '';
+  const maxAbs = Math.max(...genes.map(g => Math.abs(g.zscore)), 0.01);
+  genes.forEach((g, i) => {
+    const pct = Math.min(Math.abs(g.zscore) / maxAbs * 100, 100);
+    const sign = dir === 'up' ? '+' : '';
+    const row = document.createElement('div');
+    row.className = 'gene-row';
+    row.innerHTML = `
+      <div class="gene-name-wrap">
+        <span class="gene-rank">${i + 1}</span>
+        <span class="gene-name">${g.name}</span>
+      </div>
+      <div class="gene-bar-wrap">
+        <div class="gene-mini-bar">
+          <div class="gene-mini-fill ${dir}" style="width:${pct}%"></div>
+        </div>
+        <span class="gene-val ${dir}">${sign}${g.zscore.toFixed(3)}</span>
+      </div>`;
+    container.appendChild(row);
+  });
+}
 
-                loading.style.display = 'none';
-                dashboard.classList.add('active');
+/* ══════════════════════════════════════════════════════════════
+   MAIN ANALYSIS
+══════════════════════════════════════════════════════════════ */
+async function triggerAnalysis() {
+  const smiles = smilesInput.value.trim();
+  if (!smiles) {
+    showError('Please enter a SMILES string or click a quick-load chip.');
+    return;
+  }
 
-            } catch (err) {
-                console.error(err);
-                alert("Error during model prediction endpoint request.");
-                loading.style.display = 'none';
-            }
-        }
-    </script>
+  setLoading(true);
+
+  try {
+    const res = await fetch('/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ smiles })
+    });
+
+    const data = await res.json();
+
+    if (data.error) {
+      showError(data.error);
+      return;
+    }
+
+    /* ── risk color ─────────────────────────────────── */
+    let color, riskClass, riskLabel, descText;
+
+    if (data.risk_level === 'High Risk') {
+      color = '#ef4444'; riskClass = 'risk-high';
+      riskLabel = 'High Risk';
+      descText  = 'Strong structural alerts for hERG channel blockade. Matches cardiotoxic reference compounds under cross-validation.';
+    } else if (data.risk_level === 'Moderate Risk') {
+      color = '#f59e0b'; riskClass = 'risk-mod';
+      riskLabel = 'Moderate Risk';
+      descText  = 'Borderline cardiotoxicity probability. Structural features partially match known hERG blockers.';
+    } else {
+      color = '#10b981'; riskClass = 'risk-low';
+      riskLabel = 'Low Risk';
+      descText  = 'No significant structural alerts. Model cleared this compound — safe cardiac signature.';
+    }
+
+    const pct = (data.probability * 100).toFixed(1);
+
+    /* ── gauge ──────────────────────────────────────── */
+    setGauge(parseFloat(pct), color);
+    gaugePct.textContent = `${pct}%`;
+
+    /* ── badges ─────────────────────────────────────── */
+    riskBadge.className  = `risk-badge ${riskClass}`;
+    riskBadge.textContent = riskLabel;
+    riskDesc.textContent  = descText;
+    riskBadgeHeader.textContent  = riskLabel.toUpperCase();
+    riskBadgeHeader.style.background = `${color}18`;
+    riskBadgeHeader.style.color      = color;
+    riskBadgeHeader.style.border     = `1px solid ${color}44`;
+
+    /* ── stats ──────────────────────────────────────── */
+    statScore.textContent = `${pct}%`;
+    statScore.style.color = color;
+    statRisk.textContent  = data.risk_level === 'High Risk'   ? 'HIGH' :
+                            data.risk_level === 'Moderate Risk' ? 'MOD'  : 'LOW';
+    statRisk.style.color  = color;
+    statModel.textContent = 'RF+IMP';
+
+    /* ── smiles display ─────────────────────────────── */
+    const canon = data.smiles || smiles;
+    smilesDisplay.textContent = canon.length > 28 ? canon.slice(0,28)+'…' : canon;
+    smilesDisplay.title = canon;
+
+    /* ── molecule SVG ───────────────────────────────── */
+    if (data.svg) {
+      molBox.innerHTML = data.svg;
+    }
+
+    /* ── pathways ───────────────────────────────────── */
+    renderPathways(data.pathways);
+
+    /* ── genes ──────────────────────────────────────── */
+    renderGenes(genesActivated,  data.top_activated,  'up');
+    renderGenes(genesSuppressed, data.top_suppressed, 'down');
+
+    /* ── show ───────────────────────────────────────── */
+    setLoading(false);
+    dashboard.style.display = 'flex';
+
+  } catch (err) {
+    showError('Network error — could not reach the prediction server. Is app.py running?');
+    console.error(err);
+  }
+}
+</script>
 </body>
 </html>
