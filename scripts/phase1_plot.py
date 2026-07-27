@@ -1,9 +1,11 @@
 """
-phase1_plot.py -- Create a publication-quality visualization of the
-Phase 1 dataset audit and splits to be attached to the Jupyter Notebook/report.
+phase1_plot.py -- Create two separate publication-quality plots:
+1. Usable cohort distribution by class (phase1_usable_cohort.png)
+2. Partition size comparison (phase1_splits_distribution.png)
 """
 import os
 import sys
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -16,16 +18,15 @@ from config import CFG
 
 def main():
     # Setup aesthetic style
-    sns.set_theme(style="whitegrid", context="paper", font="DejaVu Serif")
+    sns.set_theme(style="whitegrid", context="talk", font="DejaVu Serif")
     plt.rcParams.update({
         "font.family": "serif",
         "font.serif": ["Times New Roman", "DejaVu Serif"],
         "axes.labelsize": 11,
         "axes.titlesize": 12,
-        "xtick.labelsize": 9.5,
-        "ytick.labelsize": 9.5,
-        "figure.titlesize": 14,
-        "legend.fontsize": 9.5
+        "xtick.labelsize": 10,
+        "ytick.labelsize": 10,
+        "legend.fontsize": 10
     })
 
     # Data
@@ -33,56 +34,57 @@ def main():
     counts = [199, 246, 117]
     colors_cohort = ["#d32f2f", "#f57c00", "#388e3c"] # Red, Orange, Green
 
+    # Plot 1: Usable Dataset Cohort by DICTrank Class
+    plt.figure(figsize=(6.5, 4.5), dpi=300)
+    ax1 = sns.barplot(x=classes, y=counts, palette=colors_cohort, hue=classes, legend=False)
+    plt.title("Usable Dataset Cohort by DICTrank Class", pad=15, fontweight="bold", fontsize=13)
+    plt.ylabel("Number of Compounds", fontsize=11)
+    plt.xlabel("FDA Cardiotoxicity Concern Class", fontsize=11)
+    
+    # Add value labels
+    for i, v in enumerate(counts):
+        ax1.text(i, v + 5, f"{v}\n({v/sum(counts):.1%})", ha="center", va="bottom", fontsize=9.5, fontweight="semibold")
+    plt.ylim(0, 280)
+    
+    # Save Plot 1
+    plot1_path = os.path.join(CFG.RESULTS_DIR, "phase1_usable_cohort.png")
+    plt.savefig(plot1_path, bbox_inches="tight", dpi=300)
+    plt.close()
+    print(f"Plot 1 saved successfully to {plot1_path}")
+
+    # Plot 2: Dataset Splits Target Partitions
     splits = ["Train", "Validation", "Test"]
     drug_counts = [393, 84, 85]
     scaf_counts = [393, 84, 85]
 
-    fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.5), dpi=300)
-
-    # Panel A: Cohort Distribution
-    sns.barplot(x=classes, y=counts, palette=colors_cohort, ax=axes[0], hue=classes, legend=False)
-    axes[0].set_title("A. Usable Dataset Cohort by DICTrank Class", pad=12, fontweight="bold")
-    axes[0].set_ylabel("Number of Compounds")
-    axes[0].set_xlabel("FDA Cardiotoxicity Concern Class")
-    
-    # Add value labels on top of bars
-    for i, v in enumerate(counts):
-        axes[0].text(i, v + 5, f"{v}\n({v/sum(counts):.1%})", ha="center", va="bottom", fontsize=9, fontweight="semibold")
-    axes[0].set_ylim(0, 280)
-
-    # Panel B: Train/Val/Test Splits
+    plt.figure(figsize=(7.5, 4.5), dpi=300)
     x_indices = np.arange(len(splits))
     width = 0.35
     
-    # Plot bars
-    bar1 = axes[1].bar(x_indices - width/2, drug_counts, width, label="Drug-level Split", color="#1a1a2e")
-    bar2 = axes[1].bar(x_indices + width/2, scaf_counts, width, label="Scaffold Split", color="#5c6bc0")
+    bar1 = plt.bar(x_indices - width/2, drug_counts, width, label="Drug-level Split", color="#1a1a2e")
+    bar2 = plt.bar(x_indices + width/2, scaf_counts, width, label="Scaffold Split", color="#5c6bc0")
     
-    axes[1].set_title("B. Target Partition Sizes (70 / 15 / 15)", pad=12, fontweight="bold")
-    axes[1].set_xticks(x_indices)
-    axes[1].set_xticklabels(splits)
-    axes[1].set_ylabel("Number of Compounds")
-    axes[1].set_xlabel("Dataset Partitions")
-    axes[1].legend(loc="upper right", frameon=True)
+    plt.title("Target Partition Sizes (70 / 15 / 15)", pad=15, fontweight="bold", fontsize=13)
+    plt.xticks(x_indices, splits)
+    plt.ylabel("Number of Compounds", fontsize=11)
+    plt.xlabel("Dataset Partitions", fontsize=11)
+    plt.legend(loc="upper right", frameon=True)
 
     # Add value labels
     for bar in bar1:
         yval = bar.get_height()
-        axes[1].text(bar.get_x() + bar.get_width()/2.0, yval + 5, f"{yval}", ha="center", va="bottom", fontsize=8.5)
+        plt.text(bar.get_x() + bar.get_width()/2.0, yval + 5, f"{yval}", ha="center", va="bottom", fontsize=9)
     for bar in bar2:
         yval = bar.get_height()
-        axes[1].text(bar.get_x() + bar.get_width()/2.0, yval + 5, f"{yval}", ha="center", va="bottom", fontsize=8.5)
+        plt.text(bar.get_x() + bar.get_width()/2.0, yval + 5, f"{yval}", ha="center", va="bottom", fontsize=9)
         
-    axes[1].set_ylim(0, 460)
-
-    plt.suptitle("Cardiotox-Fusion Phase 1 Usability Audit & Splits Summary", y=0.98, fontweight="bold")
-    plt.tight_layout()
+    plt.ylim(0, 460)
     
-    # Save path
-    out_path = os.path.join(CFG.RESULTS_DIR, "phase1_visualization.png")
-    plt.savefig(out_path, bbox_inches="tight", dpi=300)
-    print(f"Plot saved successfully to {out_path}")
+    # Save Plot 2
+    plot2_path = os.path.join(CFG.RESULTS_DIR, "phase1_splits_distribution.png")
+    plt.savefig(plot2_path, bbox_inches="tight", dpi=300)
+    plt.close()
+    print(f"Plot 2 saved successfully to {plot2_path}")
 
 if __name__ == "__main__":
-    import numpy as np
     main()
