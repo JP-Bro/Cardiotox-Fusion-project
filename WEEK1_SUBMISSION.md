@@ -25,12 +25,14 @@ cardiotox-fusion/
 │   └── phase1_usability_and_splits.ipynb  # Executable Jupyter Notebook (cell-by-cell)
 ├── results/
 │   ├── phase1_audit_report.md         # Markdown summary report of audit results
-│   ├── phase1_report.html             # Printable HTML report formatted for PDF
+│   ├── Cardiotox_Fusion_Phase1_Report.docx  # Compiled Word report (primary)
+│   ├── Cardiotox_Fusion_Phase1_Report_v2.docx # Compiled Word report (fallback if locked)
 │   ├── phase1_usable_cohort.png       # Plot 1: Usable cohort counts by class
 │   └── phase1_splits_distribution.png # Plot 2: Partition size comparison
 └── scripts/
     ├── phase1_audit_splits.py         # Main execution script for audit and splits
-    └── phase1_plot.py                 # Visualization script generating the 2 plots
+    ├── phase1_plot.py                 # Visualization script generating the 2 plots
+    └── create_docx.py                 # Script compiling the Word report
 ```
 
 ---
@@ -59,7 +61,17 @@ cardiotox-fusion/
 
 ---
 
-## 5. Verification Commands
+## 5. Scientific Discussion: Will Fusion Refine or Degrade GNN Performance?
+
+A central question of this research is whether incorporating transcriptomic perturbation signatures (LINCS L1000 via a Transformer encoder) will refine (improve) or degrade the predictive performance of a purely structure-based baseline model (GNN). Based on the dataset properties and structural alerts, we present the following analysis:
+
+*   **The Strength of Structural Signatures (GNN):** Molecular structure provides a highly direct representation of hERG channel binding. Blockade is fundamentally governed by physical interactions (hydrophobic, charge, electrostatic) between the ligand and the hERG pore. As a result, GNNs trained on chemical graphs are historically extremely strong baselines (~0.84 AUC-ROC on DICTrank) and are difficult to outperform.
+*   **The Risk of Biological Noise (Degradation):** Transcriptomic data (L1000) measures downstream cellular stress signatures (e.g. apoptosis, cell cycle regulation, DNA damage). However, these signatures are cell-line dependent, noisy, and indirect. If a compound is a physical hERG blocker but does not trigger transcription-level stress pathways in the tested conditions, a purely biology-based model will fail. Furthermore, simple concatenation of structural and biological features often allows this noise to leak in, leading to a degradation of the GNN's performance.
+*   **The Role of Cross-Attention (Refinement):** To prevent biological noise from degrading structural signals, we propose a cross-attention fusion mechanism. Rather than raw concatenation, the structural embedding queries the transcriptomic context. This design allows the GNN to 'filter' the L1000 gene signatures, attending to them only when they align with chemical structure. This selective fusion is expected to refine boundary cases -- compounds where structure is ambiguous but the biological stress response provides the deciding cardiotoxicity signal -- without degrading the GNN's clean structural predictions.
+
+---
+
+## 6. Verification Commands
 To re-run the usability audit, re-generate the splits, and re-create the visualization plots locally, execute the following commands from the repository root:
 
 ```bash
@@ -68,6 +80,9 @@ python scripts/phase1_audit_splits.py
 
 # 2. Generate the two separate visualization plots
 python scripts/phase1_plot.py
+
+# 3. Re-compile the Microsoft Word report
+python scripts/create_docx.py
 ```
 
 *All scripts run with a frozen random seed (`42`) set in `config.py` to guarantee identical outputs across all machines.*
