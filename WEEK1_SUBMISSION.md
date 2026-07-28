@@ -62,14 +62,13 @@ cardiotox-fusion/
 
 ## 5. Methodological & Rigorous Constraints (Addressing Faculty Feedback)
 
-To ensure scientific rigor and prevent evaluation contamination or label misalignment, we have established three explicit guidelines:
+To ensure scientific rigor, prevent evaluation contamination, and align with Dr. Bharat Manna's feedback, we have established three explicit guidelines:
 
 1.  **Label Framing (DICTrank vs. hERG):** The classification model is trained to predict general cardiotoxicity classes from the FDA DICTrank dataset, not specific hERG channel blockade. While hERG blockade is the primary physical mechanism of cardiotoxicity, DICTrank labels represent clinical cardiotoxicity concern. We target general cardiotoxicity, and move all hERG-specific claims to post-hoc discussion, maintaining clinical honesty.
 2.  **L1000 Signature Aggregation Rule:** Replicate Level-5 L1000 signatures (COMPZ z-scores) in the HA1E cell line under the target condition of 10.0 µM dose and 24 h exposure are **mean-aggregated** to construct a single consolidated transcriptomic vector per compound.
-3.  **Expression Imputer Isolation:** The fingerprint-to-expression imputer is completely excluded from the primary validation comparison. We evaluate and report model metrics separately on:
-    *   *(a) The experimental subset* of drugs with real, experimental LINCS L1000 signatures.
-    *   *(b) The broader subset* utilizing imputed signatures.
-    *   We never mix the two subsets to claim true biological-structural complementarity, avoiding structural-to-biological target leakage.
+3.  **Independent Model Evaluation (No Fusion):** To prevent target leakage and contamination (which happens when structurally-imputed profiles are mixed with experimental ones), **we do not perform any fusion**. The GNN (structure-only) and the Transformer (biology-only) models are evaluated as completely independent parallel architectures:
+    *   *GNN (Structure-only):* Operates on molecular graphs derived from chemical SMILES.
+    *   *Transformer (Biology-only):* Operates on experimental LINCS L1000 signatures. Compounds lacking experimental L1000 data are excluded from the Transformer evaluation, maintaining a clean comparison.
 
 ---
 
@@ -78,7 +77,7 @@ To ensure scientific rigor and prevent evaluation contamination or label misalig
 In response to previous literature (e.g., Seal et al. 2024), we highlight our core novelties which make this project publishable as a rigorous benchmarking study:
 
 *   **Bemis-Murcko Scaffold Splits on DICTrank:** Prior studies did not perform scaffold splits on DICTrank. This evaluation directly quantifies how much of cardiotoxicity prediction is driven by chemical-series memorization versus out-of-distribution generalizability to unseen chemical families. This scaffold-split analysis constitutes our primary publishable novelty.
-*   **Testing omics Signal Recovery:** Previous soft-voting ensemble and median-based approaches reported near-random performance (~0.57 AUC) for L1000 transcriptomics. We directly test whether a learned representation (GNN-Transformer cross-attention) can recover predictive biological signal that simpler methods missed. Both positive and negative outcomes will be reported honestly.
+*   **Testing omics Signal Recovery:** Previous shallow classifiers reported near-random performance (~0.57 AUC) for L1000 transcriptomics. We directly test whether a learned representation (multi-head Transformer encoder) can recover predictive biological signal that simpler methods missed. Both positive and negative outcomes will be reported honestly.
 
 ---
 

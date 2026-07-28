@@ -1,7 +1,7 @@
 """
 create_docx.py -- Generate a highly professional Microsoft Word Document (.docx)
 for the Week 1 deliverable, containing embedded tables, images, Jupyter execution logs,
-and a scientific discussion addressing Dr. Bharat Manna's feedback.
+and a scientific discussion addressing comparative evaluation of GNN vs. Transformer models.
 """
 import os
 import sys
@@ -105,7 +105,7 @@ def main():
     # Title Block
     title = doc.add_paragraph()
     title.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    title_run = title.add_run("Cardiotox-Fusion: Predicting DICTrank Cardiotoxicity Using Integrated Molecular Structure and LINCS L1000 Transcriptomic Signatures")
+    title_run = title.add_run("Cardiotox-Fusion: Comparative Evaluation of GNN and Transformer Architectures for Predicting FDA DICTrank Cardiotoxicity")
     title_run.font.bold = True
     title_run.font.size = Pt(15)
     title_run.font.name = "Times New Roman"
@@ -140,7 +140,7 @@ def main():
     r.font.color.rgb = RGBColor(0, 0, 0)
 
     p1 = doc.add_paragraph(
-        "To establish the modeling boundaries for the GNN-Transformer fusion model, "
+        "To establish the modeling boundaries for our comparative evaluation, "
         "we performed a joint audit of the FDA DICTrank labeling set and the LINCS L1000 GSE70138 "
         "level-5 expression matrix. Compounds were retained in the usable cohort only if they met "
         "the following criteria:"
@@ -333,7 +333,7 @@ def main():
     h3_meth = doc.add_paragraph()
     h3_meth.paragraph_format.space_before = Pt(18)
     h3_meth.paragraph_format.space_after = Pt(6)
-    r3_meth = h3_meth.add_run("3. Methodology, Signature Aggregation, and Validation Constraints")
+    r3_meth = h3_meth.add_run("3. Methodology, Signature Aggregation, and Model Isolation")
     r3_meth.font.bold = True
     r3_meth.font.size = Pt(13)
 
@@ -350,14 +350,13 @@ def main():
          "For any drug with multiple replicate signatures matching the target condition of 10.0 µM dose and 24 h exposure, "
          "we mean-aggregate the z-score vectors to construct a single, consolidated 978-dimensional transcriptomic representation per drug."),
          
-        ("Imputed vs. Experimental Isolation: ", True,
-         "Mapping molecular structures to estimated gene profiles (via an expression imputer MLP) means that for any imputed drug, "
-         "the transcriptomic input is a deterministic projection of the structure. Mixing these imputed profiles with real, experimental L1000 "
-         "profiles would contaminate the validation set and invalidate claims of multimodal complementarity. "
-         "To prevent this, the imputer is completely excluded from the primary validation comparison. "
-         "We will evaluate and report model metrics separately on: "
-         "(a) the experimental subset of drugs with real, experimental LINCS L1000 signatures, and "
-         "(b) the broader set utilizing imputed signatures. We will never mix the two subsets for benchmarking.")
+        ("Independent Model Isolation (No Fusion): ", True,
+         "To ensure an honest comparison of structure vs. biological pertubation signals without contamination risk, "
+         "we evaluate the GNN (structure-only) and the Transformer (biology-only) models as completely independent architectures. "
+         "No cross-attention or concatenation fusion is performed. The structural GNN operates on molecular graphs, "
+         "while the biological Transformer operates on experimental L1000 signatures. "
+         "Compounds lacking matched experimental L1000 signatures are excluded from the Transformer evaluation, "
+         "maintaining a clean benchmarking comparison without imputation bias.")
     ]
     for title, is_bold, text in meth_points:
         dp = doc.add_paragraph(style='List Bullet')
@@ -372,14 +371,14 @@ def main():
     h4_disc = doc.add_paragraph()
     h4_disc.paragraph_format.space_before = Pt(18)
     h4_disc.paragraph_format.space_after = Pt(6)
-    r4_disc = h4_disc.add_run("4. Project Discussion: Model Refinement, Leakage, and Academic Novelty")
+    r4_disc = h4_disc.add_run("4. Project Discussion: Model Comparison, Leakage, and Academic Novelty")
     r4_disc.font.bold = True
     r4_disc.font.size = Pt(13)
 
     p_disc1 = doc.add_paragraph(
-        "A critical question of this research is whether incorporating transcriptomic signatures (L1000) via a "
-        "Transformer encoder will refine or degrade the predictive performance of a purely structure-based baseline model (GNN). "
-        "In contrast to Seal et al. 2024, which reported near-random performance (~0.57 AUC-ROC) for transcriptomic models on DICTrank, "
+        "A central question of this research is comparing the predictive performance of a "
+        "purely structure-based model (GNN) against a purely transcriptomics-based model (Transformer) "
+        "on clinical cardiotoxicity labels. Based on the dataset properties and structural alerts, "
         "we present the following analysis and academic novelty strategy:"
     )
     p_disc1.paragraph_format.space_after = Pt(6)
@@ -395,18 +394,13 @@ def main():
          "Prior publications (e.g. Seal et al.) evaluated models using standard random or stratified splits. "
          "This project introduces Bemis-Murcko scaffold splits on DICTrank. This evaluation directly quantifies how much "
          "of the cardiotoxicity prediction is due to chemical-series memorization versus out-of-distribution generalizability to unseen chemical families. "
-         "This scaffold-split analysis constitutes our primary publishable novelty, and does not depend on the fusion model showing a positive win."),
+         "This scaffold-split analysis constitutes our primary publishable novelty, and does not depend on a fusion model showing a win."),
          
-        ("Clean Evaluation of the omics 'Signal Recovery' Hypothesis: ", True,
-         "The near-random performance of L1000 signatures in literature raises the question of whether transcriptomic profiles lack signal "
-         "or if previous methods failed to extract it. By utilizing a GNN-Transformer cross-attention architecture, we test whether "
-         "a learned deep representation can recover predictive signal that simpler approaches missed. If it still fails, "
-         "this is reported as a rigorous benchmarking study rather than a manufactured win."),
-         
-        ("Mechanism of Cross-Attention Refinement: ", True,
-         "Rather than concatenation (which leaks biological noise and degrades GNN structure-only performance), "
-         "the GNN molecular embedding queries the transcriptomic context. This ensures that the GNN only attends to biological "
-         "stress signatures when they align with chemical structure, protecting the model from performance degradation.")
+        ("Testing the 'Representation Extraction' Hypothesis: ", True,
+         "The near-random performance of L1000 signatures in literature (~0.57 AUC) raises the question of whether transcriptomic profiles lack signal "
+         "or if previous shallow classifiers failed to extract it. By utilizing a multi-head Transformer encoder on the experimental z-score sequence, "
+         "we directly test whether a learned representation can recover predictive biological signal that simpler methods missed. "
+         "Evaluating this cleanly, without any structural imputation contamination, provides a high-quality benchmarking study.")
     ]
     
     for title, is_bold, text in disc_points:
