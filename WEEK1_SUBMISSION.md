@@ -26,7 +26,6 @@ cardiotox-fusion/
 ├── results/
 │   ├── phase1_audit_report.md         # Markdown summary report of audit results
 │   ├── Cardiotox_Fusion_Phase1_Report.docx  # Compiled Word report (primary)
-│   ├── Cardiotox_Fusion_Phase1_Report_v2.docx # Compiled Word report (fallback if locked)
 │   ├── phase1_usable_cohort.png       # Plot 1: Usable cohort counts by class
 │   └── phase1_splits_distribution.png # Plot 2: Partition size comparison
 └── scripts/
@@ -61,17 +60,29 @@ cardiotox-fusion/
 
 ---
 
-## 5. Scientific Discussion: Will Fusion Refine or Degrade GNN Performance?
+## 5. Methodological & Rigorous Constraints (Addressing Faculty Feedback)
 
-A central question of this research is whether incorporating transcriptomic perturbation signatures (LINCS L1000 via a Transformer encoder) will refine (improve) or degrade the predictive performance of a purely structure-based baseline model (GNN). Based on the dataset properties and structural alerts, we present the following analysis:
+To ensure scientific rigor and prevent evaluation contamination or label misalignment, we have established three explicit guidelines:
 
-*   **The Strength of Structural Signatures (GNN):** Molecular structure provides a highly direct representation of hERG channel binding. Blockade is fundamentally governed by physical interactions (hydrophobic, charge, electrostatic) between the ligand and the hERG pore. As a result, GNNs trained on chemical graphs are historically extremely strong baselines (~0.84 AUC-ROC on DICTrank) and are difficult to outperform.
-*   **The Risk of Biological Noise (Degradation):** Transcriptomic data (L1000) measures downstream cellular stress signatures (e.g. apoptosis, cell cycle regulation, DNA damage). However, these signatures are cell-line dependent, noisy, and indirect. If a compound is a physical hERG blocker but does not trigger transcription-level stress pathways in the tested conditions, a purely biology-based model will fail. Furthermore, simple concatenation of structural and biological features often allows this noise to leak in, leading to a degradation of the GNN's performance.
-*   **The Role of Cross-Attention (Refinement):** To prevent biological noise from degrading structural signals, we propose a cross-attention fusion mechanism. Rather than raw concatenation, the structural embedding queries the transcriptomic context. This design allows the GNN to 'filter' the L1000 gene signatures, attending to them only when they align with chemical structure. This selective fusion is expected to refine boundary cases -- compounds where structure is ambiguous but the biological stress response provides the deciding cardiotoxicity signal -- without degrading the GNN's clean structural predictions.
+1.  **Label Framing (DICTrank vs. hERG):** The classification model is trained to predict general cardiotoxicity classes from the FDA DICTrank dataset, not specific hERG channel blockade. While hERG blockade is the primary physical mechanism of cardiotoxicity, DICTrank labels represent clinical cardiotoxicity concern. We target general cardiotoxicity, and move all hERG-specific claims to post-hoc discussion, maintaining clinical honesty.
+2.  **L1000 Signature Aggregation Rule:** Replicate Level-5 L1000 signatures (COMPZ z-scores) in the HA1E cell line under the target condition of 10.0 µM dose and 24 h exposure are **mean-aggregated** to construct a single consolidated transcriptomic vector per compound.
+3.  **Expression Imputer Isolation:** The fingerprint-to-expression imputer is completely excluded from the primary validation comparison. We evaluate and report model metrics separately on:
+    *   *(a) The experimental subset* of drugs with real, experimental LINCS L1000 signatures.
+    *   *(b) The broader subset* utilizing imputed signatures.
+    *   We never mix the two subsets to claim true biological-structural complementarity, avoiding structural-to-biological target leakage.
 
 ---
 
-## 6. Verification Commands
+## 6. Academic Novelty & Publishability Strategy
+
+In response to previous literature (e.g., Seal et al. 2024), we highlight our core novelties which make this project publishable as a rigorous benchmarking study:
+
+*   **Bemis-Murcko Scaffold Splits on DICTrank:** Prior studies did not perform scaffold splits on DICTrank. This evaluation directly quantifies how much of cardiotoxicity prediction is driven by chemical-series memorization versus out-of-distribution generalizability to unseen chemical families. This scaffold-split analysis constitutes our primary publishable novelty.
+*   **Testing omics Signal Recovery:** Previous soft-voting ensemble and median-based approaches reported near-random performance (~0.57 AUC) for L1000 transcriptomics. We directly test whether a learned representation (GNN-Transformer cross-attention) can recover predictive biological signal that simpler methods missed. Both positive and negative outcomes will be reported honestly.
+
+---
+
+## 7. Verification Commands
 To re-run the usability audit, re-generate the splits, and re-create the visualization plots locally, execute the following commands from the repository root:
 
 ```bash

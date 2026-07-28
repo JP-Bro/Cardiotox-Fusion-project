@@ -1,7 +1,7 @@
 """
 create_docx.py -- Generate a highly professional Microsoft Word Document (.docx)
 for the Week 1 deliverable, containing embedded tables, images, Jupyter execution logs,
-and a scientific discussion on GNN/Transformer fusion refinement vs degradation.
+and a scientific discussion addressing Dr. Bharat Manna's feedback.
 """
 import os
 import sys
@@ -105,9 +105,9 @@ def main():
     # Title Block
     title = doc.add_paragraph()
     title.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    title_run = title.add_run("Cardiotox-Fusion: Phase 1 Usability Audit and Dataset Splits")
+    title_run = title.add_run("Cardiotox-Fusion: Predicting DICTrank Cardiotoxicity Using Integrated Molecular Structure and LINCS L1000 Transcriptomic Signatures")
     title_run.font.bold = True
-    title_run.font.size = Pt(16)
+    title_run.font.size = Pt(15)
     title_run.font.name = "Times New Roman"
     title.paragraph_format.space_after = Pt(6)
 
@@ -118,14 +118,15 @@ def main():
     
     runs_data = [
         ("Milestone: ", True), ("Week 1 Deliverable   |   ", False),
-        ("Date: ", True), ("July 27, 2026\n", False),
+        ("Date: ", True), ("July 28, 2026\n", False),
         ("Team Members: ", True), ("Jimit Patel, Vineela, Aditya, Nehal, Pranjal\n", False),
+        ("Submitted to: ", True), ("Dr. Bharat Manna (School of Bio Sciences and Technology, VIT)\n", False),
         ("Repository: ", True), ("github.com/JP-Bro/Cardiotox-Fusion-project", False)
     ]
     for text, is_bold in runs_data:
         r = meta.add_run(text)
         r.font.name = "Arial"
-        r.font.size = Pt(10)
+        r.font.size = Pt(9.5)
         r.font.bold = is_bold
         r.font.color.rgb = RGBColor(50, 50, 50)
 
@@ -183,7 +184,7 @@ def main():
     p_log_title.paragraph_format.space_after = Pt(3)
 
     log_box1 = doc.add_paragraph()
-    set_cell_background(doc.add_table(rows=1, cols=1).rows[0].cells[0], "F5F5F7") # we use code block style
+    set_cell_background(doc.add_table(rows=1, cols=1).rows[0].cells[0], "F5F5F7")
     table_log1 = doc.tables[-1]
     table_log1.alignment = WD_ALIGN_PARAGRAPH.CENTER
     table_log1.rows[0].cells[0].width = Inches(5.8)
@@ -328,42 +329,84 @@ def main():
         cr2.font.italic = True
         cr2.font.size = Pt(9.5)
 
-    # 3. Scientific Discussion & Project Conclusion
-    h3_disc = doc.add_paragraph()
-    h3_disc.paragraph_format.space_before = Pt(18)
-    h3_disc.paragraph_format.space_after = Pt(6)
-    r3_disc = h3_disc.add_run("3. Scientific Discussion: Will Fusion Refine or Degrade GNN Performance?")
-    r3_disc.font.bold = True
-    r3_disc.font.size = Pt(13)
+    # 3. Methodological Details & Scientific Constraints
+    h3_meth = doc.add_paragraph()
+    h3_meth.paragraph_format.space_before = Pt(18)
+    h3_meth.paragraph_format.space_after = Pt(6)
+    r3_meth = h3_meth.add_run("3. Methodology, Signature Aggregation, and Validation Constraints")
+    r3_meth.font.bold = True
+    r3_meth.font.size = Pt(13)
+
+    p_meth1 = doc.add_paragraph(
+        "To ensure mathematical rigor and prevent data leakage or validation contamination, "
+        "we have defined two explicit constraints for the dataset preprocessing and modeling phases:"
+    )
+    p_meth1.paragraph_format.space_after = Pt(6)
+
+    meth_points = [
+        ("L1000 Signature Aggregation Rule: ", True,
+         "A single drug may have multiple replicate signatures measured across different cell lines, doses, and time points in the LINCS L1000 dataset. "
+         "To handle this, we restrict our selection to Level-5 signatures (COMPZ z-scores) in the HA1E cell line (a non-transformed reference line). "
+         "For any drug with multiple replicate signatures matching the target condition of 10.0 µM dose and 24 h exposure, "
+         "we mean-aggregate the z-score vectors to construct a single, consolidated 978-dimensional transcriptomic representation per drug."),
+         
+        ("Imputed vs. Experimental Isolation: ", True,
+         "Mapping molecular structures to estimated gene profiles (via an expression imputer MLP) means that for any imputed drug, "
+         "the transcriptomic input is a deterministic projection of the structure. Mixing these imputed profiles with real, experimental L1000 "
+         "profiles would contaminate the validation set and invalidate claims of multimodal complementarity. "
+         "To prevent this, the imputer is completely excluded from the primary validation comparison. "
+         "We will evaluate and report model metrics separately on: "
+         "(a) the experimental subset of drugs with real, experimental LINCS L1000 signatures, and "
+         "(b) the broader set utilizing imputed signatures. We will never mix the two subsets for benchmarking.")
+    ]
+    for title, is_bold, text in meth_points:
+        dp = doc.add_paragraph(style='List Bullet')
+        dp.paragraph_format.space_after = Pt(4)
+        run_title = dp.add_run(title)
+        run_title.font.bold = is_bold
+        run_title.font.size = Pt(11)
+        run_text = dp.add_run(text)
+        run_text.font.size = Pt(11)
+
+    # 4. Scientific Discussion & Publishable Novelty
+    h4_disc = doc.add_paragraph()
+    h4_disc.paragraph_format.space_before = Pt(18)
+    h4_disc.paragraph_format.space_after = Pt(6)
+    r4_disc = h4_disc.add_run("4. Project Discussion: Model Refinement, Leakage, and Academic Novelty")
+    r4_disc.font.bold = True
+    r4_disc.font.size = Pt(13)
 
     p_disc1 = doc.add_paragraph(
-        "A central question of this research is whether incorporating transcriptomic perturbation signatures "
-        "(LINCS L1000 via a Transformer encoder) will refine (improve) or degrade the predictive performance of a "
-        "purely structure-based baseline model (GNN). Based on the dataset properties and structural alerts, "
-        "we present the following analysis:"
+        "A critical question of this research is whether incorporating transcriptomic signatures (L1000) via a "
+        "Transformer encoder will refine or degrade the predictive performance of a purely structure-based baseline model (GNN). "
+        "In contrast to Seal et al. 2024, which reported near-random performance (~0.57 AUC-ROC) for transcriptomic models on DICTrank, "
+        "we present the following analysis and academic novelty strategy:"
     )
     p_disc1.paragraph_format.space_after = Pt(6)
 
     disc_points = [
-        ("The Strength of Structural Signatures (GNN): ", True,
-         "Molecular structure provides a highly direct representation of hERG channel binding. Blockade is fundamentally "
-         "governed by physical interactions (hydrophobic, charge, electrostatic) between the ligand and the hERG pore. "
-         "As a result, GNNs trained on chemical graphs are historically extremely strong baselines (~0.84 AUC-ROC on DICTrank) "
-         "and are difficult to outperform."),
+        ("DICTrank vs. hERG Channel Blockade: ", True,
+         "We clarify that DICTrank represents general cardiotoxicity concern classes, not just hERG channel blockade. "
+         "While hERG blockade is the primary physical mechanism of cardiotoxicity, DICTrank encompasses other forms of toxicities. "
+         "Therefore, our model is trained to predict general cardiotoxicity (DICTrank classes), and hERG blockade is discussed as the principal "
+         "mechanistic subclass, rather than being claimed as a direct prediction target. This aligns our labeling with clinical claims."),
          
-        ("The Risk of Biological Noise (degradation): ", True,
-         "Transcriptomic data (L1000) measures downstream cellular stress signatures (e.g. apoptosis, cell cycle regulation, DNA damage). "
-         "However, these signatures are cell-line dependent, noisy, and indirect. If a compound is a physical hERG blocker but does "
-         "not trigger transcription-level stress pathways in the tested conditions, a purely biology-based model will fail. "
-         "Furthermore, simple concatenation of structural and biological features often allows this noise to leak in, "
-         "leading to a degradation of the GNN's performance."),
+        ("Bemis-Murcko Scaffold Splits as Primary Novelty: ", True,
+         "Prior publications (e.g. Seal et al.) evaluated models using standard random or stratified splits. "
+         "This project introduces Bemis-Murcko scaffold splits on DICTrank. This evaluation directly quantifies how much "
+         "of the cardiotoxicity prediction is due to chemical-series memorization versus out-of-distribution generalizability to unseen chemical families. "
+         "This scaffold-split analysis constitutes our primary publishable novelty, and does not depend on the fusion model showing a positive win."),
          
-        ("The Role of Cross-Attention (refinement): ", True,
-         "To prevent biological noise from degrading structural signals, we propose a cross-attention fusion mechanism. "
-         "Rather than raw concatenation, the structural embedding queries the transcriptomic context. This design allows "
-         "the GNN to 'filter' the L1000 gene signatures, attending to them only when they align with chemical structure. "
-         "This selective fusion is expected to refine boundary cases -- compounds where structure is ambiguous but the biological "
-         "stress response provides the deciding cardiotoxicity signal -- without degrading the GNN's clean structural predictions.")
+        ("Clean Evaluation of the omics 'Signal Recovery' Hypothesis: ", True,
+         "The near-random performance of L1000 signatures in literature raises the question of whether transcriptomic profiles lack signal "
+         "or if previous methods failed to extract it. By utilizing a GNN-Transformer cross-attention architecture, we test whether "
+         "a learned deep representation can recover predictive signal that simpler approaches missed. If it still fails, "
+         "this is reported as a rigorous benchmarking study rather than a manufactured win."),
+         
+        ("Mechanism of Cross-Attention Refinement: ", True,
+         "Rather than concatenation (which leaks biological noise and degrades GNN structure-only performance), "
+         "the GNN molecular embedding queries the transcriptomic context. This ensures that the GNN only attends to biological "
+         "stress signatures when they align with chemical structure, protecting the model from performance degradation.")
     ]
     
     for title, is_bold, text in disc_points:
@@ -375,21 +418,21 @@ def main():
         run_text = dp.add_run(text)
         run_text.font.size = Pt(11)
 
-    # 4. Verification & Reproducibility
-    h4 = doc.add_paragraph()
-    h4.paragraph_format.space_before = Pt(18)
-    h4.paragraph_format.space_after = Pt(6)
-    r4 = h4.add_run("4. Verification and Reproducibility")
-    r4.font.bold = True
-    r4.font.size = Pt(13)
+    # 5. Verification & Reproducibility
+    h5 = doc.add_paragraph()
+    h5.paragraph_format.space_before = Pt(18)
+    h5.paragraph_format.space_after = Pt(6)
+    r5 = h5.add_run("5. Verification and Reproducibility")
+    r5.font.bold = True
+    r5.font.size = Pt(13)
 
-    p4 = doc.add_paragraph(
+    p5 = doc.add_paragraph(
         "All data processing steps are fully automated. The random seed is frozen at 42 in config.py, "
         "and both split files are frozen and saved in the repository at data/splits/drug_split.csv "
         "and data/splits/scaffold_split.csv. "
         "These splits will remain frozen throughout the modeling pipeline."
     )
-    p4.paragraph_format.space_after = Pt(12)
+    p5.paragraph_format.space_after = Pt(12)
 
     # Save document with locked file fallback
     out_docx_path = os.path.join(CFG.RESULTS_DIR, "Cardiotox_Fusion_Phase1_Report.docx")
