@@ -68,7 +68,8 @@ To ensure scientific rigor, prevent evaluation contamination, and align with Dr.
 2.  **L1000 Signature Aggregation Rule:** Replicate Level-5 L1000 signatures (COMPZ z-scores) in the HA1E cell line under the target condition of 10.0 µM dose and 24 h exposure are **mean-aggregated** to construct a single consolidated transcriptomic vector per compound.
 3.  **Independent Model Evaluation (No Fusion):** To prevent target leakage and contamination (which happens when structurally-imputed profiles are mixed with experimental ones), **we do not perform any fusion**. The GNN (structure-only) and the Transformer (biology-only) models are evaluated as completely independent parallel architectures:
     *   *GNN (Structure-only):* Operates on molecular graphs derived from chemical SMILES.
-    *   *Transformer (Biology-only):* Operates on experimental LINCS L1000 signatures. Compounds lacking experimental L1000 data are excluded from the Transformer evaluation, maintaining a clean comparison.
+    *   *Transformer (Biology-only):* Operates on experimental LINCS L1000 signatures.
+    *   *Fair Comparison Across Population Sizes:* The GNN will be evaluated on both (a) the full DICTrank set and (b) the L1000-matched subset, allowing a direct head-to-head comparison on identical drugs.
 
 ---
 
@@ -76,7 +77,7 @@ To ensure scientific rigor, prevent evaluation contamination, and align with Dr.
 
 In response to previous literature (e.g., Seal et al. 2024), we highlight our core novelties which make this project publishable as a rigorous benchmarking study:
 
-*   **Bemis-Murcko Scaffold Splits on DICTrank:** Prior studies did not perform scaffold splits on DICTrank. This evaluation directly quantifies how much of cardiotoxicity prediction is driven by chemical-series memorization versus out-of-distribution generalizability to unseen chemical families. This scaffold-split analysis constitutes our primary publishable novelty.
+*   **Bemis-Murcko Scaffold Splits on DICTrank:** Prior studies did not perform scaffold splits on DICTrank. This evaluation assigns whole scaffold clusters to the held-out test set until at least 15% of unique drugs are covered, directly quantifying how much cardiotoxicity prediction is driven by chemical-series memorization versus out-of-distribution generalizability to unseen chemical families.
 *   **Testing omics Signal Recovery:** Previous shallow classifiers reported near-random performance (~0.57 AUC) for L1000 transcriptomics. We directly test whether a learned representation (multi-head Transformer encoder) can recover predictive biological signal that simpler methods missed. Both positive and negative outcomes will be reported honestly.
 
 ---

@@ -239,7 +239,8 @@ def main():
 
     p3 = doc.add_paragraph(
         "To prevent target leakage and ensure realistic validation generalizability, "
-        "we implemented two separate stratified splitting schemes. In both schemes, splits are frozen at a 70 / 15 / 15 ratio."
+        "we implemented two separate stratified splitting schemes. In both schemes, splits are frozen at a 70 / 15 / 15 ratio. "
+        "For scaffold splits, whole carbon scaffold clusters are assigned to the held-out test set until at least 15% of unique compounds are covered."
     )
     p3.paragraph_format.space_after = Pt(12)
 
@@ -339,24 +340,27 @@ def main():
 
     p_meth1 = doc.add_paragraph(
         "To ensure mathematical rigor and prevent data leakage or validation contamination, "
-        "we have defined two explicit constraints for the dataset preprocessing and modeling phases:"
+        "we have defined explicit constraints for the dataset preprocessing and modeling phases:"
     )
     p_meth1.paragraph_format.space_after = Pt(6)
 
     meth_points = [
         ("L1000 Signature Aggregation Rule: ", True,
-         "A single drug may have multiple replicate signatures measured across different cell lines, doses, and time points in the LINCS L1000 dataset. "
-         "To handle this, we restrict our selection to Level-5 signatures (COMPZ z-scores) in the HA1E cell line (a non-transformed reference line). "
-         "For any drug with multiple replicate signatures matching the target condition of 10.0 µM dose and 24 h exposure, "
-         "we mean-aggregate the z-score vectors to construct a single, consolidated 978-dimensional transcriptomic representation per drug."),
+         "A single drug may have multiple replicate signatures measured across different cell lines, doses, and time points in LINCS L1000. "
+         "To handle this, we restrict our selection to Level-5 signatures (COMPZ z-scores) in the HA1E cell line. "
+         "For any drug with multiple replicate signatures matching 10.0 µM dose and 24 h exposure, "
+         "we mean-aggregate the z-score vectors into a single, consolidated 978-dimensional transcriptomic representation per drug."),
          
         ("Independent Model Isolation (No Fusion): ", True,
-         "To ensure an honest comparison of structure vs. biological pertubation signals without contamination risk, "
+         "To ensure an honest comparison of structure vs. biological perturbation signals without contamination risk, "
          "we evaluate the GNN (structure-only) and the Transformer (biology-only) models as completely independent architectures. "
          "No cross-attention or concatenation fusion is performed. The structural GNN operates on molecular graphs, "
-         "while the biological Transformer operates on experimental L1000 signatures. "
-         "Compounds lacking matched experimental L1000 signatures are excluded from the Transformer evaluation, "
-         "maintaining a clean benchmarking comparison without imputation bias.")
+         "while the biological Transformer operates on experimental L1000 signatures."),
+
+        ("Fair Comparison Across Population Sizes: ", True,
+         "Because the Transformer can only evaluate compounds with experimental L1000 signatures while the GNN can run on the full DICTrank set, "
+         "we report GNN performance on both (a) the full DICTrank dataset and (b) the L1000-matched subset alone. "
+         "This guarantees a head-to-head comparison on identical compounds as well as at full scale.")
     ]
     for title, is_bold, text in meth_points:
         dp = doc.add_paragraph(style='List Bullet')
@@ -388,13 +392,13 @@ def main():
          "We clarify that DICTrank represents general cardiotoxicity concern classes, not just hERG channel blockade. "
          "While hERG blockade is the primary physical mechanism of cardiotoxicity, DICTrank encompasses other forms of toxicities. "
          "Therefore, our model is trained to predict general cardiotoxicity (DICTrank classes), and hERG blockade is discussed as the principal "
-         "mechanistic subclass, rather than being claimed as a direct prediction target. This aligns our labeling with clinical claims."),
+         "mechanistic subclass, rather than being claimed as a direct prediction target."),
          
         ("Bemis-Murcko Scaffold Splits as Primary Novelty: ", True,
          "Prior publications (e.g. Seal et al.) evaluated models using standard random or stratified splits. "
-         "This project introduces Bemis-Murcko scaffold splits on DICTrank. This evaluation directly quantifies how much "
-         "of the cardiotoxicity prediction is due to chemical-series memorization versus out-of-distribution generalizability to unseen chemical families. "
-         "This scaffold-split analysis constitutes our primary publishable novelty, and does not depend on a fusion model showing a win."),
+         "This project introduces Bemis-Murcko scaffold splits on DICTrank, assigning whole scaffold clusters to the test set until at least 15% of unique drugs are held out. "
+         "This evaluation directly quantifies how much cardiotoxicity prediction is due to chemical-series memorization versus out-of-distribution generalizability. "
+         "This scaffold-split analysis constitutes our primary publishable novelty."),
          
         ("Testing the 'Representation Extraction' Hypothesis: ", True,
          "The near-random performance of L1000 signatures in literature (~0.57 AUC) raises the question of whether transcriptomic profiles lack signal "
