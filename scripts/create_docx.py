@@ -334,13 +334,13 @@ def main():
     h3_meth = doc.add_paragraph()
     h3_meth.paragraph_format.space_before = Pt(18)
     h3_meth.paragraph_format.space_after = Pt(6)
-    r3_meth = h3_meth.add_run("3. Methodology, Signature Aggregation, and Model Isolation")
+    r3_meth = h3_meth.add_run("3. Methodology, Signature Aggregation, and Dual Output System")
     r3_meth.font.bold = True
     r3_meth.font.size = Pt(13)
 
     p_meth1 = doc.add_paragraph(
         "To ensure mathematical rigor and prevent data leakage or validation contamination, "
-        "we have defined explicit constraints for the dataset preprocessing and modeling phases:"
+        "we have defined explicit constraints for the dataset preprocessing and dual-output inference pipeline:"
     )
     p_meth1.paragraph_format.space_after = Pt(6)
 
@@ -351,16 +351,16 @@ def main():
          "For any drug with multiple replicate signatures matching 10.0 µM dose and 24 h exposure, "
          "we mean-aggregate the z-score vectors into a single, consolidated 978-dimensional transcriptomic representation per drug."),
          
-        ("Independent Model Isolation (No Fusion): ", True,
-         "To ensure an honest comparison of structure vs. biological perturbation signals without contamination risk, "
-         "we evaluate the GNN (structure-only) and the Transformer (biology-only) models as completely independent architectures. "
-         "No cross-attention or concatenation fusion is performed. The structural GNN operates on molecular graphs, "
-         "while the biological Transformer operates on experimental L1000 signatures."),
+        ("Dual Independent Outputs (GNN & Transformer): ", True,
+         "We evaluate and display two independent output scores for every compound: "
+         "(1) Structural Risk Score (from GNN), and (2) Biological Perturbation Score (from Transformer). "
+         "No black-box fusion is performed, ensuring transparent, un-contaminated evaluation across both modalities."),
 
-        ("Fair Comparison Across Population Sizes: ", True,
-         "Because the Transformer can only evaluate compounds with experimental L1000 signatures while the GNN can run on the full DICTrank set, "
-         "we report GNN performance on both (a) the full DICTrank dataset and (b) the L1000-matched subset alone. "
-         "This guarantees a head-to-head comparison on identical compounds as well as at full scale.")
+        ("Mathematical Imputation Tagging & Disclaimer: ", True,
+         "For novel or out-of-dataset compounds lacking experimental L1000 signatures, an MLP imputer calculates a mathematical estimation "
+         "of the gene expression vector from chemical structure. Crucially, the system explicitly tags the output: "
+         "'[Notice] Imputed Signature: This compound uses a mathematically calculated gene profile. Mathematically estimated results may vary from experimental observations.' "
+         "Furthermore, imputed profiles are reported separately and excluded from the core experimental benchmark.")
     ]
     for title, is_bold, text in meth_points:
         dp = doc.add_paragraph(style='List Bullet')
@@ -404,7 +404,7 @@ def main():
          "The near-random performance of L1000 signatures in literature (~0.57 AUC) raises the question of whether transcriptomic profiles lack signal "
          "or if previous shallow classifiers failed to extract it. By utilizing a multi-head Transformer encoder on the experimental z-score sequence, "
          "we directly test whether a learned representation can recover predictive biological signal that simpler methods missed. "
-         "Evaluating this cleanly, without any structural imputation contamination, provides a high-quality benchmarking study.")
+         "Evaluating this cleanly, with transparent imputation tagging, provides a high-quality benchmarking study.")
     ]
     
     for title, is_bold, text in disc_points:
