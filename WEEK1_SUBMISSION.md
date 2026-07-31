@@ -36,9 +36,12 @@ cardiotox-fusion/
 
 ---
 
-## 3. Usability Audit Summary (Ground Truth Counts)
-* **Usable Compounds in Dataset:** **562** (filtered for RDKit-valid SMILES and matched LINCS L1000 Level-5 active signatures).
-* **Per-Class Distribution:**
+## 3. Usability Audit Summary & Dual Coverage Counts
+* **Ambiguous Class Handling:** Ambiguous concern drugs are removed from classification targets, mapping DICTrank to binary classification (`Most` + `Less` concern = 1 vs `No` concern = 0), matching Seal et al.
+* **Dual L1000 Coverage Counts:**
+  * **Broad Match (Any L1000 Signature):** **1,048** DICTrank drugs matched across any cell line, dose, or treatment time point.
+  * **Strict Usable Cohort (HA1E, 10.0 µM, 24 h):** **562** compounds (filtered for RDKit-valid SMILES and matched Level-5 active signatures).
+* **Per-Class Distribution (Strict 562 Cohort):**
   * **Most Concern (High Risk):** 199 compounds (35.4%)
   * **Less Concern (Medium Risk):** 246 compounds (43.8%)
   * **No Concern (Safe):** 117 compounds (20.8%)
@@ -62,14 +65,15 @@ cardiotox-fusion/
 
 ## 5. Methodological & Rigorous Constraints (Addressing Faculty Feedback)
 
-To ensure scientific rigor, prevent evaluation contamination, and align with Dr. Bharat Manna's feedback, we have established four explicit guidelines:
+To ensure scientific rigor, prevent evaluation contamination, and align with Dr. Bharat Manna's feedback, we have established five explicit guidelines:
 
-1.  **Label Framing (DICTrank vs. hERG):** The classification model is trained to predict general cardiotoxicity classes from the FDA DICTrank dataset, not specific hERG channel blockade. While hERG blockade is the primary physical mechanism of cardiotoxicity, DICTrank labels represent clinical cardiotoxicity concern. We target general cardiotoxicity, and move all hERG-specific claims to post-hoc discussion, maintaining clinical honesty.
-2.  **L1000 Signature Aggregation Rule:** Replicate Level-5 L1000 signatures (COMPZ z-scores) in the HA1E cell line under the target condition of 10.0 µM dose and 24 h exposure are **mean-aggregated** to construct a single consolidated transcriptomic vector per compound.
-3.  **Independent Dual Outputs (GNN & Transformer):** We display two separate, independent predictions for every drug:
+1.  **Label Framing (DICTrank vs. hERG):** The classification model is trained to predict general cardiotoxicity classes from the FDA DICTrank dataset, not specific hERG channel blockade. Ambiguous drugs are removed to avoid predicting FDA labeling uncertainty.
+2.  **Learned Gene-Identity Embeddings:** For the Transformer encoder, we use learned gene-identity embeddings (a unique learned embedding vector for each of the 978 landmark gene IDs plus a linear projection of its scalar z-score) instead of sinusoidal positional encodings, as gene ordering in 1D expression vectors is arbitrary.
+3.  **L1000 Signature Aggregation Rule:** Replicate Level-5 L1000 signatures (COMPZ z-scores) in the HA1E cell line under the target condition of 10.0 µM dose and 24 h exposure are **mean-aggregated** to construct a single consolidated transcriptomic vector per compound.
+4.  **Independent Dual Outputs (GNN & Transformer):** We display two separate, independent predictions for every drug:
     *   *GNN Prediction:* Structure-based risk score derived from chemical SMILES graph.
     *   *Transformer Prediction:* Biology-based risk score derived from transcriptomic expression z-scores.
-4.  **Mathematical Imputation Tagging & Disclaimer:** If a drug is not present in the experimental L1000 dataset, the system mathematically calculates/imputes the gene expression vector from chemical structure using an MLP. When this occurs, the output displays an explicit tag and disclaimer:
+5.  **Mathematical Imputation Tagging & Disclaimer:** If a drug is not present in the experimental L1000 dataset, the system mathematically calculates/imputes the gene expression vector from chemical structure using an MLP. When this occurs, the output displays an explicit tag and disclaimer:
     > *"[Notice] Imputed Signature: This compound uses a mathematically calculated gene profile. Mathematically estimated results may vary from experimental observations."*
     Imputed drugs are evaluated separately and excluded from the core experimental benchmark.
 
@@ -80,7 +84,7 @@ To ensure scientific rigor, prevent evaluation contamination, and align with Dr.
 In response to previous literature (e.g., Seal et al. 2024), we highlight our core novelties which make this project publishable as a rigorous benchmarking study:
 
 *   **Bemis-Murcko Scaffold Splits on DICTrank:** Prior studies did not perform scaffold splits on DICTrank. This evaluation assigns whole scaffold clusters to the held-out test set until at least 15% of unique drugs are covered, directly quantifying how much of cardiotoxicity prediction is driven by chemical-series memorization versus out-of-distribution generalizability to unseen chemical families.
-*   **Testing omics Signal Recovery:** Previous shallow classifiers reported near-random performance (~0.57 AUC) for L1000 transcriptomics. We directly test whether a learned representation (multi-head Transformer encoder) can recover predictive biological signal that simpler methods missed. Both positive and negative outcomes will be reported honestly.
+*   **Testing omics Signal Recovery:** Previous shallow classifiers reported near-random performance (~0.57 AUC) for L1000 transcriptomics. We directly test whether a learned representation (multi-head Transformer encoder with learned gene embeddings) can recover predictive biological signal that simpler methods missed. Both positive and negative outcomes will be reported honestly.
 
 ---
 

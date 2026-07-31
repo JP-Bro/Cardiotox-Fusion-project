@@ -118,7 +118,7 @@ def main():
     
     runs_data = [
         ("Milestone: ", True), ("Week 1 Deliverable   |   ", False),
-        ("Date: ", True), ("July 28, 2026\n", False),
+        ("Date: ", True), ("July 31, 2026\n", False),
         ("Team Members: ", True), ("Jimit Patel, Vineela, Aditya, Nehal, Pranjal\n", False),
         ("Submitted to: ", True), ("Dr. Bharat Manna (School of Bio Sciences and Technology, VIT)\n", False),
         ("Repository: ", True), ("github.com/JP-Bro/Cardiotox-Fusion-project", False)
@@ -134,23 +134,21 @@ def main():
     h1 = doc.add_paragraph()
     h1.paragraph_format.space_before = Pt(18)
     h1.paragraph_format.space_after = Pt(6)
-    r = h1.add_run("1. Dataset Usability Audit")
+    r = h1.add_run("1. Dataset Usability Audit & Dual Coverage Counts")
     r.font.bold = True
     r.font.size = Pt(13)
     r.font.color.rgb = RGBColor(0, 0, 0)
 
     p1 = doc.add_paragraph(
-        "To establish the modeling boundaries for our comparative evaluation, "
-        "we performed a joint audit of the FDA DICTrank labeling set and the LINCS L1000 GSE70138 "
-        "level-5 expression matrix. Compounds were retained in the usable cohort only if they met "
-        "the following criteria:"
+        "To establish the modeling boundaries for our comparative evaluation and avoid predicting FDA labeling uncertainty, "
+        "ambiguous drugs were dropped, mapping the problem to binary classification (Most+Less concern = 1 vs No concern = 0, matching Seal et al.). "
+        "We report two distinct coverage counts across the LINCS L1000 dataset:"
     )
     p1.paragraph_format.space_after = Pt(6)
 
     bullets = [
-        "Possessed a valid, parseable chemical structure (verified via RDKit).",
-        "Matched a unique Level-5 perturbation signature (COMPZ) in the HA1E cell line (10.0 µM dose, 24-hour time point).",
-        "Carried a non-ambiguous DICTrank label mapping to binary classification (No concern = 0; Less/Most concern = 1)."
+        "Broad L1000 Coverage: 1,048 DICTrank drugs matched to at least one L1000 signature across any cell line, dose, or time point.",
+        "Strict HA1E Usable Cohort: 562 DICTrank drugs matching the strict condition of Level-5 signatures (COMPZ z-scores) in the HA1E cell line (10.0 µM dose, 24 h exposure)."
     ]
     for b in bullets:
         bp = doc.add_paragraph(style='List Bullet')
@@ -159,8 +157,8 @@ def main():
         br.font.size = Pt(11)
 
     p2 = doc.add_paragraph(
-        "Out of the raw 1,211 labeled DICTrank compounds, a total of 562 compounds met all three requirements, "
-        "forming our core dataset. The breakdown across the cardiotoxicity label categories is detailed below:"
+        "Out of the raw 1,211 labeled DICTrank compounds, a total of 562 compounds met all strict requirements, "
+        "forming our primary core dataset. The breakdown across the cardiotoxicity label categories is detailed below:"
     )
     p2.paragraph_format.space_before = Pt(6)
     p2.paragraph_format.space_after = Pt(10)
@@ -195,13 +193,9 @@ def main():
     r_code1 = p_code1.add_run(
         "In [2]: # Load and merge datasets\n"
         "Raw DICTrank count: 1211\n"
-        "L1000 matched compounds: 1048\n"
-        "Merged set count: 1048\n\n"
-        "In [4]: # Class Counts Verification\n"
-        "--- CLASS COUNTS (DICTrank Full Set) ---\n"
-        "  less           : 451\n"
-        "  most           : 318\n"
-        "  no             : 279\n\n"
+        "DICTrank drugs with ANY L1000 signature: 1048\n"
+        "Merged strict usable set count (HA1E, 10uM, 24h): 562\n\n"
+        "In [4]: # Binary Classification (Ambiguous Class Dropped)\n"
         "--- CLASS COUNTS (LINCS-Overlapping Usable Set) ---\n"
         "  less           : 246 (43.8%)\n"
         "  most           : 199 (35.4%)\n"
@@ -334,17 +328,21 @@ def main():
     h3_meth = doc.add_paragraph()
     h3_meth.paragraph_format.space_before = Pt(18)
     h3_meth.paragraph_format.space_after = Pt(6)
-    r3_meth = h3_meth.add_run("3. Methodology, Signature Aggregation, and Dual Output System")
+    r3_meth = h3_meth.add_run("3. Methodology, Embeddings, and Dual Output System")
     r3_meth.font.bold = True
     r3_meth.font.size = Pt(13)
 
     p_meth1 = doc.add_paragraph(
         "To ensure mathematical rigor and prevent data leakage or validation contamination, "
-        "we have defined explicit constraints for the dataset preprocessing and dual-output inference pipeline:"
+        "we have defined explicit constraints for the dataset preprocessing, Transformer architecture, and dual-output inference pipeline:"
     )
     p_meth1.paragraph_format.space_after = Pt(6)
 
     meth_points = [
+        ("Learned Gene-Identity Embeddings (No Sinusoidal Encoding): ", True,
+         "Because gene order in the 978-element L1000 landmark vector is arbitrary (e.g. Entrez ID ordering), sinusoidal positional encodings inject a false sequence ordering. "
+         "Instead, each token is represented as a learned gene-identity embedding vector for that specific gene ID plus a linear projection of its scalar z-score."),
+
         ("L1000 Signature Aggregation Rule: ", True,
          "A single drug may have multiple replicate signatures measured across different cell lines, doses, and time points in LINCS L1000. "
          "To handle this, we restrict our selection to Level-5 signatures (COMPZ z-scores) in the HA1E cell line. "
@@ -402,7 +400,7 @@ def main():
          
         ("Testing the 'Representation Extraction' Hypothesis: ", True,
          "The near-random performance of L1000 signatures in literature (~0.57 AUC) raises the question of whether transcriptomic profiles lack signal "
-         "or if previous shallow classifiers failed to extract it. By utilizing a multi-head Transformer encoder on the experimental z-score sequence, "
+         "or if previous shallow classifiers failed to extract it. By utilizing a multi-head Transformer encoder with learned gene-identity embeddings on the experimental z-score sequence, "
          "we directly test whether a learned representation can recover predictive biological signal that simpler methods missed. "
          "Evaluating this cleanly, with transparent imputation tagging, provides a high-quality benchmarking study.")
     ]
