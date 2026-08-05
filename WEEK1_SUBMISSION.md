@@ -1,6 +1,6 @@
 # Cardiotox-Fusion — Week 1 Project Deliverables & Submission Guide
 
-This document lists the exact files, outputs, and verification commands completed and uploaded to the GitHub repository for the **Week 1** milestone.
+This document lists the exact files, outputs, and verification commands completed and uploaded to the GitHub repository for the **Phase 1 (Week 1)** milestone.
 
 ---
 
@@ -8,98 +8,65 @@ This document lists the exact files, outputs, and verification commands complete
 * **Repository Name:** `Cardiotox-Fusion-project`
 * **Owner:** `JP-Bro`
 * **URL:** [https://github.com/JP-Bro/Cardiotox-Fusion-project](https://github.com/JP-Bro/Cardiotox-Fusion-project)
-* **Status:** All Week 1 files have been successfully pushed and are up-to-date with `origin/main`.
+* **Status:** All Phase 1 pipeline fixes, frozen splits, and audit logs have been committed and pushed.
 
 ---
 
 ## 2. Directory Structure of Uploaded Deliverables
-Below is the directory manifest showing where each required Week 1 deliverable is located in the repository:
+Below is the directory manifest showing where each required deliverable is located in the repository:
 
 ```text
 cardiotox-fusion/
 ├── data/
 │   └── splits/
-│       ├── drug_split.csv             # Stratified Drug-level split (Train/Val/Test)
+│       ├── drug_split.csv             # Stratified Drug-level split (Parent-grouped, 0% cross-leak)
 │       └── scaffold_split.csv         # Bemis-Murcko Scaffold-level split
 ├── notebooks/
-│   └── phase1_usability_and_splits.ipynb  # Executable Jupyter Notebook (cell-by-cell)
+│   └── phase1_usability_and_splits.ipynb  # Executable Jupyter Notebook
 ├── results/
-│   ├── phase1_audit_report.md         # Markdown summary report of audit results
-│   ├── Cardiotox_Fusion_Phase1_Report.docx  # Compiled Word report (primary)
+│   ├── phase1_audit_report.md         # Summary report of audit results
+│   ├── pipeline_rebuild_audit.md      # Detailed audit log of pipeline rebuild & gene verification
+│   ├── Cardiotox_Fusion_Phase1_Report.docx  # Compiled Word report
 │   ├── phase1_usable_cohort.png       # Plot 1: Usable cohort counts by class
 │   └── phase1_splits_distribution.png # Plot 2: Partition size comparison
 └── scripts/
+    ├── 03_rebuild_pipeline.py         # End-to-end LINCS matching, mean-aggregation, & split generator
     ├── phase1_audit_splits.py         # Main execution script for audit and splits
-    ├── phase1_plot.py                 # Visualization script generating the 2 plots
-    └── create_docx.py                 # Script compiling the Word report
+    ├── phase1_plot.py                 # Visualization script
+    └── create_docx.py                 # Script compiling Word report
 ```
 
 ---
 
-## 3. Usability Audit Summary & Dual Coverage Counts
+## 3. Usability Audit Summary & Strict Cohort Counts (Post-Audit Fixes)
 * **Ambiguous Class Handling:** Ambiguous concern drugs are removed from classification targets, mapping DICTrank to binary classification (`Most` + `Less` concern = 1 vs `No` concern = 0), matching Seal et al.
-* **Dual L1000 Coverage Counts:**
-  * **Broad Match (Any L1000 Signature):** **1,048** DICTrank drugs matched across any cell line, dose, or treatment time point.
-  * **Strict Usable Cohort (HA1E, 10.0 µM, 24 h):** **562** compounds (filtered for RDKit-valid SMILES and matched Level-5 active signatures).
-* **Per-Class Distribution (Strict 562 Cohort):**
-  * **Most Concern (High Risk):** 199 compounds (35.4%)
-  * **Less Concern (Medium Risk):** 246 compounds (43.8%)
-  * **No Concern (Safe):** 117 compounds (20.8%)
-* **Imbalance Handling:** Due to the 79.2% positive cardiotoxicity rate, **AUC-PR** is frozen as our primary evaluation metric.
+* **Parent Structure Deduplication:** Salt-form variants sharing identical parent SMILES (e.g., *Sildenafil* vs *Sildenafil Citrate*) are deduplicated into a single representative parent molecule.
+* **Strict Usable Cohort (HA1E, 10.0 µM, 24 h):** **514 unique parent compounds** matching valid SMILES, verified landmark gene IDs (pr_is_lm = 1), and mean-aggregated Level-5 signatures.
+* **Leakage Elimination:** Drug-level splits group by `parent_smiles` prior to splitting, guaranteeing **0% cross-split SMILES leakage** between train, val, and test.
 
 ---
 
 ## 4. Dataset Partition Summary (70 / 15 / 15)
 
-### A. Drug-Level Splits (Stratified by Cardiotoxicity Label)
-* **Train:** 393 compounds (Positive Rate: 79.1%)
-* **Validation:** 84 compounds (Positive Rate: 79.8%)
-* **Test:** 85 compounds (Positive Rate: 78.8%)
+### A. Drug-Level Splits (Grouped by Parent SMILES & Stratified by Label)
+* **Train:** 359 compounds (78.8% Toxic)
+* **Validation:** 78 compounds (78.2% Toxic)
+* **Test:** 78 compounds (78.2% Toxic)
 
 ### B. Bemis-Murcko Scaffold-Level Splits (Grouped by Carbon Scaffold)
-* **Train:** 393 compounds (Positive Rate: 79.4%)
-* **Validation:** 84 compounds (Positive Rate: 75.0%)
-* **Test:** 85 compounds (Positive Rate: 82.4%)
+* **Train:** 344 compounds
+* **Validation:** 65 compounds
+* **Test:** 106 compounds
 
 ---
 
-## 5. Methodological & Rigorous Constraints (Addressing Faculty Feedback)
-
-To ensure scientific rigor, prevent evaluation contamination, and align with Dr. Bharat Manna's feedback, we have established five explicit guidelines:
-
-1.  **Label Framing (DICTrank vs. hERG):** The classification model is trained to predict general cardiotoxicity classes from the FDA DICTrank dataset, not specific hERG channel blockade. Ambiguous drugs are removed to avoid predicting FDA labeling uncertainty.
-2.  **Learned Gene-Identity Embeddings:** For the Transformer encoder, we use learned gene-identity embeddings (a unique learned embedding vector for each of the 978 landmark gene IDs plus a linear projection of its scalar z-score) instead of sinusoidal positional encodings, as gene ordering in 1D expression vectors is arbitrary.
-3.  **L1000 Signature Aggregation Rule:** Replicate Level-5 L1000 signatures (COMPZ z-scores) in the HA1E cell line under the target condition of 10.0 µM dose and 24 h exposure are **mean-aggregated** to construct a single consolidated transcriptomic vector per compound.
-4.  **Independent Dual Outputs (GNN & Transformer):** We display two separate, independent predictions for every drug:
-    *   *GNN Prediction:* Structure-based risk score derived from chemical SMILES graph.
-    *   *Transformer Prediction:* Biology-based risk score derived from transcriptomic expression z-scores.
-5.  **Mathematical Imputation Tagging & Disclaimer:** If a drug is not present in the experimental L1000 dataset, the system mathematically calculates/imputes the gene expression vector from chemical structure using an MLP. When this occurs, the output displays an explicit tag and disclaimer:
-    > *"[Notice] Imputed Signature: This compound uses a mathematically calculated gene profile. Mathematically estimated results may vary from experimental observations."*
-    Imputed drugs are evaluated separately and excluded from the core experimental benchmark.
-
----
-
-## 6. Academic Novelty & Publishability Strategy
-
-In response to previous literature (e.g., Seal et al. 2024), we highlight our core novelties which make this project publishable as a rigorous benchmarking study:
-
-*   **Bemis-Murcko Scaffold Splits on DICTrank:** Prior studies did not perform scaffold splits on DICTrank. This evaluation assigns whole scaffold clusters to the held-out test set until at least 15% of unique drugs are covered, directly quantifying how much of cardiotoxicity prediction is driven by chemical-series memorization versus out-of-distribution generalizability to unseen chemical families.
-*   **Testing omics Signal Recovery:** Previous shallow classifiers reported near-random performance (~0.57 AUC) for L1000 transcriptomics. We directly test whether a learned representation (multi-head Transformer encoder with learned gene embeddings) can recover predictive biological signal that simpler methods missed. Both positive and negative outcomes will be reported honestly.
-
----
-
-## 7. Verification Commands
-To re-run the usability audit, re-generate the splits, and re-create the visualization plots locally, execute the following commands from the repository root:
+## 5. Verification Commands (Reproducibility)
+To rebuild the entire matching, mean-aggregation, deduplication, and split pipeline from scratch on a fresh clone:
 
 ```bash
-# 1. Run the usability audit and generate the split files
+# 1. Run the end-to-end LINCS matching, aggregation, and split generation script
+python scripts/03_rebuild_pipeline.py
+
+# 2. Run verification script to confirm 0 cross-split leakage and class balance
 python scripts/phase1_audit_splits.py
-
-# 2. Generate the two separate visualization plots
-python scripts/phase1_plot.py
-
-# 3. Re-compile the Microsoft Word report
-python scripts/create_docx.py
 ```
-
-*All scripts run with a frozen random seed (`42`) set in `config.py` to guarantee identical outputs across all machines.*
