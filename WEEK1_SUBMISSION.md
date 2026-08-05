@@ -41,7 +41,7 @@ cardiotox-fusion/
 ## 3. Usability Audit Summary & Strict Cohort Counts (Post-Audit Fixes)
 * **Ambiguous Class Handling:** Ambiguous concern drugs are removed from classification targets, mapping DICTrank to binary classification (`Most` + `Less` concern = 1 vs `No` concern = 0), matching Seal et al.
 * **Parent Structure Deduplication:** Salt-form variants sharing identical parent SMILES (e.g., *Sildenafil* vs *Sildenafil Citrate*) are deduplicated into a single representative parent molecule.
-* **Strict Usable Cohort (HA1E, 10.0 µM, 24 h):** **514 unique parent compounds** matching valid SMILES, verified landmark gene IDs (pr_is_lm = 1), and mean-aggregated Level-5 signatures.
+* **Strict Usable Cohort (HA1E, 10.0 µM, 24 h):** **517 unique parent compounds** matching valid SMILES, verified landmark gene IDs (pr_is_lm = 1), and mean-aggregated Level-5 signatures.
 * **Leakage Elimination:** Drug-level splits group by `parent_smiles` prior to splitting, guaranteeing **0% cross-split SMILES leakage** between train, val, and test.
 
 ---
@@ -49,13 +49,13 @@ cardiotox-fusion/
 ## 4. Dataset Partition Summary (70 / 15 / 15)
 
 ### A. Drug-Level Splits (Grouped by Parent SMILES & Stratified by Label)
-* **Train:** 359 compounds (78.8% Toxic)
+* **Train:** 361 compounds (78.9% Toxic)
 * **Validation:** 78 compounds (78.2% Toxic)
 * **Test:** 78 compounds (78.2% Toxic)
 
 ### B. Bemis-Murcko Scaffold-Level Splits (Grouped by Carbon Scaffold)
-* **Train:** 344 compounds
-* **Validation:** 65 compounds
+* **Train:** 322 compounds
+* **Validation:** 89 compounds
 * **Test:** 106 compounds
 
 ---
