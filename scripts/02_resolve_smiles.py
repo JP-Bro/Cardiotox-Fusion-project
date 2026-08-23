@@ -73,6 +73,9 @@ def main():
     
     for idx, row in labels_df.iterrows():
         query_name = row['resolved_name']
+        if pd.isna(query_name):
+            continue
+        query_name = str(query_name).strip()
         upper_name = query_name.upper()
         
         raw_smi = None
