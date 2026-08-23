@@ -1,23 +1,27 @@
-# Pipeline Rebuild Audit Log
+# Master Pipeline Rebuild & Data Audit Log
 
-## Step 1: Verification of Gene Columns
-- Extracted 978 landmark genes from GCTX.
-- Verified that columns in `expression_matrix.csv` match the first 978 GCTX row IDs (NCBI landmark gene IDs).
+## Point 1: Verified Landmark Genes (pr_is_lm == 1)
+- Source: `GSE70138_Broad_LINCS_gene_info_2017-03-06.txt.gz`
+- Verified total landmark genes: 978
+- Extracted exact GCTX row indices corresponding to `pr_is_lm == 1`.
 
-## Step 2: LINCS Matching
-- Filtered LINCS signatures to HA1E, 24h, 10.0 µM, trt_cp.
-- Total signatures meeting criteria: 1,837
-- Resolved SMILES for matched compounds (including Fulvestrant, Ixabepilone, Ivermectin).
+## Point 2 & 3: Neutralisation & InChIKey Skeleton Deduplication
+- Neutralised formal charges using RDKit `Uncharger`.
+- Resolved label conflict: ACYCLOVIR (0) vs ACYCLOVIR SODIUM (1) -> Assigned Label 1.
+- Grouped compounds by **14-character InChIKey connectivity block**.
+- Total clean unique chemical skeletons: **487**.
+- Drug-level cross-split structural leakage: **0 leaks (0%)**.
 
-## Step 3 & 4: Extraction, Deduplication & Aggregation
-- Removed 65 salt duplicates based on `parent_smiles`.
-- Final clean matched compounds count: **517 unique parent structures**.
-- Extracted expression vectors for these compounds and mean-aggregated replicate z-scores.
+## Point 4: Scaffold Split Rebuild
+- Computed Murcko Scaffolds without chirality (`includeChirality=False`).
+- Handled 15 acyclic compounds by assigning individual pseudo-scaffold IDs.
+- Allocated scaffold clusters using compound-count-proportional greedy packing.
+- Scaffold Split compound counts:
+  - Train: 340
+  - Validation: 73
+  - Test: 74
 
-## Step 5: Data Splitting
-- Stratified 70/15/15 random split generated on drug level (`drug_split.csv`), grouped by `parent_smiles`.
-- Scaffold split generated (`scaffold_split.csv`), grouped by Bemis-Murcko scaffolds.
-- Cross-split SMILES leakage: **0% (Exactly 0 leaks)**.
-- Train size (drug): 361
-- Val size (drug): 78
-- Test size (drug): 78
+## Point 5: Sample Size & Statistical Power
+- Scaffold test set size: 74 compounds (10 negatives).
+- Documented AUC-PR 95% Confidence Interval for Random Classifier: `[0.785, 0.915]`.
+- Evaluation expandability: Full DICTrank dataset (1,211 drugs, 343 negatives) is available for GNN structure branch benchmarking.
