@@ -1,0 +1,50 @@
+2026-07-27 16:47:29 | phase1_audit_splits | INFO | ============================================================
+2026-07-27 16:47:29 | phase1_audit_splits | INFO | STARTING PHASE 1: AUDIT & SPLIT GENERATOR
+2026-07-27 16:47:29 | phase1_audit_splits | INFO | ============================================================
+2026-07-27 16:47:29 | phase1_audit_splits | INFO | Loaded 1211 labeled compounds from DICTrank.
+2026-07-27 16:47:29 | phase1_audit_splits | INFO | Loaded 1048 matched compounds from LINCS matches.
+2026-07-27 16:47:29 | phase1_audit_splits | INFO | Merged set contains 1048 compounds.
+2026-07-27 16:47:31 | phase1_audit_splits | INFO | Available sig_ids in expression matrix: 489
+2026-07-27 16:47:31 | phase1_audit_splits | INFO | Usable set shape: (562, 22)
+2026-07-27 16:47:31 | phase1_audit_splits | INFO | 
+--- CLASS COUNTS (Full Set) ---
+2026-07-27 16:47:31 | phase1_audit_splits | INFO |   less           : 451
+2026-07-27 16:47:31 | phase1_audit_splits | INFO |   most           : 318
+2026-07-27 16:47:31 | phase1_audit_splits | INFO |   no             : 279
+2026-07-27 16:47:31 | phase1_audit_splits | INFO | 
+--- CLASS COUNTS (LINCS-Overlapping Usable Set) ---
+2026-07-27 16:47:31 | phase1_audit_splits | INFO |   less           : 246
+2026-07-27 16:47:31 | phase1_audit_splits | INFO |   most           : 199
+2026-07-27 16:47:31 | phase1_audit_splits | INFO |   no             : 117
+2026-07-27 16:48:01 | phase1_audit_splits | INFO | ============================================================
+2026-07-27 16:48:01 | phase1_audit_splits | INFO | STARTING PHASE 1: AUDIT & SPLIT GENERATOR
+2026-07-27 16:48:01 | phase1_audit_splits | INFO | ============================================================
+2026-07-27 16:48:01 | phase1_audit_splits | INFO | Loaded 1211 labeled compounds from DICTrank.
+2026-07-27 16:48:01 | phase1_audit_splits | INFO | Loaded 1048 matched compounds from LINCS matches.
+2026-07-27 16:48:01 | phase1_audit_splits | INFO | Merged set contains 1048 compounds.
+2026-07-27 16:48:03 | phase1_audit_splits | INFO | Available sig_ids in expression matrix: 489
+2026-07-27 16:48:03 | phase1_audit_splits | INFO | Usable set shape: (562, 21)
+2026-07-27 16:48:03 | phase1_audit_splits | INFO | 
+--- CLASS COUNTS (Full Set) ---
+2026-07-27 16:48:03 | phase1_audit_splits | INFO |   less           : 451
+2026-07-27 16:48:03 | phase1_audit_splits | INFO |   most           : 318
+2026-07-27 16:48:03 | phase1_audit_splits | INFO |   no             : 279
+2026-07-27 16:48:03 | phase1_audit_splits | INFO | 
+--- CLASS COUNTS (LINCS-Overlapping Usable Set) ---
+2026-07-27 16:48:03 | phase1_audit_splits | INFO |   less           : 246
+2026-07-27 16:48:03 | phase1_audit_splits | INFO |   most           : 199
+2026-07-27 16:48:03 | phase1_audit_splits | INFO |   no             : 117
+2026-07-27 16:48:22 | phase1_audit_splits | INFO | 
+--- DRUG-LEVEL SPLIT SIZES ---
+2026-07-27 16:48:22 | phase1_audit_splits | INFO |   train   : 393 compounds (pos rate: 79.1%)
+2026-07-27 16:48:22 | phase1_audit_splits | INFO |   test    : 85 compounds (pos rate: 78.8%)
+2026-07-27 16:48:22 | phase1_audit_splits | INFO |   val     : 84 compounds (pos rate: 79.8%)
+2026-07-27 16:48:22 | phase1_audit_splits | INFO | 
+--- SCAFFOLD-LEVEL SPLIT SIZES ---
+2026-07-27 16:48:22 | phase1_audit_splits | INFO |   train   : 393 compounds (pos rate: 79.4%)
+2026-07-27 16:48:22 | phase1_audit_splits | INFO |   test    : 85 compounds (pos rate: 82.4%)
+2026-07-27 16:48:22 | phase1_audit_splits | INFO |   val     : 84 compounds (pos rate: 75.0%)
+2026-07-27 16:48:22 | phase1_audit_splits | INFO | Saved drug split to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\splits\drug_split.csv
+2026-07-27 16:48:22 | phase1_audit_splits | INFO | Saved scaffold split to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\splits\scaffold_split.csv
+2026-07-27 16:48:22 | phase1_audit_splits | INFO | Saved audit report to: C:\Users\patel\Desktop\group_project\cardiotox-fusion\results\phase1_audit_report.md
+2026-07-27 16:48:22 | phase1_audit_splits | INFO | PHASE 1 COMPLETE.

@@ -25,7 +25,6 @@ env/
 # Large raw GCTX binary matrix (>100MB exceeds standard GitHub push limit)
 data/raw/lincs/*.gctx
 *.gctx
-data/processed/graphs/
 
 # Large trained checkpoints (PT / PKL)
 models/checkpoints/*.pt
