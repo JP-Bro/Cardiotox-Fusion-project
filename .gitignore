@@ -22,11 +22,10 @@ env/
 *.sln
 *.swp
 
-# Large raw datasets and matched matrix files (prevents GitHub 100MB rejection)
-data/raw/
+# Large raw GCTX binary matrix (>100MB exceeds standard GitHub push limit)
+data/raw/lincs/*.gctx
+*.gctx
 data/processed/graphs/
-data/processed/expression_matrix.csv
-data/processed/lincs_matched_compounds.csv
 
 # Large trained checkpoints (PT / PKL)
 models/checkpoints/*.pt
