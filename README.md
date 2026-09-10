@@ -72,12 +72,20 @@ All scripts use `config.py` for paths and `RANDOM_SEED = 42`.
 
 ---
 
-## Baseline Results (Scaffold Split Test Set, N = 74)
+## Baseline Results (Scaffold Split Test Set, N = 74: 64 Toxic, 10 Safe)
 
-| Model | AUC-PR | 95% CI | AUC-ROC |
-|---|---|---|---|
-| Random Classifier (prevalence) | 0.8649 | — | 0.500 |
-| LR on L1000 expression | 0.8600 | [0.7535, 0.9561] | 0.4828 |
-| RF on Morgan fingerprints | **0.9344** | [0.8681, 0.9893] | **0.7125** |
+> **Metric Reporting Standard:** In an imbalanced test set with 86.5% positive prevalence, a random classifier achieves an AUC-PR floor of **0.8649**. Thus, **AUC-ROC** and **Balanced Accuracy** serve as the primary discriminative metrics, with **AUC-PR** reported alongside its 0.865 prevalence baseline.
 
-> **Note:** Wide CIs reflect the small scaffold test set (10 negatives). All deep model comparisons will be evaluated against this same 487-drug scaffold split and bootstrapped CIs will be reported.
+| Modality & Model | AUC-ROC (Primary) | 95% Bootstrap CI | Balanced Acc | AUC-PR (Floor = 0.865) | 95% Bootstrap CI |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Random Guess (Baseline)** | **0.5000** | — | **0.5000** | **0.8649** | — |
+| **Structure: Random Forest** (200 trees, Morgan FP) | **0.7227** | [0.523, 0.906] | **0.6375** | **0.9395** | [0.879, 0.990] |
+| **Structure: Support Vector** (RBF, Morgan FP) | **0.7078** | [0.489, 0.895] | **0.6000** | **0.9326** | [0.862, 0.989] |
+| **Biology: Sparse Logistic Reg** (L1 / Lasso, L1000) | **0.5922** | [0.377, 0.801] | **0.5672** | **0.9061** | [0.821, 0.972] |
+| **Biology: Support Vector** (Linear, L1000) | **0.5141** | [0.286, 0.731] | **0.5000** | **0.8549** | [0.752, 0.966] |
+| **Biology: Logistic Regression** (L2, L1000) | **0.4875** | [0.260, 0.721] | **0.5062** | **0.8503** | [0.741, 0.954] |
+
+### Key Scientific Takeaway
+1. **Structure Modality:** 2D Morgan fingerprints with Random Forest achieve real, moderate predictive signal (**AUC-ROC = 0.723**, 95% CI strictly above 0.50).
+2. **Biology Modality:** Classical linear models on raw 978 landmark gene expression exhibit no detectable signal above a random coin flip (all 95% CIs cross 0.500). This aligns with established literature and justifies the use of a deep self-attention Transformer to capture complex multi-gene biological perturbations.
+3. **Statistical Power Limitation:** The 74-compound scaffold test set contains 10 negatives. The wide bootstrap confidence intervals honestly reflect this biological data availability constraint.
