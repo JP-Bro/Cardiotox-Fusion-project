@@ -1,1212 +1,1212 @@
 resolved_name,DICT_Concern,cardiotox_label
-Hyaluronic Acid,no,0
-ZYPREXA Relprevv,less,1
-Tigan,no,0
-BICILLIN L-A,less,1
-INVEGA HAFYERA,most,1
-Aveed,most,1
-ARISTADA,less,1
-Signifor LAR,most,1
-TRIPTODUR,less,1
-VIVITROL,less,1
-Apretude,no,0
+HYALURONIC ACID,no,0
+Olanzapine pamoate,less,1
+Trimethobenzamide Hydrochloride,no,0
+PENICILLIN G BENZATHINE,less,1
+paliperidone palmitate,most,1
+TESTOSTERONE UNDECANOATE,most,1
+aripiprazole lauroxil,less,1
+PASIREOTIDE,most,1
+triptorelin,less,1
+naltrexone,less,1
+CABOTEGRAVIR SODIUM,no,0
 Fulvestrant,no,0
-BAL,less,1
-Trelstar,most,1
-carboprost tromethamine,less,1
-Hydroxocobalamin,no,0
+Dimercaprol,less,1
+TRIPTORELIN PAMOATE,most,1
+CARBOPROST TROMETHAMINE,less,1
+HYDROXOCOBALAMIN ACETATE,no,0
 Cyanocobalamin,less,1
-Estradiol Valerate,most,1
-Testosterone Cypionate,most,1
-Streptomycin,no,0
-Medroxyprogesterone Acetate,less,1
-Haloperidol Decanoate,most,1
-Depo-Estradiol,most,1
-Haloperidol,most,1
-ziprasidone mesylate,less,1
+ESTRADIOL VALERATE,most,1
+TESTOSTERONE CYPIONATE,most,1
+STREPTOMYCIN SULFATE,no,0
+MEDROXYPROGESTERONE ACETATE,less,1
+HALOPERIDOL DECANOATE,most,1
+ESTRADIOL CYPIONATE,most,1
+Haloperidol Lactate,most,1
+ZIPRASIDONE MESYLATE,less,1
 PENICILLIN G PROCAINE,no,0
-Bleomycin,less,1
-Polymyxin B,no,0
-Premarin,less,1
-CAPASTAT SULFATE,no,0
-INFED,less,1
-Solu-Cortef,less,1
-Calcium Disodium Versenate,less,1
-Oxytocin,less,1
-Penicillin G Sodium,less,1
+BLEOMYCIN SULFATE,less,1
+POLYMYXIN B SULFATE,no,0
+"ESTROGENS, CONJUGATED",less,1
+capreomycin sulfate,no,0
+IRON DEXTRAN,less,1
+HYDROCORTISONE SODIUM SUCCINATE,less,1
+EDETATE CALCIUM DISODIUM,less,1
+OXYTOCIN,less,1
+PENICILLIN G SODIUM,less,1
 Phentolamine Mesylate,most,1
 Colistimethate Sodium,no,0
 Orphenadrine Citrate,less,1
-Midazolam,most,1
-Metoclopramide,less,1
-Penicillin G Potassium,less,1
-pentamidine isethionate,less,1
-Diphenhydramine Hydrochloride,less,1
+Midazolam Hydrochloride,most,1
+METOCLOPRAMIDE HYDROCHLORIDE,less,1
+PENICILLIN G POTASSIUM,less,1
+PENTAMIDINE ISETHIONATE,less,1
+DIPHENHYDRAMINE HYDROCHLORIDE,less,1
 PROCAINAMIDE HYDROCHLORIDE,most,1
-Leucovorin Calcium,no,0
-Cefuroxime sodium,no,0
+LEUCOVORIN CALCIUM,no,0
+cefuroxime sodium,no,0
 PROCHLORPERAZINE EDISYLATE,less,1
-Cefazolin,no,0
-Droperidol,most,1
-Ketamine Hydrochloride,less,1
-ONDANSETRON,most,1
+CEFAZOLIN SODIUM,no,0
+DROPERIDOL,most,1
+KETAMINE HYDROCHLORIDE,less,1
+ONDANSETRON HYDROCHLORIDE,most,1
 Pentobarbital Sodium,less,1
-Amikacin Sulfate,no,0
+AMIKACIN SULFATE,no,0
 THIAMINE HYDROCHLORIDE,no,0
-Methylprednisolone Sodium Succinate,less,1
-Dimenhydrinate,less,1
+METHYLPREDNISOLONE SODIUM SUCCINATE,less,1
+DIMENHYDRINATE,less,1
 Methylergonovine Maleate,less,1
 SUCCINYLCHOLINE CHLORIDE,most,1
-Tobramycin,no,0
-Aztreonam,less,1
-Oxacillin,less,1
+Tobramycin Sulfate,no,0
+AZTREONAM,less,1
+OXACILLIN SODIUM,less,1
 Hydralazine Hydrochloride,most,1
-Colistimethate,no,0
-Succinylcholine Chloride,most,1
-Fosphenytoin,most,1
-PYRIDOXINE HCI,no,0
-Cefotetan,no,0
-Ertapenem,less,1
-Bumetanide,less,1
-Cefotetan,no,0
-ENLON,most,1
-Pipracil,no,0
-Cefizox,no,0
-Cortrosyn,less,1
-Brevital Sodium,less,1
-DEMEROL,less,1
-Protopam Chloride,less,1
+colistimethate,no,0
+SUCCINYLCHOLINE CHLORIDE DIHYDRATE,most,1
+FOSPHENYTOIN SODIUM,most,1
+PYRIDOXINE HYDROCHLORIDE,no,0
+CEFOTETAN,no,0
+ERTAPENEM SODIUM,less,1
+bumetanide,less,1
+CEFOTETAN DISODIUM,no,0
+edrophonium chloride,most,1
+Piperacillin Sodium,no,0
+ceftizoxime sodium,no,0
+Cosyntropin,less,1
+METHOHEXITAL SODIUM,less,1
+MEPERIDINE HYDROCHLORIDE,less,1
+PRALIDOXIME CHLORIDE,less,1
 Nalbuphine Hydrochloride,less,1
-Deferoxamine mesylate,less,1
+DEFEROXAMINE MESYLATE,less,1
 Hydromorphone Hydrochloride,less,1
-Sterile Water,no,0
-Revex,less,1
-Purified Cortrophin Gel,less,1
-Miacalcin,less,1
-Makena,less,1
+WATER,no,0
+nalmefene hydrochloride,less,1
+CORTICOTROPIN,less,1
+CALCITONIN SALMON,less,1
+HYDROXYPROGESTERONE CAPROATE,less,1
 FLUPHENAZINE DECANOATE,most,1
-Lupron Depot-PED,less,1
-Miochol E,less,1
-TISSUEBLUE,no,0
-MEMBRANEBLUE,no,0
-Steritalc 2g; Steritalc 3g; Steritalc 4g,less,1
-Novocaine,less,1
-PRIALT,less,1
-Indium DTPA In 111,no,0
-Spinraza,no,0
-OMNIPAQUE,most,1
-Cytarabine,less,1
-ParaGard T 380A,no,0
-Conray,most,1
-ISOVUE 200; ISOVUE 250; ISOVUE 300; ISOVUE 370,most,1
-Visipaque,most,1
-PROSTIN VR PEDIATRIC,less,1
-Nouress,no,0
-Gallium Ga-68 PSMA-11,no,0
-Amidate,less,1
-Vasopressin,less,1
-Ga-68-DOTATOC,no,0
-Photofrin,less,1
-AMONDYS 45,no,0
-Kit for the Preparation of Technetium Tc 99m Medronate,no,0
-Nulibry,no,0
-Onpattro,less,1
-Xerava,less,1
-ALIQOPA,less,1
-GANITE,less,1
-Kimyrsa,less,1
-Triferic AVNU,less,1
-Ephedrine Sulfate,less,1
-Fetroja,less,1
-Neuraceq,no,0
-CERIANNA,no,0
-TAUVID,no,0
-Viltepso,less,1
-Zulresso,less,1
+LEUPROLIDE ACETATE,less,1
+ACETYLCHOLINE CHLORIDE,less,1
+BRILLIANT BLUE G,no,0
+TRYPAN BLUE,no,0
+TALC,less,1
+Procaine Hydrochloride,less,1
+ziconotide acetate,less,1
+Indium In-111 Pentetate Disodium,no,0
+Nusinersen,no,0
+Iohexol,most,1
+cytarabine,less,1
 COPPER,no,0
-Xofigo,no,0
-Magnevist,less,1
-Rapivab,no,0
-MANGANESE,no,0
-Azedra,less,1
-Cyanokit,less,1
-Cisplatin,less,1
-Orbactiv,less,1
-Ascor,no,0
-Dopram,most,1
-DAPZURA RT,less,1
-REZIPRES,less,1
-Detectnet,no,0
-NETSPOT,no,0
-OLINVYK,most,1
-Potassium Acetate,most,1
-Calcium Chloride,no,0
-Choline C 11,no,0
-Ethyol,most,1
+IOTHALAMATE MEGLUMINE,most,1
+IOPAMIDOL,most,1
+Iodixanol,most,1
+ALPROSTADIL,less,1
+CYSTEINE HYDROCHLORIDE,no,0
+GALLIUM GA-68 GOZETOTIDE,no,0
+Etomidate,less,1
+"VASOPRESSIN, UNSPECIFIED",less,1
+EDOTREOTIDE GALLIUM GA-68,no,0
+PORFIMER SODIUM,less,1
+casimersen,no,0
+TECHNETIUM TC-99M MEDRONATE,no,0
+fosdenopterin hydrobromide,no,0
+patisiran sodium,less,1
+ERAVACYCLINE DIHYDROCHLORIDE,less,1
+COPANLISIB,less,1
+GALLIUM NITRATE,less,1
+oritavancin diphosphate,less,1
+FERRIC PYROPHOSPHATE CITRATE,less,1
+Ephedrine Sulfate,less,1
+Cefiderocol sulfate tosylate,less,1
+FLORBETABEN F-18,no,0
+FLUOROESTRADIOL F-18,no,0
+Flortaucipir F-18,no,0
+viltolarsen,less,1
+BREXANOLONE,less,1
+CUPRIC CHLORIDE,no,0
+RADIUM RA-223 DICHLORIDE,no,0
+GADOPENTETATE DIMEGLUMINE,less,1
+peramivir,no,0
+MANGANESE CHLORIDE,no,0
+IOBENGUANE I-131,less,1
+Hydroxocobalamin,less,1
+cisplatin,less,1
+ORITAVANCIN,less,1
+ASCORBIC ACID,no,0
+DOXAPRAM HYDROCHLORIDE,most,1
+DAPTOMYCIN,less,1
+EPHEDRINE HYDROCHLORIDE,less,1
+COPPER OXODOTREOTIDE CU-64,no,0
+DOTATATE,no,0
+OLICERIDINE,most,1
+POTASSIUM ACETATE,most,1
+CALCIUM CHLORIDE,no,0
+CHOLINE C-11,no,0
+AMIFOSTINE,most,1
 Sodium Nitrite,most,1
-Giapreza,less,1
-KINEVAC,less,1
-Zemdri (plazomicin),less,1
-DEFITELIO,less,1
-Vizamyl,less,1
-Chromium,no,0
-IXEMPRA,most,1
+ANGIOTENSIN II,less,1
+Sincalide,less,1
+PLAZOMICIN,less,1
+DEFIBROTIDE SODIUM,less,1
+Flutemetamol F-18,less,1
+CHROMIC CHLORIDE,no,0
+IXABEPILONE,most,1
 ARGATROBAN,less,1
-IC-Green,no,0
-YONDELIS,most,1
+indocyanine green,no,0
+Trabectedin,most,1
 Sodium Thiosulfate,less,1
-EOVIST,less,1
-Corlopam,less,1
-Technescan HDP,no,0
-Selenious Acid,no,0
-VENOFER (IRON SUCROSE),less,1
-R-Gene,no,0
-Beleodaq,less,1
-CardioGen-82,most,1
-BRIDION,most,1
-Veletri,less,1
-Calcium Gluconate,most,1
-DEFINITY RT,most,1
-Ferrlecit,less,1
-NEUROLITE,less,1
-Halaven,most,1
-Monoferric,less,1
-Lutathera,less,1
-Folotyn,less,1
+GADOXETATE DISODIUM,less,1
+FENOLDOPAM MESYLATE,less,1
+OXIDRONATE DISODIUM,no,0
+SELENIUM,no,0
+IRON SUCROSE,less,1
+ARGININE HYDROCHLORIDE,no,0
+BELINOSTAT,less,1
+RUBIDIUM CHLORIDE RB-82,most,1
+SUGAMMADEX SODIUM,most,1
+epoprostenol,less,1
+CALCIUM GLUCONATE MONOHYDRATE,most,1
+PERFLUTREN,most,1
+SODIUM FERRIC GLUCONATE COMPLEX,less,1
+BICISATE DIHYDROCHLORIDE,less,1
+ERIBULIN MESYLATE,most,1
+FERRIC DERISOMALTOSE,less,1
+LUTETIUM OXODOTREOTIDE LU-177,less,1
+PRALATREXATE,less,1
+GALLIUM CHLORIDE GA-67,no,0
+SECRETIN HUMAN,no,0
+Pemetrexed disodium heptahydrate,less,1
+IBUTILIDE FUMARATE,most,1
+ANIDULAFUNGIN,less,1
+GOZETOTIDE,no,0
+BENDAMUSTINE HYDROCHLORIDE,less,1
+foscarnet sodium,most,1
+ZINC SULFATE,no,0
+HETASTARCH,less,1
+gadodiamide,less,1
+Amisulpride,most,1
+MEBROFENIN,no,0
+CEFTAROLINE FOSAMIL,less,1
+DOPAMINE HYDROCHLORIDE,most,1
+conivaptan hydrochloride,less,1
+SAMARIUM SM-153 LEXIDRONAM PENTASODIUM,less,1
+CARFILZOMIB,most,1
+ETELCALCETIDE HYDROCHLORIDE,most,1
+FLORBETAPIR F-18,less,1
+CYCLOPHOSPHAMIDE ANHYDROUS,most,1
+VANCOMYCIN,less,1
+TIROFIBAN HYDROCHLORIDE,less,1
+CANGRELOR,no,0
+FERRIC CARBOXYMALTOSE,less,1
+TEMSIROLIMUS,less,1
+STREPTOZOCIN,no,0
+Remifentanil Hydrochloride,less,1
+LEVOLEUCOVORIN DISODIUM,no,0
+TECHNETIUM TC-99M PYROPHOSPHATE,no,0
+INDIUM CHLORIDE IN-111,no,0
+etoposide phosphate,no,0
 GALLIUM CITRATE GA-67,no,0
-ChiRhoStim; ChiRhoStim 40,no,0
-Alimta,less,1
-Corvert,most,1
-ERAXIS,less,1
-ILLUCCIX,no,0
-BELRAPZO,less,1
-Foscavir,most,1
-Zinc Sulfate,no,0
-Hextend,less,1
-OMNISCAN,less,1
-Barhemsys,most,1
-Choletec,no,0
-Teflaro,less,1
-Dopamine Hydrochloride,most,1
-VAPRISOL DEXTROSE IN PLASTIC CONTAINER,less,1
-Quadramet,less,1
-KYPROLIS,most,1
-PARSABIV,most,1
-Amyvid,less,1
-CYCLOPHOSPHAMIDE,most,1
-Vancomycin,less,1
-AGGRASTAT,less,1
-KENGREAL,no,0
-Injectafer,less,1
-Torisel,less,1
-Zanosar,no,0
-Ultiva,less,1
-KHAPZORY,no,0
-Kit for the Preparation of Technetium Tc99m Pyrophosphate,no,0
-INDIUM IN 111 CHLORIDE,no,0
-ETOPOPHOS,no,0
-Gallium,no,0
-Cytalux,no,0
-Cosela,no,0
-MultiHance,most,1
-DaTscan,no,0
-Myoview,less,1
-Drax Exametazime,less,1
-Nipent,less,1
-PYLARIFY,no,0
-Axumin,no,0
-Acetaminophen,less,1
-Pepaxto,no,0
-DALVANCE,no,0
-Glofil-125,no,0
-LEXISCAN(R) (REGADENOSON),most,1
-ZEPZELCA,no,0
-Fluorodopa F18,no,0
-BYFAVO,most,1
-Pemfexy,less,1
-Ellence,most,1
-Sodium Citrate,no,0
-Ultratag RBC,no,0
-Gadavist,less,1
-Cleviprex,less,1
+PAFOLACIANINE SODIUM,no,0
+trilaciclib dihydrochloride,no,0
+gadobenate dimeglumine,most,1
+ioflupane I-123,no,0
+Tetrofosmin,less,1
+TECHNETIUM TC-99M EXAMETAZIME,less,1
+PENTOSTATIN,less,1
+PIFLUFOLASTAT F-18,no,0
+Fluciclovine F-18,no,0
+ACETAMINOPHEN,less,1
+melphalan flufenamide hydrochloride,no,0
+DALBAVANCIN HYDROCHLORIDE,no,0
+IOTHALAMATE SODIUM I-125,no,0
+REGADENOSON,most,1
+LURBINECTEDIN,no,0
+FLUORODOPA F-18,no,0
+remimazolam besylate,most,1
+PEMETREXED MONOHYDRATE,less,1
+EPIRUBICIN HYDROCHLORIDE,most,1
+SODIUM CITRATE,no,0
+STANNOUS CHLORIDE,no,0
+GADOBUTROL,less,1
+CLEVIDIPINE,less,1
 Alfentanil Hydrochloride,less,1
-PRECEDEX,most,1
-Visudyne,less,1
-Korsuva,less,1
-Asclera,most,1
-VIBATIV,most,1
-Levothyroxine Sodium,most,1
-ATROPINE SULFATE; Atropine Sulfate,less,1
-Vyondys 53,less,1
-Cytovene IV,less,1
-THAM,no,0
-ProHance,less,1
+DEXMEDETOMIDINE HYDROCHLORIDE,most,1
+VERTEPORFIN,less,1
+DIFELIKEFALIN ACETATE,less,1
+POLIDOCANOL,most,1
+telavancin hydrochloride,most,1
+LEVOTHYROXINE SODIUM ANHYDROUS,most,1
+ATROPINE SULFATE,less,1
+golodirsen,less,1
+ganciclovir sodium,less,1
+TROMETHAMINE,no,0
+gadoteridol,less,1
 PROPOFOL,most,1
-Levoleucovorin,no,0
+LEVOLEUCOVORIN CALCIUM PENTAHYDRATE,no,0
 CASPOFUNGIN ACETATE,less,1
 ESMOLOL HYDROCHLORIDE,most,1
-Ifosfamide,most,1
-Daunorubicin Hydrochloride,most,1
-mitoXANTRONE,most,1
-Carmustine,less,1
-GEMCITABINE,less,1
+IFOSFAMIDE,most,1
+DAUNORUBICIN HYDROCHLORIDE,most,1
+MITOXANTRONE HYDROCHLORIDE,most,1
+CARMUSTINE,less,1
+GEMCITABINE HYDROCHLORIDE,less,1
 CAFFEINE CITRATE,most,1
 BIVALIRUDIN,less,1
-VinCRIStine Sulfate,less,1
-Arsenic Trioxide,most,1
-Micafungin,less,1
-Cefoxitin,less,1
-Sodium Tetradecyl Sulfate,most,1
-Paclitaxel,less,1
-Mesna,less,1
+VINCRISTINE SULFATE,less,1
+ARSENIC TRIOXIDE,most,1
+MICAFUNGIN,less,1
+cefoxitin sodium,less,1
+SODIUM TETRADECYL SULFATE,most,1
+paclitaxel,less,1
+mesna,less,1
 Eptifibatide,less,1
-Technetium Tc 99m Sestamibi,most,1
-Ibuprofen Lysine,less,1
-Vinblastine Sulfate,less,1
-Indium In 111 Oxyquinoline,no,0
+TETRAKIS(2-METHOXYISOBUTYLISOCYANIDE)COPPER(I) TETRAFLUOROBORATE,most,1
+IBUPROFEN LYSINE,less,1
+VINBLASTINE SULFATE,less,1
+INDIUM IN-111 OXYQUINOLINE,no,0
 Esomeprazole Sodium,no,0
-CLARISCAN,less,1
+gadoterate meglumine,less,1
 Adenosine,most,1
 NICARDIPINE HYDROCHLORIDE,most,1
-LMD in Dextrose; LMD in Sodium Chloride,most,1
-Azithromycin,most,1
-CIDOFOVIR DIHYDRATE,less,1
-AMPICILLIN,no,0
-Micafungin,less,1
-Norepinephrine Bitartrate,less,1
-CEFEPIME,no,0
-Rocuronium,less,1
+DEXTRAN 40,most,1
+AZITHROMYCIN MONOHYDRATE,most,1
+CIDOFOVIR,less,1
+AMPICILLIN SODIUM,no,0
+MICAFUNGIN SODIUM,less,1
+NOREPINEPHRINE BITARTRATE,less,1
+CEFEPIME HYDROCHLORIDE,no,0
+ROCURONIUM BROMIDE,less,1
 ENALAPRILAT,less,1
 Busulfan,less,1
 Calcitriol,less,1
-Meropenem,less,1
-Clindamycin,less,1
+MEROPENEM,less,1
+Clindamycin Phosphate,less,1
 Sodium Nitroprusside,most,1
-Fosaprepitant,no,0
-Romidepsin,less,1
-Ferumoxytol,less,1
-Aminophylline,less,1
-PARAPLATIN,less,1
-Gemcitabine,less,1
-Azathioprine Sodium,no,0
-Ammonia N 13,no,0
-Kit for the Preparation of Technetium Tc99m Mertiatide,less,1
-TAZICEF,no,0
-Sodium Fluoride F 18,no,0
+FOSAPREPITANT DIMEGLUMINE,no,0
+ROMIDEPSIN,less,1
+FERUMOXYTOL NON-STOICHIOMETRIC MAGNETITE,less,1
+Aminophylline Dihydrate,less,1
+CARBOPLATIN,less,1
+GEMCITABINE,less,1
+AZATHIOPRINE SODIUM,no,0
+AMMONIA N-13,no,0
+Betiatide,less,1
+CEFTAZIDIME,no,0
+SODIUM FLUORIDE F-18,no,0
 Milrinone Lactate,most,1
 NEOSTIGMINE METHYLSULFATE,less,1
-Amiodarone Hydrochloride,less,1
-TECHNETIUM TC 99M SESTAMIBI,less,1
-acyclovir,less,1
-Pamidronate Disodium,less,1
-Chloramphenicol Sodium Succinate,no,0
-Zinc Chloride,less,1
+AMIODARONE HYDROCHLORIDE,less,1
+TECHNETIUM TC-99M SESTAMIBI,less,1
+ACYCLOVIR SODIUM,less,1
+PAMIDRONATE DISODIUM,less,1
+CHLORAMPHENICOL SODIUM SUCCINATE,no,0
+ZINC CHLORIDE,less,1
 Fomepizole,less,1
-DOXOrubicin Hydrochloride,most,1
-Cisatracurium Besylate,less,1
-Amphotericin B,less,1
-Topotecan,no,0
-Dacarbazine,no,0
-LEVOLEUCOVORIN,no,0
+DOXORUBICIN HYDROCHLORIDE,most,1
+CISATRACURIUM BESYLATE,less,1
+AMPHOTERICIN B,less,1
+TOPOTECAN,no,0
+DACARBAZINE,no,0
+Levoleucovorin Calcium,no,0
 DECITABINE,less,1
-Tigecycline,no,0
-Etoposide,no,0
-DOCETAXEL,less,1
+TIGECYCLINE,no,0
+ETOPOSIDE,no,0
+DOCETAXEL ANHYDROUS,less,1
 Dipyridamole,most,1
-Sotradecol,most,1
-Nelarabine,no,0
-Idarubicin Hydrochloride,most,1
-Valproate Sodium,less,1
-STRONTIUM CHLORIDE Sr-89,no,0
-epoprostenol,less,1
-Acetazolamide,no,0
-Allopurinol,less,1
-Flumazenil,most,1
-Atracurium Besylate,less,1
-Erythromycin Lactobionate,most,1
+TETRADECYL HYDROGEN SULFATE (ESTER),most,1
+NELARABINE,no,0
+IDARUBICIN HYDROCHLORIDE,most,1
+VALPROATE SODIUM,less,1
+STRONTIUM CHLORIDE SR-89,no,0
+EPOPROSTENOL SODIUM,less,1
+ACETAZOLAMIDE SODIUM,no,0
+ALLOPURINOL SODIUM,less,1
+FLUMAZENIL,most,1
+ATRACURIUM BESYLATE,less,1
+ERYTHROMYCIN LACTOBIONATE,most,1
 Granisetron Hydrochloride,most,1
-Vinorelbine,less,1
-Fludarabine Phosphate,less,1
-dactinomycin,no,0
-Fludeoxyglucose F 18,no,0
-DOBUTAMINE,less,1
-Indomethacin,less,1
+vinorelbine tartrate,less,1
+FLUDARABINE PHOSPHATE,less,1
+DACTINOMYCIN,no,0
+Fludeoxyglucose F-18,no,0
+DOBUTAMINE HYDROCHLORIDE,less,1
+INDOMETHACIN SODIUM,less,1
 PROTAMINE SULFATE,most,1
-oxaliplatin,most,1
-Irinotecan Hydrochloride,less,1
-Ceftriaxone,no,0
-Hypaque Sodium,most,1
+OXALIPLATIN,most,1
+IRINOTECAN HYDROCHLORIDE,less,1
+CEFTRIAXONE SODIUM,no,0
+Diatrizoate Sodium,most,1
 Etesevimab,less,1
-Neutrexin,no,0
-Feridex,less,1
+trimetrexate glucuronate,no,0
+ferumoxides,less,1
 Bamlanivimab,less,1
-RadioGenix System,no,0
-TEMODAR,no,0
-Briviact,no,0
-SIVEXTRO,less,1
-Baxdela,less,1
-NOXAFIL,most,1
-UPTRAVI; UPTRAVI Titration Pack,no,0
-Vimpat,most,1
-PREVYMIS,less,1
-NUZYRA,less,1
-Trovan,most,1
-Kit for the Prepartion of Technetium Tc99m Sulfur Colloid,less,1
-Heparin Sodium,no,0
-VELCADE,most,1
+TECHNETIUM TC-99M SODIUM PERTECHNETATE,no,0
+Temozolomide,no,0
+brivaracetam,no,0
+tedizolid phosphate,less,1
+delafloxacin meglumine,less,1
+POSACONAZOLE; posaconazole,most,1
+SELEXIPAG,no,0
+LACOSAMIDE,most,1
+LETERMOVIR,less,1
+omadacycline,less,1
+trovafloxacin mesylate,most,1
+TECHNETIUM TC-99M SULFUR COLLOID,less,1
+HEPARIN SODIUM,no,0
+bortezomib,most,1
 AZACITIDINE,less,1
-Octreotide Acetate,most,1
-RIMSO-50,no,0
-Cysview,no,0
-Cystografin Dilute,no,0
-Valstar,no,0
-CRESEMBA,less,1
-Aptivus,no,0
-Metopirone,less,1
-Ravicti,no,0
-OPSUMIT,less,1
-ONGLYZA,most,1
-DIFICID; Dificid,no,0
-Wakix,most,1
-Xadago,less,1
-Turalio,less,1
-CAPRELSA,most,1
-Zydelig,no,0
-Benznidazole,no,0
-Dipentum,less,1
-Isturisa,most,1
-Prograf,less,1
-ONGENTYS,less,1
-Priftin,less,1
-Matulane,less,1
-Katerzia,most,1
-FACTIVE,most,1
-Juxtapid,less,1
-NUBEQA,less,1
-Lynparza,no,0
-PYtest,no,0
-Pranactin-Citric,no,0
-Odomzo,no,0
-TEPMETKO,no,0
-Keveyis,less,1
-Fanapt,most,1
-Agrylin,most,1
-Livmarli,no,0
-Lucemyra,most,1
-SYMPROIC,no,0
-Otezla,no,0
-Invirase,most,1
-Inrebic,most,1
-Idhifa,most,1
-VIIBRYD,less,1
-Hepsera,no,0
-ANZEMET,most,1
-TABRECTA,no,0
-JANUVIA,most,1
-Corlanor,most,1
-Radiogardase,no,0
-TAVALISSE,most,1
-Alinia,no,0
-Vyvanse,most,1
-Hetlioz; Hetlioz LQ,no,0
-Pradaxa,most,1
-TPOXX,no,0
-IRESSA,no,0
-Mycapssa,most,1
-Ruzurgi,no,0
-Adempas,less,1
-MAYZENT,less,1
-Savella,less,1
-Sapropterin Dihydrochloride,less,1
-BELVIQ XR; Belviq,most,1
-SPRYCEL,most,1
-SOLOSEC,no,0
-DURLAZA,no,0
-Diacomit,no,0
-Auryxia,no,0
-Synthroid,less,1
-TIBSOVO,most,1
-MYTESI,no,0
-Livtencity,no,0
-ALECENSA,less,1
-Xcopri; Xcopri Maintenance Pack; Xcopri Titration Pack,most,1
-Cevimeline,less,1
-Orgovyx,most,1
-Rayaldee,less,1
-AUSTEDO; Austedo,most,1
-SIRTURO,most,1
-Lorbrena,most,1
-QELBREE,less,1
-Trecator,no,0
-TAVNEOS,less,1
-XELJANZ; XELJANZ XR,most,1
-Moxidectin,less,1
-Desvenlafaxine,less,1
-NUPLAZID,most,1
-Venclexta,no,0
-SLYND,no,0
-Myrbetriq,less,1
-STEGLATRO,no,0
-RAZADYNE,most,1
-Daypro,most,1
-Stivarga,most,1
-ACCRUFER,no,0
-PEXEVA,less,1
-GEMTESA,no,0
-ZYPITAMAG,no,0
-BREXAFEMME,no,0
-HIPREX,no,0
-Tybost,no,0
-VERQUVO,less,1
-Rozlytrek,most,1
-XIFAXAN,no,0
-PIZENSY,less,1
-Avandia,most,1
-EMFLAZA,less,1
-Ketek,most,1
-Daurismo,most,1
-ORFADIN,no,0
-ZYKADIA,most,1
-Vumerity,no,0
-Multaq,most,1
-Cenestin,most,1
-Quazepam,no,0
-Northera,most,1
-Boniva,less,1
-Livalo,no,0
-Olumiant,most,1
-Zokinvy,less,1
-ZONTIVITY,no,0
-RYDAPT,less,1
-CALQUENCE,less,1
-citalopram,most,1
-Alunbrig,less,1
-FARYDAK,most,1
-ZEJULA,less,1
-Jardiance,no,0
-BRILINTA,most,1
-DOPTELET,no,0
-Ibrance,no,0
-Gilenya,most,1
-TYKERB,most,1
-Cholbam,no,0
-amiloride hydrocloride,less,1
-VEMLIDY,no,0
-UKONIQ,no,0
-TABLOID,no,0
+OCTREOTIDE ACETATE,most,1
+Dimethyl Sulfoxide,no,0
+HEXAMINOLEVULINATE HYDROCHLORIDE,no,0
+diatrizoate meglumine,no,0
+VALRUBICIN,no,0
+ISAVUCONAZONIUM SULFATE,less,1
+TIPRANAVIR,no,0
+METYRAPONE,less,1
+GLYCEROL PHENYLBUTYRATE,no,0
+macitentan,less,1
+saxagliptin hydrochloride,most,1
+FIDAXOMICIN,no,0
+PITOLISANT HYDROCHLORIDE,most,1
+SAFINAMIDE MESYLATE,less,1
+PEXIDARTINIB HYDROCHLORIDE,less,1
+VANDETANIB,most,1
+IDELALISIB,no,0
+BENZNIDAZOLE,no,0
+OLSALAZINE SODIUM,less,1
+OSILODROSTAT PHOSPHATE,most,1
+anhydrous tacrolimus,less,1
+OPICAPONE,less,1
+RIFAPENTINE,less,1
+PROCARBAZINE HYDROCHLORIDE,less,1
+Amlodipine Benzoate,most,1
+GEMIFLOXACIN MESYLATE,most,1
+LOMITAPIDE MESYLATE,less,1
+DAROLUTAMIDE,less,1
+OLAPARIB,no,0
+Urea C-14,no,0
+UREA C-13,no,0
+SONIDEGIB PHOSPHATE,no,0
+Tepotinib Hydrochloride,no,0
+DICHLORPHENAMIDE,less,1
+ILOPERIDONE,most,1
+ANAGRELIDE HYDROCHLORIDE ANHYDROUS,most,1
+maralixibat chloride,no,0
+LOFEXIDINE HYDROCHLORIDE,most,1
+naldemedine tosylate,no,0
+APREMILAST,no,0
+SAQUINAVIR MESYLATE,most,1
+FEDRATINIB HYDROCHLORIDE,most,1
+ENASIDENIB MESYLATE,most,1
+VILAZODONE HYDROCHLORIDE,less,1
+adefovir dipivoxil,no,0
+DOLASETRON MESYLATE,most,1
+CAPMATINIB,no,0
+SITAGLIPTIN PHOSPHATE,most,1
+IVABRADINE HYDROCHLORIDE,most,1
+FERRIC FERROCYANIDE,no,0
+FOSTAMATINIB,most,1
+NITAZOXANIDE,no,0
+LISDEXAMFETAMINE DIMESYLATE,most,1
+TASIMELTEON,no,0
+DABIGATRAN ETEXILATE MESYLATE,most,1
+TECOVIRIMAT MONOHYDRATE,no,0
+GEFITINIB,no,0
+Octreotide,most,1
+Amifampridine,no,0
+RIOCIGUAT,less,1
+SIPONIMOD,less,1
+MILNACIPRAN HYDROCHLORIDE; milnacipran hydrochloride,less,1
+SAPROPTERIN DIHYDROCHLORIDE,less,1
+LORCASERIN HYDROCHLORIDE HEMIHYDRATE,most,1
+dasatinib,most,1
+SECNIDAZOLE,no,0
+Aspirin,no,0
+Stiripentol,no,0
+TETRAFERRIC TRICITRATE DECAHYDRATE,no,0
+LEVOTHYROXINE,less,1
+ivosidenib,most,1
+CROFELEMER,no,0
+MARIBAVIR,no,0
+ALECTINIB HYDROCHLORIDE,less,1
+CENOBAMATE,most,1
+CEVIMELINE HYDROCHLORIDE,less,1
+RELUGOLIX,most,1
+CALCIFEDIOL,less,1
+DEUTETRABENAZINE,most,1
+Bedaquiline Fumarate,most,1
+LORLATINIB,most,1
+VILOXAZINE HYDROCHLORIDE,less,1
+ETHIONAMIDE,no,0
+AVACOPAN,less,1
+TOFACITINIB CITRATE,most,1
+MOXIDECTIN,less,1
+DESVENLAFAXINE,less,1
+pimavanserin tartrate,most,1
+Venetoclax,no,0
+DROSPIRENONE,no,0
+MIRABEGRON,less,1
+ERTUGLIFLOZIN PIDOLATE,no,0
+galantamine hydrobromide,most,1
+OXAPROZIN,most,1
+REGORAFENIB MONOHYDRATE,most,1
+FERRIC MALTOL,no,0
+PAROXETINE MESYLATE,less,1
+vibegron,no,0
+PITAVASTATIN,no,0
+IBREXAFUNGERP CITRATE,no,0
+METHENAMINE HIPPURATE,no,0
+COBICISTAT,no,0
+VERICIGUAT,less,1
+ENTRECTINIB,most,1
+RIFAXIMIN,no,0
+LACTITOL,less,1
+ROSIGLITAZONE MALEATE,most,1
+DEFLAZACORT,less,1
+telithromycin,most,1
+GLASDEGIB,most,1
+NITISINONE,no,0
+CERITINIB,most,1
+diroximel fumarate,no,0
+Dronedarone,most,1
+"ESTROGENS, CONJUGATED SYNTHETIC A",most,1
+QUAZEPAM,no,0
+DROXIDOPA,most,1
+IBANDRONATE SODIUM,less,1
+pitavastatin calcium,no,0
+baricitinib,most,1
+LONAFARNIB,less,1
+VORAPAXAR SULFATE,no,0
+MIDOSTAURIN,less,1
+ACALABRUTINIB,less,1
+CITALOPRAM HYDROBROMIDE,most,1
+brigatinib,less,1
+PANOBINOSTAT LACTATE,most,1
+niraparib,less,1
+empagliflozin,no,0
+TICAGRELOR,most,1
+AVATROMBOPAG MALEATE,no,0
+PALBOCICLIB,no,0
+FINGOLIMOD HYDROCHLORIDE,most,1
+LAPATINIB DITOSYLATE,most,1
+CHOLIC ACID,no,0
+AMILORIDE HYDROCHLORIDE,less,1
+TENOFOVIR ALAFENAMIDE FUMARATE,no,0
+umbralisib tosylate,no,0
+THIOGUANINE,no,0
 azithromycin,less,1
-Vraylar,less,1
-Tasigna,most,1
-Revlimid,most,1
-Toviaz,less,1
-Lenvima,most,1
-PURINETHOL,no,0
-Aplenzin,less,1
-Chemet,less,1
-Aemcolo,no,0
-COMETRIQ,less,1
-Stendra,less,1
-Cerdelga,most,1
-Krintafel,no,0
-Kerendia,no,0
-ESBRIET,no,0
-LOKELMA,no,0
-Pomalyst,most,1
-Galafold,no,0
-DYANAVEL XR; Dyanavel XR,most,1
-Tasmar,less,1
-RETEVMO,most,1
-XTAMPZA ER,less,1
-INLYTA,most,1
-Thiola EC,less,1
-SCEMBLIX,most,1
-Mekinist,most,1
-FIBRICOR,no,0
-KISQALI,most,1
-GOCOVRI,less,1
-Tafinlar,most,1
-Osphena,most,1
-Enablex,less,1
-Trimethoprim,no,0
-BRUKINSA,less,1
-UBRELVY,no,0
-TRUSELTIQ,no,0
-Nexavar,most,1
-QINLOCK,most,1
-Primsol,no,0
-Nerlynx,no,0
-XARELTO; Xarelto,no,0
-Afinitor; Afinitor Disperz,less,1
-Viramune,no,0
-VIRACEPT,less,1
-Iclusig,most,1
-Xenical,no,0
-HYCAMTIN,no,0
-Xtandi,most,1
-SUNOSI,less,1
-ELMIRON,no,0
-PIFELTRO,no,0
-Plaquenil,most,1
-BRAFTOVI,most,1
-ENJUVIA,most,1
-Firdapse,less,1
-Xermelo,no,0
-FOTIVDA,most,1
-BALVERSA,less,1
-Orladeyo,less,1
-FARXIGA,no,0
-Velphoro,no,0
-Macrilen,most,1
-BOSULIF,most,1
-Rezurock,less,1
-JAKAFI,most,1
-VERMOX,no,0
-PARNATE,less,1
-WELIREG,less,1
-Trulance Immediate release,no,0
-Xyrem,no,0
-Qulipta,no,0
-Gleostine,no,0
-Incruse Ellipta,less,1
-Cefditoren Pivoxil,no,0
-Lysodren,no,0
-DIURIL,less,1
-CRIXIVAN,less,1
-EVRYSDI,no,0
-Reyvow,less,1
-Horizant,no,0
-Emcyt,most,1
-Nucynta ER,less,1
-CAPLYTA,less,1
-KOSELUGO,most,1
-TAZVERIK,no,0
-Mulpleta,no,0
-Vascepa,less,1
-Cotellic,most,1
-MOVANTIK,no,0
-Cedax,no,0
-COPIKTRA,no,0
-Lithium,most,1
-INGREZZA,most,1
-Xospata,most,1
-PONVORY,less,1
-Orilissa,no,0
-ZOLINZA,less,1
-Varubi,no,0
-IMPAVIDO,no,0
-Xalkori,most,1
-Ayvakit,less,1
-Vizimpro,no,0
-IBSRELA,no,0
-Xofluza,no,0
-Thalomid,most,1
-MOTEGRITY,no,0
-PROMACTA,no,0
-ERLEADA,most,1
-Lithostat,less,1
-Rinvoq,most,1
-Sular,less,1
-Mavenclad,most,1
-EGATEN,most,1
-Peganone,no,0
-NINLARO,no,0
-Viberzi,no,0
-BAFIERTAM,no,0
-ISENTRESS,no,0
-Ofev,most,1
-Prilosec,less,1
-Gilotrif,no,0
-Rubraca,less,1
-OXBRYTA,no,0
-ELIQUIS,less,1
-Tradjenta,most,1
-ZEPOSIA; ZEPOSIA 7-Day Starter Pack; ZEPOSIA Starter Kit,less,1
-Cystadane,no,0
-RIDAURA,no,0
-TAGRISSO,most,1
-EXKIVITY,most,1
-Darvon-N,less,1
-ADDYI,less,1
-Fetzima,less,1
-Marplan,less,1
-PREZISTA,no,0
-SAVAYSA,no,0
-XPOVIO,less,1
-Fexinidazole,most,1
-Rukobia,less,1
-XURIDEN,no,0
-BYLVAY,no,0
-LUPKYNIS,most,1
-DOJOLVI,no,0
-Cesamet,less,1
-Rexulti,less,1
-NOURIANZ,no,0
-FINTEPLA,most,1
-Recorlev,most,1
-LUMAKRAS,less,1
-Nardil,less,1
-ERIVEDGE,no,0
-EDURANT,no,0
-Cotempla XR-ODT,most,1
-ZELBORAF,most,1
-Kalydeco,no,0
-Imbruvica,most,1
-Gavreto,less,1
-Tivicay; Tivicay PD,no,0
-VELTASSA,no,0
-Nexletol,less,1
-Aubagio,less,1
-Epidiolex,no,0
-LEUKERAN,no,0
-MEKTOVI,most,1
-Zorvolex,most,1
-NURTEC ODT,no,0
-Conjupri,most,1
-Codeine sulfate,less,1
-Nalfon,most,1
-INVOKANA,no,0
-Endari,no,0
-BELVIQ XR Extended Release Extended Release,most,1
-Daliresp,less,1
-DAYVIGO,no,0
-Celontin,no,0
-Levocarnitine,no,0
-BELSOMRA,less,1
-Ocaliva,no,0
-Karbinal ER,less,1
-E.E.S; E.E.S 400,most,1
-Bupropion Hydrochloride (XL),less,1
-Desvenlafaxine Succinate,less,1
-Tetrabenazine,most,1
-Naltrexone Hydrochloride,less,1
-Cefuroxime axetil,less,1
-Pyrimethamine,less,1
-Alprazolam,less,1
-ATORVASTATIN CALCIUM,no,0
-Isradipine,less,1
-Atovaquone,no,0
-Calcium Acetate,no,0
-Indomethacin,most,1
-Sucralfate,no,0
-Bosentan,less,1
+CARIPRAZINE,less,1
+NILOTINIB,most,1
+LENALIDOMIDE,most,1
+FESOTERODINE FUMARATE,less,1
+LENVATINIB,most,1
+MERCAPTOPURINE,no,0
+BUPROPION HYDROBROMIDE,less,1
+SUCCIMER,less,1
+Rifamycin,no,0
+cabozantinib s-malate,less,1
+AVANAFIL,less,1
+eliglustat,most,1
+TAFENOQUINE SUCCINATE,no,0
+FINERENONE,no,0
+PIRFENIDONE,no,0
+SODIUM ZIRCONIUM CYCLOSILICATE,no,0
+POMALIDOMIDE,most,1
+MIGALASTAT HYDROCHLORIDE,no,0
+AMPHETAMINE,most,1
+Tolcapone,less,1
+selpercatinib,most,1
+OXYCODONE,less,1
+AXITINIB,most,1
+TIOPRONIN,less,1
+ASCIMINIB HYDROCHLORIDE,most,1
+TRAMETINIB DIMETHYL SULFOXIDE,most,1
+Fenofibric Acid,no,0
+RIBOCICLIB SUCCINATE,most,1
+AMANTADINE,less,1
+DABRAFENIB MESYLATE,most,1
+OSPEMIFENE,most,1
+DARIFENACIN,less,1
+TRIMETHOPRIM,no,0
+ZANUBRUTINIB,less,1
+UBROGEPANT,no,0
+INFIGRATINIB,no,0
+SORAFENIB,most,1
+Ripretinib,most,1
+TRIMETHOPRIM HYDROCHLORIDE,no,0
+NERATINIB MALEATE,no,0
+rivaroxaban,no,0
+EVEROLIMUS,less,1
+NEVIRAPINE,no,0
+NELFINAVIR MESYLATE,less,1
+ponatinib hydrochloride,most,1
+ORLISTAT,no,0
+TOPOTECAN HYDROCHLORIDE,no,0
+ENZALUTAMIDE,most,1
+SOLRIAMFETOL,less,1
+PENTOSAN POLYSULFATE SODIUM,no,0
+doravirine,no,0
+HYDROXYCHLOROQUINE SULFATE,most,1
+ENCORAFENIB,most,1
+"ESTROGENS, CONJUGATED SYNTHETIC B",most,1
+amifampridine phosphate,less,1
+telotristat ethyl,no,0
+tivozanib hydrochloride,most,1
+Erdafitinib,less,1
+Berotralstat hydrochloride,less,1
+DAPAGLIFLOZIN PROPANEDIOL,no,0
+FERRIC OXYHYDROXIDE,no,0
+MACIMORELIN,most,1
+BOSUTINIB MONOHYDRATE,most,1
+BELUMOSUDIL,less,1
+RUXOLITINIB,most,1
+mebendazole,no,0
+TRANYLCYPROMINE SULFATE,less,1
+BELZUTIFAN,less,1
+Plecanatide,no,0
+SODIUM OXYBATE,no,0
+ATOGEPANT,no,0
+LOMUSTINE,no,0
+UMECLIDINIUM BROMIDE,less,1
+CEFDITOREN PIVOXIL,no,0
+mitotane,no,0
+CHLOROTHIAZIDE,less,1
+INDINAVIR SULFATE,less,1
+RISDIPLAM,no,0
+lasmiditan,less,1
+gabapentin enacarbil,no,0
+ESTRAMUSTINE PHOSPHATE SODIUM,most,1
+TAPENTADOL HYDROCHLORIDE,less,1
+LUMATEPERONE,less,1
+SELUMETINIB,most,1
+tazemetostat hydrobromide,no,0
+LUSUTROMBOPAG,no,0
+ICOSAPENT ETHYL,less,1
+COBIMETINIB FUMARATE,most,1
+NALOXEGOL OXALATE,no,0
+Ceftibuten dihydrate,no,0
+DUVELISIB,no,0
+Lithium Citrate,most,1
+VALBENAZINE TOSYLATE,most,1
+GILTERITINIB FUMARATE,most,1
+Ponesimod,less,1
+ELAGOLIX SODIUM,no,0
+VORINOSTAT,less,1
+ROLAPITANT HYDROCHLORIDE,no,0
+MILTEFOSINE,no,0
+CRIZOTINIB,most,1
+avapritinib,less,1
+DACOMITINIB,no,0
+TENAPANOR HYDROCHLORIDE,no,0
+BALOXAVIR MARBOXIL,no,0
+THALIDOMIDE,most,1
+PRUCALOPRIDE SUCCINATE,no,0
+ELTROMBOPAG OLAMINE,no,0
+Apalutamide,most,1
+ACETOHYDROXAMIC ACID,less,1
+upadacitinib,most,1
+NISOLDIPINE,less,1
+Cladribine,most,1
+TRICLABENDAZOLE,most,1
+ETHOTOIN,no,0
+ixazomib citrate,no,0
+ELUXADOLINE,no,0
+monomethyl fumarate,no,0
+RALTEGRAVIR POTASSIUM,no,0
+NINTEDANIB ESYLATE,most,1
+OMEPRAZOLE MAGNESIUM,less,1
+AFATINIB,no,0
+rucaparib camsylate,less,1
+Voxelotor,no,0
+APIXABAN,less,1
+LINAGLIPTIN,most,1
+OZANIMOD HYDROCHLORIDE,less,1
+BETAINE,no,0
+AURANOFIN,no,0
+OSIMERTINIB,most,1
+Mobocertinib,most,1
+propoxyphene napsylate,less,1
+Flibanserin,less,1
+LEVOMILNACIPRAN HYDROCHLORIDE; levomilnacipran hydrochloride,less,1
+ISOCARBOXAZID,less,1
+darunavir ethanolate,no,0
+EDOXABAN TOSYLATE,no,0
+selinexor,less,1
+FEXINIDAZOLE,most,1
+FOSTEMSAVIR TROMETHAMINE,less,1
+uridine triacetate,no,0
+odevixibat,no,0
+VOCLOSPORIN,most,1
+TRIHEPTANOIN,no,0
+NABILONE,less,1
+brexpiprazole,less,1
+istradefylline,no,0
+FENFLURAMINE,most,1
+LEVOKETOCONAZOLE,most,1
+SOTORASIB,less,1
+PHENELZINE SULFATE,less,1
+VISMODEGIB,no,0
+rilpivirine hydrochloride,no,0
+METHYLPHENIDATE,most,1
+VEMURAFENIB,most,1
+ivacaftor,no,0
+IBRUTINIB,most,1
+PRALSETINIB,less,1
+DOLUTEGRAVIR SODIUM,no,0
+patiromer,no,0
+Bempedoic Acid,less,1
+TERIFLUNOMIDE,less,1
+CANNABIDIOL,no,0
+CHLORAMBUCIL,no,0
+BINIMETINIB,most,1
+DICLOFENAC,most,1
+RIMEGEPANT SULFATE,no,0
+LEVAMLODIPINE MALEATE,most,1
+CODEINE SULFATE,less,1
+FENOPROFEN CALCIUM,most,1
+canagliflozin,no,0
+Glutamine,no,0
+LORCASERIN HYDROCHLORIDE ANHYDROUS,most,1
+roflumilast,less,1
+LEMBOREXANT,no,0
+METHSUXIMIDE,no,0
+LEVOCARNITINE,no,0
+suvorexant,less,1
+Obeticholic Acid,no,0
+CARBINOXAMINE MALEATE,less,1
+Erythromycin Ethylsuccinate,most,1
+BUPROPION HYDROCHLORIDE,less,1
+DESVENLAFAXINE SUCCINATE,less,1
+TETRABENAZINE,most,1
+NALTREXONE HYDROCHLORIDE,less,1
+CEFUROXIME AXETIL,less,1
+PYRIMETHAMINE,less,1
+ALPRAZOLAM,less,1
+ATORVASTATIN CALCIUM PROPYLENE GLYCOL SOLVATE,no,0
+ISRADIPINE,less,1
+ATOVAQUONE,no,0
+CALCIUM ACETATE,no,0
+INDOMETHACIN,most,1
+SUCRALFATE,no,0
+BOSENTAN ANHYDROUS,less,1
 COLESTIPOL HYDROCHLORIDE,less,1
-Felbamate,less,1
+FELBAMATE,less,1
 HYDROXYUREA,no,0
-Loxapine,less,1
+LOXAPINE SUCCINATE,less,1
 PIOGLITAZONE,most,1
-acyclovir,no,0
-Morphine Sulfate Extended Release,less,1
-Paroxetine,less,1
-Prazosin Hydrochloride,less,1
+ACYCLOVIR,no,0
+MORPHINE SULFATE,less,1
+PAROXETINE HYDROCHLORIDE HEMIHYDRATE,less,1
+PRAZOSIN HYDROCHLORIDE,less,1
 ZOLPIDEM TARTRATE,less,1
-Mycophenolic Acid,less,1
-Triamterene,no,0
+MYCOPHENOLATE SODIUM,less,1
+TRIAMTERENE,no,0
 RIZATRIPTAN BENZOATE,most,1
-Tacrolimus,most,1
-ibuprofen,most,1
-Rufinamide,less,1
-Cimetidine,less,1
-Clonidine hydrochloride,less,1
-methazolamide,no,0
-Metoprolol Succinate,most,1
-Sirolimus,less,1
-Torsemide,less,1
-Oxcarbazepine,less,1
-Clindamycin Palmitate Hydrochloride,no,0
-meloxicam,most,1
-METHITEST,less,1
-Glycopyrrolate,less,1
-deferasirox,no,0
-Isoniazid,no,0
+TACROLIMUS,most,1
+IBUPROFEN,most,1
+RUFINAMIDE,less,1
+CIMETIDINE HYDROCHLORIDE,less,1
+CLONIDINE HYDROCHLORIDE,less,1
+METHAZOLAMIDE,no,0
+METOPROLOL TARTRATE,most,1
+SIROLIMUS,less,1
+TORSEMIDE,less,1
+OXCARBAZEPINE,less,1
+CLINDAMYCIN PALMITATE HYDROCHLORIDE,no,0
+MELOXICAM,most,1
+METHYLTESTOSTERONE,less,1
+GLYCOPYRROLATE,less,1
+DEFERASIROX,no,0
+ISONIAZID,no,0
 FLUDROCORTISONE ACETATE,less,1
 VERAPAMIL HYDROCHLORIDE,most,1
-Zileuton,no,0
-Propantheline Bromide,less,1
-Sertraline,most,1
-Bisoprolol Fumarate,most,1
-Vardenafil Hydrochloride,most,1
-Aminocaproic acid,less,1
-Telmisartan,less,1
+ZILEUTON,no,0
+PROPANTHELINE BROMIDE,less,1
+SERTRALINE HYDROCHLORIDE,most,1
+BISOPROLOL FUMARATE,most,1
+VARDENAFIL,most,1
+AMINOCAPROIC ACID,less,1
+TELMISARTAN,less,1
 LAMOTRIGINE,less,1
-Fenofibrate,no,0
-montelukast sodium,less,1
-Metolazone,less,1
-Disulfiram,no,0
-Megestrol Acetate,less,1
+FENOFIBRATE,no,0
+MONTELUKAST SODIUM,less,1
+METOLAZONE,less,1
+DISULFIRAM,no,0
+MEGESTROL ACETATE,less,1
 METOPROLOL SUCCINATE,most,1
-acarbose,no,0
-Clindamycin Hydrochloride,no,0
-Jencycla,no,0
-Estropipate,most,1
-Levocetirizine Dihydrochloride,less,1
-colchicine,no,0
+ACARBOSE,no,0
+CLINDAMYCIN HYDROCHLORIDE,no,0
+NORETHINDRONE,no,0
+ESTROPIPATE,most,1
+LEVOCETIRIZINE DIHYDROCHLORIDE,less,1
+COLCHICINE,no,0
 PENTOXIFYLLINE,less,1
-zaleplon,less,1
+ZALEPLON,less,1
 METHSCOPOLAMINE BROMIDE,less,1
 KETOCONAZOLE,most,1
 CANDESARTAN CILEXETIL,less,1
-Esomeprazole magnesium,less,1
-Quinidine Gluconate,less,1
-Amoxapine,less,1
+ESOMEPRAZOLE MAGNESIUM,less,1
+QUINIDINE GLUCONATE,less,1
+AMOXAPINE,less,1
 PROMETHAZINE HYDROCHLORIDE,less,1
-Labetalol Hydrochloride,most,1
-Dofetilide,most,1
-Famciclovir,less,1
+LABETALOL,most,1
+DOFETILIDE,most,1
+FAMCICLOVIR,less,1
 Albuterol,most,1
 GEMFIBROZIL,less,1
-Melphalan,less,1
-Diazepam,less,1
-Bosentan,less,1
-Moexipril Hydrochloride,less,1
-Chlorthalidone,less,1
-Fluvastatin,less,1
-Probenecid,no,0
-Guanfacine,less,1
-almotriptan,most,1
-Colesevelam,no,0
+MELPHALAN,less,1
+DIAZEPAM,less,1
+BOSENTAN,less,1
+MOEXIPRIL HYDROCHLORIDE,less,1
+CHLORTHALIDONE,less,1
+FLUVASTATIN SODIUM,less,1
+PROBENECID,no,0
+GUANFACINE HYDROCHLORIDE,less,1
+almotriptan malate,most,1
+COLESEVELAM HYDROCHLORIDE,no,0
 NIZATIDINE,less,1
 TENOFOVIR DISOPROXIL FUMARATE,no,0
-Cartia XT,most,1
-Felodipine,less,1
-Risedronate Sodium,less,1
-Cephalexin,no,0
-Diazoxide,less,1
-Ritonavir,most,1
-Acetazolamide,no,0
-Lurasidone Hydrochloride,less,1
-Dutasteride,less,1
+DILTIAZEM HYDROCHLORIDE,most,1
+FELODIPINE,less,1
+RISEDRONATE SODIUM,less,1
+CEPHALEXIN,no,0
+DIAZOXIDE,less,1
+RITONAVIR,most,1
+ACETAZOLAMIDE,no,0
+LURASIDONE HYDROCHLORIDE,less,1
+DUTASTERIDE,less,1
 Exemestane,less,1
-Fosinopril sodium,less,1
-Sodium Phenylbutyrate,less,1
-Hydrocodone Bitartrate,most,1
-ENTECAVIR,no,0
-cilostazol,most,1
+FOSINOPRIL SODIUM,less,1
+SODIUM PHENYLBUTYRATE,less,1
+HYDROCODONE BITARTRATE,most,1
+ENTECAVIR ANHYDROUS,no,0
+CILOSTAZOL,most,1
 OLANZAPINE,less,1
-Disopyramide Phosphate,most,1
-Danazol,less,1
-Benazepril Hydrochloride,less,1
-Ergomar Sublingual,less,1
-Azathioprine,no,0
-Carbidopa,less,1
-montelukast sodium,less,1
-Chlordiazepoxide Hydrochloride,no,0
-Maraviroc,most,1
-Imipramine Pamoate,less,1
-Flecainide Acetate,most,1
-Amantadine HCl,less,1
-Ethacrynic acid,less,1
-eletriptan hydrobromide,most,1
-Hydroxyzine Pamoate,most,1
-Erythrocin Stearate,most,1
+DISOPYRAMIDE PHOSPHATE,most,1
+DANAZOL,less,1
+BENAZEPRIL HYDROCHLORIDE,less,1
+Ergotamine Tartrate,less,1
+AZATHIOPRINE,no,0
+CARBIDOPA,less,1
+MONTELUKAST,less,1
+CHLORDIAZEPOXIDE HYDROCHLORIDE,no,0
+MARAVIROC,most,1
+IMIPRAMINE PAMOATE,less,1
+FLECAINIDE ACETATE,most,1
+AMANTADINE HYDROCHLORIDE,less,1
+ETHACRYNIC ACID,less,1
+ELETRIPTAN HYDROBROMIDE,most,1
+HYDROXYZINE PAMOATE,most,1
+ERYTHROMYCIN STEARATE,most,1
 ISOSORBIDE MONONITRATE,less,1
-Nabumetone,most,1
-Sunitinib malate,most,1
-Cabergoline,most,1
-RASAGILINE,less,1
+NABUMETONE,most,1
+SUNITINIB MALATE,most,1
+CABERGOLINE,most,1
+RASAGILINE MESYLATE,less,1
 ACITRETIN,less,1
-Oxybutynin Chloride,most,1
-Risperidone,less,1
-Diclofenac Potassium,most,1
-Ramipril,less,1
-PRYIDOSTIGMINE BROMIDE,no,0
-Solifenacin Succinate,less,1
-Omeprazole,less,1
+OXYBUTYNIN CHLORIDE,most,1
+RISPERIDONE,less,1
+DICLOFENAC POTASSIUM,most,1
+RAMIPRIL,less,1
+PYRIDOSTIGMINE BROMIDE,no,0
+SOLIFENACIN SUCCINATE,less,1
+OMEPRAZOLE,less,1
 QUININE SULFATE,most,1
-Memantine Hydrochloride,less,1
-Pioglitazone,most,1
-Zenzedi,most,1
-Nebivolol,less,1
-voriconazole,most,1
-Rimantadine Hydrochloride,less,1
-Efavirenz,most,1
+MEMANTINE HYDROCHLORIDE,less,1
+PIOGLITAZONE HYDROCHLORIDE,most,1
+Dextroamphetamine Sulfate,most,1
+NEBIVOLOL HYDROCHLORIDE,less,1
+VORICONAZOLE,most,1
+RIMANTADINE HYDROCHLORIDE,less,1
+EFAVIRENZ,most,1
 CELECOXIB,most,1
-Cefadroxil,no,0
-Sumatriptan Succinate,most,1
-Haloperidol,most,1
-Clozapine,most,1
-Azithromycin,most,1
-Abacavir,most,1
+CEFADROXIL HEMIHYDRATE,no,0
+SUMATRIPTAN SUCCINATE,most,1
+HALOPERIDOL,most,1
+CLOZAPINE,most,1
+AZITHROMYCIN ANHYDROUS,most,1
+ABACAVIR SULFATE,most,1
 QUINIDINE SULFATE,most,1
-Prednisolone Sodium Phosphate,less,1
-Fosamprenavir Calcium,less,1
-Isosorbide Dinitrate,less,1
-Nifedipine,less,1
-Fluoxetine,most,1
+PREDNISOLONE SODIUM PHOSPHATE,less,1
+FOSAMPRENAVIR CALCIUM,less,1
+ISOSORBIDE DINITRATE,less,1
+NIFEDIPINE,less,1
+FLUOXETINE HYDROCHLORIDE,most,1
 PROCHLORPERAZINE MALEATE,less,1
-Ampicillin,no,0
-Ambrisentan,less,1
-Mycophenolic Acid,less,1
-Risedronate Sodium,less,1
-Colchicine,no,0
-Sotalol Hydrochloride,most,1
-Meclizine Hydrochloride,no,0
+AMPICILLIN TRIHYDRATE,no,0
+AMBRISENTAN,less,1
+MYCOPHENOLIC ACID,less,1
+RISEDRONATE SODIUM HEMI-PENTAHYDRATE,less,1
+COLCHICEINE,no,0
+SOTALOL HYDROCHLORIDE,most,1
+MECLIZINE HYDROCHLORIDE,no,0
 TRIENTINE HYDROCHLORIDE,no,0
-Baclofen,less,1
-Bethanechol Chloride,less,1
-Clarithromycin,most,1
+BACLOFEN,less,1
+BETHANECHOL CHLORIDE,less,1
+CLARITHROMYCIN,most,1
 CHLORZOXAZONE,no,0
 PRIMAQUINE PHOSPHATE,less,1
-Venlafaxine Hydrochloride,less,1
-vigabatrin,no,0
-Penicillamine,no,0
-Sevelamer Hydrochloride,no,0
-Metaproterenol Sulfate,less,1
-VALGANCICLOVIR HYDROCHLORIDE,less,1
-Liothyronine sodium,less,1
-Prasugrel,less,1
-emtricitabine,no,0
-Valacyclovir Hydrochloride,no,0
-GAVILAX,no,0
-Desloratadine,no,0
+VENLAFAXINE,less,1
+VIGABATRIN,no,0
+PENICILLAMINE,no,0
+SEVELAMER HYDROCHLORIDE,no,0
+METAPROTERENOL SULFATE,less,1
+VALGANCICLOVIR,less,1
+LIOTHYRONINE SODIUM,less,1
+PRASUGREL HYDROCHLORIDE,less,1
+EMTRICITABINE,no,0
+VALACYCLOVIR HYDROCHLORIDE,no,0
+POLYETHYLENE GLYCOL 3350,no,0
+DESLORATADINE,no,0
 PERPHENAZINE,less,1
 DIMETHYL FUMARATE,no,0
-Bromocriptine Mesylate,most,1
-Nadolol,less,1
-Propranolol Hydrochloride,most,1
-Risedronate Sodium,less,1
-Albendazole,no,0
-Indapamide,less,1
-Ezetimibe,no,0
-Abiraterone Acetate,less,1
-Claravis,less,1
+BROMOCRIPTINE MESYLATE,most,1
+NADOLOL,less,1
+PROPRANOLOL HYDROCHLORIDE,most,1
+RISEDRONATE SODIUM MONOHYDRATE,less,1
+ALBENDAZOLE,no,0
+INDAPAMIDE,less,1
+EZETIMIBE,no,0
+ABIRATERONE ACETATE,less,1
+ISOTRETINOIN,less,1
 LISINOPRIL,less,1
-Tiagabine Hydrochloride,less,1
-ropinirole hydrochloride,most,1
-Terazosin,less,1
-frovatriptan succinate,most,1
+TIAGABINE HYDROCHLORIDE,less,1
+ROPINIROLE HYDROCHLORIDE,most,1
+TERAZOSIN HYDROCHLORIDE,less,1
+FROVATRIPTAN SUCCINATE,most,1
 SILODOSIN,less,1
-Darifenacin,less,1
-Dicyclomine hydrochloride,less,1
+DARIFENACIN HYDROBROMIDE,less,1
+DICYCLOMINE HYDROCHLORIDE,less,1
 CEFDINIR,less,1
-Temazepam,less,1
-Propoxyphene,less,1
-moxifloxacin hydrochloride,most,1
-Oxycodone Hydrochloride,less,1
+TEMAZEPAM,less,1
+PROPOXYPHENE HYDROCHLORIDE,less,1
+MOXIFLOXACIN HYDROCHLORIDE,most,1
+OXYCODONE HYDROCHLORIDE,less,1
 THEOPHYLLINE,less,1
-Phentermine Resin ER,less,1
+PHENTERMINE,less,1
 SILDENAFIL CITRATE,less,1
-stavudine,no,0
-Imipramine Hydrochloride,less,1
-Ranitidine,less,1
-Pindolol,less,1
-Dalfampridine,no,0
-Nevirapine,no,0
-Tizanidine,less,1
-Acebutolol Hydrochloride,less,1
-Trihexyphenidyl Hydrochloride,less,1
-simvastatin,less,1
-Miglustat,no,0
-Ranolazine,most,1
-Bexarotene,less,1
-Ticlopidine Hydrochloride,no,0
-Bicalutamide,less,1
-Atorvastatin calcium,no,0
-Mirtazapine,most,1
-Sevelamer Carbonate,no,0
-Chlorpromazine Hydrochloride,less,1
-Lactulose,no,0
-Naproxen Sodium,most,1
-Prednisolone,less,1
-Tramadol Hydrochloride,less,1
-Lovastatin,no,0
-Rivastigmine Tartrate,less,1
-Meprobamate,less,1
-Captopril,less,1
+STAVUDINE,no,0
+IMIPRAMINE HYDROCHLORIDE,less,1
+RANITIDINE HYDROCHLORIDE,less,1
+PINDOLOL,less,1
+DALFAMPRIDINE,no,0
+NEVIRAPINE HEMIHYDRATE,no,0
+TIZANIDINE HYDROCHLORIDE,less,1
+ACEBUTOLOL HYDROCHLORIDE,less,1
+TRIHEXYPHENIDYL HYDROCHLORIDE,less,1
+SIMVASTATIN,less,1
+MIGLUSTAT,no,0
+RANOLAZINE,most,1
+BEXAROTENE,less,1
+TICLOPIDINE HYDROCHLORIDE,no,0
+BICALUTAMIDE,less,1
+ATORVASTATIN,no,0
+MIRTAZAPINE,most,1
+SEVELAMER CARBONATE,no,0
+CHLORPROMAZINE HYDROCHLORIDE,less,1
+LACTULOSE,no,0
+NAPROXEN SODIUM,most,1
+PREDNISOLONE,less,1
+TRAMADOL HYDROCHLORIDE,less,1
+LOVASTATIN,no,0
+RIVASTIGMINE TARTRATE,less,1
+MEPROBAMATE,less,1
+CAPTOPRIL,less,1
 FLAVOXATE HYDROCHLORIDE,less,1
-Methamphetamine Hydrochloride,most,1
-Cefixime,no,0
-Seromycin,less,1
-Meclofenamate Sodium,most,1
-Folic acid,no,0
-Nitrofurantoin,less,1
-mycophenolate mofetil,less,1
-ketoprofen,most,1
-Duloxetine,less,1
-Ramelteon,no,0
-Fluconazole,most,1
+METHAMPHETAMINE HYDROCHLORIDE,most,1
+CEFIXIME,no,0
+CYCLOSERINE,less,1
+MECLOFENAMATE SODIUM,most,1
+FOLIC ACID,no,0
+NITROFURANTOIN,less,1
+MYCOPHENOLATE MOFETIL,less,1
+KETOPROFEN,most,1
+DULOXETINE HYDROCHLORIDE,less,1
+RAMELTEON,no,0
+FLUCONAZOLE,most,1
 CYCLOPHOSPHAMIDE,most,1
-Imatinib Mesylate,most,1
-Ivermectin,less,1
-Ranitidine,less,1
-Cortisone Acetate,less,1
-Amlodipine Besylate,most,1
-Paromomycin Sulfate,no,0
-Rosuvastatin Calcium,no,0
-Paliperidone,most,1
-Aripiprazole,less,1
-Varenicline,less,1
-Valsartan,less,1
-Amoxicillin,no,0
-Cimetidine,less,1
-Dexamethasone,less,1
-Amiloride Hydrochloride,less,1
-Furosemide,less,1
+IMATINIB MESYLATE,most,1
+IVERMECTIN,less,1
+RANITIDINE,less,1
+CORTISONE ACETATE,less,1
+AMLODIPINE BESYLATE,most,1
+PAROMOMYCIN SULFATE,no,0
+ROSUVASTATIN CALCIUM,no,0
+PALIPERIDONE,most,1
+ARIPIPRAZOLE,less,1
+VARENICLINE TARTRATE,less,1
+VALSARTAN,less,1
+AMOXICILLIN,no,0
+CIMETIDINE,less,1
+DEXAMETHASONE,less,1
+AMILORIDE HYDROCHLORIDE ANHYDROUS,less,1
+FUROSEMIDE,less,1
 LETROZOLE,less,1
-Riluzole,less,1
+RILUZOLE,less,1
 Dronabinol,less,1
-Oxandrolone,no,0
+OXANDROLONE,no,0
 FOSFOMYCIN TROMETHAMINE,no,0
-Tamoxifen Citrate,less,1
-Venlafaxine Hydrochloride,less,1
-Diflunisal,most,1
-Loratadine,no,0
-Metformin Hydrochloride,most,1
-Loperamide Hydrochloride,most,1
-Eulexin,less,1
-Hydroxyzine hydrochloride,most,1
-Lubiprostone,less,1
-Flurazepam Hydrochloride,less,1
-Alfuzosin Hydrochloride,less,1
-Tadalafil,less,1
-Digoxin,most,1
-Thiothixene,less,1
-Ursodiol,no,0
-Propylthiouracil,no,0
-Vancomycin Hydrochloride,no,0
-Selegiline Hydrochloride,less,1
-Trifluoperazine Hydrochloride,less,1
-Levofloxacin,most,1
-Trazodone Hydrochloride,most,1
-Cefdinir,less,1
-Chloroquine Phosphate,most,1
-Amphetamine Sulfate,most,1
-Tizanidine Hydrochloride,less,1
-Eplerenone,less,1
-Phendimetrazine Tartrate,less,1
-Propafenone,most,1
+TAMOXIFEN CITRATE,less,1
+VENLAFAXINE HYDROCHLORIDE,less,1
+DIFLUNISAL,most,1
+LORATADINE,no,0
+METFORMIN HYDROCHLORIDE,most,1
+LOPERAMIDE HYDROCHLORIDE,most,1
+FLUTAMIDE,less,1
+HYDROXYZINE DIHYDROCHLORIDE,most,1
+LUBIPROSTONE,less,1
+FLURAZEPAM HYDROCHLORIDE,less,1
+ALFUZOSIN HYDROCHLORIDE,less,1
+TADALAFIL,less,1
+DIGOXIN,most,1
+THIOTHIXENE,less,1
+URSODIOL,no,0
+PROPYLTHIOURACIL,no,0
+vancomycin hydrochloride,no,0
+SELEGILINE HYDROCHLORIDE,less,1
+TRIFLUOPERAZINE HYDROCHLORIDE,less,1
+LEVOFLOXACIN,most,1
+TRAZODONE HYDROCHLORIDE,most,1
+CEFDINIR MONOHYDRATE,less,1
+CHLOROQUINE PHOSPHATE,most,1
+AMPHETAMINE SULFATE,most,1
+Tizanidine,less,1
+EPLERENONE,less,1
+PHENDIMETRAZINE TARTRATE,less,1
+PROPAFENONE,most,1
 PANTOPRAZOLE SODIUM,no,0
 CAPECITABINE,most,1
-Alvimopan,most,1
-Paricalcitol,less,1
-Repaglinide,less,1
-Cetirizine Hydrochloride,less,1
+ALVIMOPAN,most,1
+PARICALCITOL,less,1
+REPAGLINIDE,less,1
+CETIRIZINE HYDROCHLORIDE,less,1
 PRAZIQUANTEL,most,1
-divalproex sodium,less,1
-Clorazepate Dipotassium,no,0
-Allopurinol,less,1
-Phenytoin,most,1
-Warfarin Sodium,no,0
-valproic acid,less,1
+DIVALPROEX SODIUM,less,1
+CLORAZEPATE DIPOTASSIUM,no,0
+ALLOPURINOL,less,1
+PHENYTOIN,most,1
+WARFARIN SODIUM,no,0
+VALPROIC ACID,less,1
 MEXILETINE HYDROCHLORIDE,most,1
-Mefloquine Hydrochloride,most,1
-Oxymorphone hydrochloride,less,1
-Levonorgestrel,no,0
-Escitalopram,less,1
-Tolterodine Tartrate,less,1
-cephalexin,no,0
+MEFLOQUINE HYDROCHLORIDE,most,1
+OXYMORPHONE HYDROCHLORIDE,less,1
+LEVONORGESTREL,no,0
+ESCITALOPRAM OXALATE,less,1
+TOLTERODINE TARTRATE,less,1
+CEPHALEXIN ANHYDROUS,no,0
 ETHOSUXIMIDE,no,0
-Famotidine,less,1
-Clonazepam,less,1
+FAMOTIDINE,less,1
+CLONAZEPAM,less,1
 BENZONATATE,no,0
-Vardenafil Hydrochloride,most,1
-Fluvoxamine Maleate,less,1
-Carglumic Acid,no,0
-Flurbiprofen,most,1
-Azithromycin,most,1
-Paser,less,1
-Midodrine Hydrochloride,most,1
-Entecavir,no,0
+VARDENAFIL HYDROCHLORIDE,most,1
+FLUVOXAMINE MALEATE,less,1
+CARGLUMIC ACID,no,0
+FLURBIPROFEN,most,1
+AZITHROMYCIN DIHYDRATE,most,1
+AMINOSALICYLIC ACID,less,1
+MIDODRINE HYDROCHLORIDE,most,1
+ENTECAVIR,no,0
 MINOXIDIL,most,1
-Acamprosate Calcium,less,1
-Naproxen,most,1
-Atomoxetine Hydrochloride,most,1
-Nimodipine,less,1
-Finasteride,less,1
-Methyldopa,less,1
+ACAMPROSATE CALCIUM,less,1
+NAPROXEN,most,1
+ATOMOXETINE HYDROCHLORIDE,most,1
+NIMODIPINE,less,1
+FINASTERIDE,less,1
+METHYLDOPA,less,1
 PREGABALIN,most,1
-Methimazole,no,0
-Atenolol,most,1
-Thioridazine Hydrochloride,most,1
-Cefprozil,no,0
+METHIMAZOLE,no,0
+ATENOLOL,most,1
+THIORIDAZINE HYDROCHLORIDE,most,1
+CEFPROZIL,no,0
 ESTRADIOL,most,1
-Valganciclovir,less,1
-ATAZANAVIR,most,1
-Progesterone,most,1
-Ketorolac Tromethamine,most,1
-Fenofibric acid,no,0
-Ciprofloxacin,most,1
-Zidovudine,less,1
+VALGANCICLOVIR HYDROCHLORIDE,less,1
+ATAZANAVIR SULFATE,most,1
+PROGESTERONE,most,1
+KETOROLAC TROMETHAMINE,most,1
+CHOLINE FENOFIBRATE,no,0
+CIPROFLOXACIN HYDROCHLORIDE,most,1
+ZIDOVUDINE,less,1
 METHYLPHENIDATE HYDROCHLORIDE,most,1
 Cholestyramine,no,0
-Ondansetron,most,1
-Oseltamivir phosphate,less,1
-Vecamyl,less,1
-Lanthanum carbonate,no,0
-Atorvastatin calcium,no,0
-Zonisamide,less,1
-Levetiracetam,less,1
-Protriptyline hydrochloride,less,1
+ONDANSETRON,most,1
+OSELTAMIVIR PHOSPHATE,less,1
+MECAMYLAMINE HYDROCHLORIDE,less,1
+LANTHANUM CARBONATE,no,0
+ATORVASTATIN CALCIUM TRIHYDRATE,no,0
+ZONISAMIDE,less,1
+LEVETIRACETAM,less,1
+PROTRIPTYLINE HYDROCHLORIDE,less,1
 BENZPHETAMINE HYDROCHLORIDE,less,1
-Nateglinide,no,0
-Phenytek,most,1
-Rosuvastatin,no,0
-Eletriptan Hydrobromide,most,1
-Sulfasalazine,less,1
+NATEGLINIDE,no,0
+PHENYTOIN SODIUM,most,1
+ROSUVASTATIN,no,0
+ELETRIPTAN HYDROBROMIDE MONOHYDRATE,most,1
+SULFASALAZINE,less,1
 DOXEPIN HYDROCHLORIDE,less,1
-Losartan Potassium,less,1
-Donepezil Hydrochloride,less,1
-Pravastatin Sodium,less,1
-Sildenafil,less,1
-Rabeprazole sodium,no,0
-Methotrexate Sodium,less,1
-PAROXETINE,less,1
-Pramipexole Dihydrochloride,less,1
-Ursodiol,no,0
-MENEST,most,1
-Estazolam,less,1
-esomeprazole magnesium,less,1
-Mefenamic Acid,most,1
-Propafenone Hydrochloride,most,1
+LOSARTAN POTASSIUM,less,1
+DONEPEZIL HYDROCHLORIDE,less,1
+PRAVASTATIN SODIUM,less,1
+SILDENAFIL,less,1
+RABEPRAZOLE SODIUM,no,0
+METHOTREXATE SODIUM,less,1
+PAROXETINE HYDROCHLORIDE ANHYDROUS,less,1
+PRAMIPEXOLE DIHYDROCHLORIDE,less,1
+URSADIOL,no,0
+"ESTROGENS, ESTERIFIED",most,1
+ESTAZOLAM,less,1
+ESOMEPRAZOLE MAGNESIUM DIHYDRATE,less,1
+MEFENAMIC ACID,most,1
+PROPAFENONE HYDROCHLORIDE,most,1
 CARBAMAZEPINE,most,1
-Ultramicrosize Griseofulvin,no,0
-Mifepristone,less,1
-Guanfacine Extended-Release,less,1
-Itraconazole,less,1
-Anastrozole,less,1
-Cyproheptadine Hydrochloride,less,1
-Alendronate,no,0
+GRISEOFULVIN,no,0
+MIFEPRISTONE,less,1
+GUANFACINE,less,1
+ITRACONAZOLE,less,1
+ANASTROZOLE,less,1
+CYPROHEPTADINE,less,1
+ALENDRONATE SODIUM,no,0
 CEFPODOXIME PROXETIL,less,1
-Lamivudine,no,0
-Quetiapine Fumarate,less,1
+LAMIVUDINE,no,0
+QUETIAPINE FUMARATE,less,1
 FEXOFENADINE HYDROCHLORIDE,no,0
-Clobazam,no,0
-Etodolac,most,1
-Clomipramine Hydrochloride,less,1
-Pyrazinamide,no,0
-Zolmitriptan,most,1
-Alosetron Hydrochloride,less,1
-Deferiprone,less,1
-Sodium Iodide I-131,less,1
-SODIUM IODIDE I 123,no,0
-Cefadroxil,no,0
-Nefazodone Hydrochloride,less,1
-spironolactone,less,1
+CLOBAZAM,no,0
+ETODOLAC,most,1
+CLOMIPRAMINE HYDROCHLORIDE,less,1
+PYRAZINAMIDE,no,0
+ZOLMITRIPTAN,most,1
+ALOSETRON HYDROCHLORIDE,less,1
+DEFERIPRONE,less,1
+SODIUM IODIDE I-131,less,1
+SODIUM IODIDE I-123,no,0
+CEFADROXIL,no,0
+NEFAZODONE HYDROCHLORIDE,less,1
+SPIRONOLACTONE,less,1
 AMITRIPTYLINE HYDROCHLORIDE,most,1
-Trimipramine Maleate,less,1
-Niacor,less,1
-toremifene citrate,most,1
+TRIMIPRAMINE MALEATE,less,1
+niacin,less,1
+TOREMIFENE CITRATE,most,1
 METHADONE HYDROCHLORIDE,most,1
-Tolvaptan,less,1
-Carisoprodol,less,1
-ziprasidone hydrochloride,most,1
-Buspirone Hydrochloride,less,1
+TOLVAPTAN,less,1
+CARISOPRODOL,less,1
+ZIPRASIDONE HYDROCHLORIDE,most,1
+BUSPIRONE HYDROCHLORIDE,less,1
 DESIPRAMINE HYDROCHLORIDE,less,1
-Balsalazide Disodium,less,1
-Rifabutin,less,1
-Trandolapril,less,1
-Metaxalone,no,0
+BALSALAZIDE DISODIUM,less,1
+RIFABUTIN,less,1
+TRANDOLAPRIL,less,1
+METAXALONE,no,0
 APREPITANT,less,1
-CINACALCET,most,1
-Triazolam,no,0
-Pimozide,less,1
-Labetalol Hydrochloride,most,1
+CINACALCET HYDROCHLORIDE,most,1
+TRIAZOLAM,no,0
+PIMOZIDE,less,1
+LABETALOL HYDROCHLORIDE,most,1
 TROSPIUM CHLORIDE,less,1
-Molindone Hydrochloride,less,1
-Clomiphene Citrate,less,1
-DIETHYLPROPION HYDROCHLORIDE ER,most,1
-Perindopril Erbumine,less,1
-Clemastine Fumarate,less,1
+MOLINDONE HYDROCHLORIDE,less,1
+CLOMIPHENE CITRATE,less,1
+DIETHYLPROPION HYDROCHLORIDE,most,1
+PERINDOPRIL ERBUMINE,less,1
+CLEMASTINE FUMARATE,less,1
 SULINDAC,most,1
-Dexmethylphenidate Hydrochloride,most,1
-Piroxicam,most,1
-Primidone,no,0
-Methocarbamol,less,1
-Naratriptan,most,1
+DEXMETHYLPHENIDATE HYDROCHLORIDE,most,1
+PIROXICAM,most,1
+PRIMIDONE,no,0
+METHOCARBAMOL,less,1
+NARATRIPTAN HYDROCHLORIDE,most,1
 CYCLOBENZAPRINE HYDROCHLORIDE,less,1
-Miglitol,no,0
-Lansoprazole,less,1
+MIGLITOL,no,0
+LANSOPRAZOLE,less,1
 CARVEDILOL,most,1
-Hydrochlorothiazide,less,1
-Theophylline (Anhydrous),less,1
-Chenodal,no,0
-Misoprostol,less,1
-Citalopram,less,1
-etravirine,less,1
-Clopidogrel,less,1
-Neomycin Sulfate,no,0
-Levorphanol Tartrate,less,1
-Tinidazole,less,1
+HYDROCHLOROTHIAZIDE,less,1
+THEOPHYLLINE ANHYDROUS,less,1
+CHENODIOL,no,0
+MISOPROSTOL,less,1
+CITALOPRAM,less,1
+ETRAVIRINE,less,1
+CLOPIDOGREL BISULFATE,less,1
+NEOMYCIN SULFATE,no,0
+LEVORPHANOL TARTRATE,less,1
+TINIDAZOLE,less,1
 TOLMETIN SODIUM,most,1
-Nortriptyline Hydrochloride,most,1
-molnupiravir,no,0
-Seconal Sodium,less,1
-ISMOTIC,no,0
-SOTALOL,most,1
-Maxaquin,most,1
-Renese,less,1
-PERMAX,most,1
-VITRAKVI,no,0
+NORTRIPTYLINE HYDROCHLORIDE,most,1
+MOLNUPIRAVIR,no,0
+secobarbital sodium,less,1
+isosorbide,no,0
+sotalol,most,1
+lomefloxacin hydrochloride,most,1
+polythiazide,less,1
+pergolide,most,1
+LAROTRECTINIB,no,0
 SODIUM POLYSTYRENE SULFONATE,most,1
-Relistor,less,1
-Eszopiclone,less,1
+METHYLNALTREXONE BROMIDE,less,1
+ESZOPICLONE,less,1
 VASOPRESSIN,less,1
-Naloxone Hydrochloride,less,1
+NALOXONE HYDROCHLORIDE,less,1
 PHYTONADIONE,less,1
-Dehydrated Alcohol,most,1
-Compro,less,1
-LEQVIO,no,0
-Empaveli,less,1
-FIRMAGON,most,1
-OXLUMO,no,0
-Vantas,most,1
-Vyleesi,less,1
-Imcivree,no,0
-Lanreotide Acetate,less,1
-Tymlos,less,1
-Zegalogue,less,1
-Byetta,no,0
-Tegsedi,less,1
-Saxenda,less,1
-XYOSTED,most,1
-VOXZOGO 0.4mg; VOXZOGO 0.56mg; VOXZOGO 1.2mg,less,1
-SymlinPen,no,0
-ZOLADEX,most,1
-SYNRIBO,less,1
-GIVLAARI,no,0
-Copaxone,less,1
-WEGOVY,less,1
-Nexplanon,most,1
-FUZEON,less,1
-Kynamro,no,0
-Fragmin,no,0
-Forteo,less,1
-KYBELLA,less,1
-Fondaparinux Sodium,no,0
-Terbutaline Sulfate,most,1
-Fyremadel,no,0
-Isosulfan Blue,no,0
-ICATIBANT,no,0
-Innohep,less,1
-KYNMOBI,most,1
-Dsuvia,less,1
-nitroglycerin,most,1
-Asenapine,most,1
-Buprenorphine,less,1
-Citanest Plain,less,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
-,most,1
+ALCOHOL,most,1
+PROCHLORPERAZINE,less,1
+INCLISIRAN SODIUM,no,0
+Pegcetacoplan,less,1
+DEGARELIX,most,1
+LUMASIRAN,no,0
+HISTRELIN ACETATE,most,1
+bremelanotide acetate,less,1
+SETMELANOTIDE,no,0
+LANREOTIDE ACETATE,less,1
+ABALOPARATIDE,less,1
+DASIGLUCAGON,less,1
+exenatide,no,0
+INOTERSEN SODIUM,less,1
+LIRAGLUTIDE,less,1
+TESTOSTERONE ENANTHATE,most,1
+VOSORITIDE,less,1
+pramlintide acetate,no,0
+goserelin acetate,most,1
+OMACETAXINE MEPESUCCINATE,less,1
+givosiran sodium,no,0
+GLATIRAMER ACETATE,less,1
+SEMAGLUTIDE,less,1
+etonogestrel,most,1
+Enfuvirtide,less,1
+MIPOMERSEN SODIUM,no,0
+DALTEPARIN SODIUM,no,0
+Teriparatide,less,1
+DEOXYCHOLIC ACID,less,1
+FONDAPARINUX SODIUM,no,0
+terbutaline sulfate,most,1
+ganirelix acetate,no,0
+ISOSULFAN BLUE,no,0
+ICATIBANT ACETATE,no,0
+tinzaparin sodium,less,1
+apomorphine hydrochloride,most,1
+SUFENTANIL,less,1
+NITROGLYCERIN,most,1
+ASENAPINE MALEATE,most,1
+BUPRENORPHINE HYDROCHLORIDE,less,1
+PRILOCAINE HYDROCHLORIDE,less,1
+Etoricoxib,most,1
+Rofecoxib,most,1
+Benfluorex,most,1
+Chlorphentermine,most,1
+Dexfenfluramine,most,1
+Fenfluramine,most,1
+Levomethadyl acetate,most,1
+Phentermine,most,1
+Propoxyphene,most,1
+Sertindole,most,1
+Sibutramine,most,1
+Cisapride,most,1
+Tegaserod,most,1
+Terodiline,most,1
+Astemizole,most,1
+Terfenadine,most,1
+Grepafloxacin,most,1
+Sparfloxacin,most,1
+Buflomedil,most,1
+Dofetilide,most,1
+Encainide,most,1
+Lidoflazine,most,1
+Mibefradil,most,1
+Orciprenaline,most,1
+Prenylamine,most,1
+Probucol,most,1
+Clobutinol,most,1

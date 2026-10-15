@@ -53,7 +53,8 @@ class CFG:
 
     GNN_CHECKPOINT    = os.path.join(CHECKPOINTS_DIR, "gnn_best.pt")
     TRANSFORMER_CKPT  = os.path.join(CHECKPOINTS_DIR, "transformer_best.pt")
-    FUSION_CHECKPOINT = os.path.join(CHECKPOINTS_DIR, "fusion_best.pt")
+    # NOTE: there is deliberately no fusion checkpoint. The design is two INDEPENDENT models (structure GNN,
+    # expression Transformer); a fusion model was dropped after review (imputed expression is not independent evidence).
 
     RESULTS_CSV       = os.path.join(RESULTS_DIR, "model_results.csv")
     BASELINE_REPORT   = os.path.join(RESULTS_DIR, "baseline_comparison.md")
@@ -108,28 +109,25 @@ class CFG:
     # -----------------------------------------------------------------------
     # Model Hyperparameters
     # -----------------------------------------------------------------------
-    # Embedding dimensions
-    EMBED_DIM         = 128         # output dim of both GNN and Transformer branches
-    FUSION_DIM        = 256         # = 2 * EMBED_DIM after cross-attention concat
+    # Two independent models (no fusion). Phase 2 specification, matching results/Phase1_Final_Report.md.
+    EMBED_DIM         = 128         # embedding size of each branch before its own classification head
 
-    # GNN
+    # Structure branch: 3-layer Graph Isomorphism Network (GIN)
     GNN_HIDDEN_DIM    = 256
-    GNN_NUM_LAYERS    = 4
+    GNN_NUM_LAYERS    = 3
     GNN_DROPOUT       = 0.3
 
-    # Transformer
-    TRANS_D_MODEL     = 128         # model dimension inside Transformer
-    TRANS_NHEAD       = 4           # attention heads
-    TRANS_NUM_LAYERS  = 3           # encoder layers
-    TRANS_DIM_FF      = 512         # feed-forward hidden dim
+    # Expression branch: Transformer encoder over 978 gene tokens.
+    # Each token = learned gene-identity embedding + a projection of that gene's z-score.
+    # NO sinusoidal positional encoding: gene order in the 978-vector is arbitrary.
+    TRANS_D_MODEL     = 128
+    TRANS_NHEAD       = 4
+    TRANS_NUM_LAYERS  = 2
+    TRANS_DIM_FF      = 512
     TRANS_DROPOUT     = 0.2
-    NUM_GENES         = 978         # LINCS L1000 landmark genes
+    NUM_GENES         = 978         # LINCS L1000 landmark genes (pr_is_lm == 1)
 
-    # Cross-attention fusion
-    FUSION_NHEAD      = 4
-    FUSION_DROPOUT    = 0.2
-
-    # MLP head
+    # Classification head (one per branch)
     MLP_HIDDEN_DIMS   = [256, 128, 64]
     MLP_DROPOUT       = 0.3
 
@@ -148,9 +146,9 @@ class CFG:
     VAL_FRAC          = 0.15
     TEST_FRAC         = 0.15        # must sum to 1.0
 
-    # Positive class weight for BCEWithLogitsLoss (rough imbalance 327/96 in LINCS-covered set)
-    # Will be recomputed dynamically in training scripts based on actual split
-    POS_WEIGHT_FALLBACK = 2.5
+    # Toxic is the MAJORITY class (~79% of the cohort), so the weight on the safe (negative) class is what needs
+    # raising. Compute class weights from the actual training split in the training script (scripts/utils.compute_class_weight);
+    # do not hard-code a ratio here.
 
     # -----------------------------------------------------------------------
     # Interpretability
@@ -159,7 +157,7 @@ class CFG:
     TOP_K_ATOMS       = 10          # report top-K atoms by GNN attention weight
 
     # Known cardiotoxicity toxicophores (structural alerts from literature)
-    # Used to validate GNN attention -- not assert explanation
+    # Used to validate GNN attention -- not assert explanation. (Descriptive only; not used by any current script.)
     KNOWN_TOXICOPHORES = [
         "anthracycline",
         "quinone",

@@ -34,3 +34,8 @@ models/checkpoints/*.pkl
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Phase 2 builds graphs in memory; stale pre-rebuild artifacts must not be tracked
+data/processed/graphs/
+data/processed/graph_manifest.csv
+*.pt
