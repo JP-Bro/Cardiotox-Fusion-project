@@ -14,7 +14,7 @@
 | `data/processed/expression_matrix.csv` | 486 x 978 mean-aggregated landmark z-scores (HA1E / 10 µM / 24 h) |
 | `data/processed/lincs_matched_compounds.csv` | matched cohort with LINCS pert_id and signature ids |
 | `results/pipeline_rebuild_audit.md` | cohort funnel and dedup log (auto-generated) |
-| `results/pipeline_verification.md` | 54 independent checks (auto-generated) |
+| `results/pipeline_verification.md` | 53 independent checks (auto-generated) |
 | `results/name_match_audit.md` | audit of name-matched compounds (auto-generated) |
 | `results/classical_baselines_report.md` | 17 classical models with bootstrap CIs (auto-generated) |
 | `results/split_stability_report.md` | split-to-split variability of the primary baselines (auto-generated) |
@@ -35,6 +35,6 @@ python scripts/03_rebuild_pipeline.py
 python scripts/04_baselines.py
 python scripts/05_split_stability.py all
 python scripts/audit_matches.py
-python scripts/verify_pipeline.py   # expects: 54/54 checks passed
+python scripts/verify_pipeline.py   # expects: 53/53 checks passed
 ```
 LINCS raw files must be downloaded first (see `README.md`).

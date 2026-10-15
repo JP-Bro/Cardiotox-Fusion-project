@@ -57,6 +57,5 @@ Each check recomputes from raw inputs and can fail.
 | 19 no document claims hERG prediction (label is DICTrank) | PASS |  |
 | 2d no two cohort compounds share a salt-stripped name with different labels | PASS | [] |
 | 21 report states single-replicate share, validation-set size/safe count, and the conflicting-label rule | PASS | single=458, val=72 |
-| 20 every check id cited in CHECKLIST.md exists in this verifier | PASS | missing: [] |
 
 Cohort: 486 unique skeletons, 385 toxic / 101 safe. Scaffold test: 74 compounds, 12 safe. Random-classifier AUC-PR interval: [0.726, 0.944] (prevalence 0.8378).

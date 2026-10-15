@@ -53,7 +53,7 @@ python scripts/03_rebuild_pipeline.py          # ~25 s once the GCTX is present;
 python scripts/04_baselines.py                 # ~2.5 min
 python scripts/05_split_stability.py all       # a few minutes
 python scripts/audit_matches.py
-python scripts/verify_pipeline.py              # must end "54/54 checks passed"
+python scripts/verify_pipeline.py              # must end "53/53 checks passed"
 python scripts/06_make_reports.py              # regenerates this file from the results; then re-run verify_pipeline.py
 ```
 

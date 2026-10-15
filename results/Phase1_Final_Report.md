@@ -3,7 +3,7 @@
 **Project:** Cardiotoxicity prediction, structure (GNN) vs expression (Transformer), two independent models
 **Team:** Jimit Patel, Mallu Vineela Reddy, Aditya Gaurang Patel, Nehal Solanki, Pranjal Chhipa
 **Repository:** https://github.com/JP-Bro/Cardiotox-Fusion-project
-**Status:** October 2026. Every number below is generated from the result files by `scripts/06_make_reports.py` and checked by `scripts/verify_pipeline.py` (54/54 checks pass at generation time).
+**Status:** October 2026. Every number below is generated from the result files by `scripts/06_make_reports.py` and checked by `scripts/verify_pipeline.py` (53/53 checks pass at generation time).
 
 ---
 
