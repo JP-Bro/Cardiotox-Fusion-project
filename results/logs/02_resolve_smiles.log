@@ -1,0 +1,234 @@
+2026-10-14 21:26:58 | 02_resolve_smiles | INFO | ============================================================
+2026-10-14 21:26:58 | 02_resolve_smiles | INFO | SCRIPT: 02_resolve_smiles.py
+2026-10-14 21:26:58 | 02_resolve_smiles | INFO | PURPOSE: ChEMBL SMILES resolution for all labeled compounds
+2026-10-14 21:26:58 | 02_resolve_smiles | INFO | ============================================================
+2026-10-14 21:26:58 | 02_resolve_smiles | INFO | Loaded 1211 labeled compounds from C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\labeled_compounds.csv
+2026-10-14 21:26:58 | 02_resolve_smiles | INFO | Loaded checkpoint: 1211 previously resolved compounds
+2026-10-14 21:26:58 | 02_resolve_smiles | INFO | [10/1211] Resolving: naltrexone
+2026-10-14 21:27:02 | 02_resolve_smiles | INFO |   OK naltrexone -> O=C1CC[C@@]2(O)[C@H]3Cc4ccc(O)c5c4[C@@]2... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:27:02 | 02_resolve_smiles | INFO | [11/1211] Resolving: CABOTEGRAVIR SODIUM
+2026-10-14 21:27:06 | 02_resolve_smiles | INFO |   CABOTEGRAVIR SODIUM: salt stripped (2 frags), removed: ['[Na+]']
+2026-10-14 21:27:06 | 02_resolve_smiles | INFO |   OK CABOTEGRAVIR SODIUM -> C[C@H]1CO[C@@H]2Cn3cc(C(=O)NCc4ccc(F)cc4... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:27:06 | 02_resolve_smiles | INFO | [12/1211] Resolving: Fulvestrant
+2026-10-14 21:27:08 | 02_resolve_smiles | INFO |   OK Fulvestrant -> C[C@]12CC[C@@H]3c4ccc(O)cc4C[C@@H](CCCCC... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:27:08 | 02_resolve_smiles | INFO | [13/1211] Resolving: Dimercaprol
+2026-10-14 21:27:13 | 02_resolve_smiles | INFO |   OK Dimercaprol -> OCC(S)CS... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:27:13 | 02_resolve_smiles | INFO | [17/1211] Resolving: Cyanocobalamin
+2026-10-14 21:27:16 | 02_resolve_smiles | WARNING |   X Cyanocobalamin: no_structure --  | No canonical_smiles in ChEMBL response
+2026-10-14 21:27:16 | 02_resolve_smiles | INFO | [18/1211] Resolving: ESTRADIOL VALERATE
+2026-10-14 21:27:19 | 02_resolve_smiles | INFO |   OK ESTRADIOL VALERATE -> CCCCC(=O)O[C@H]1CC[C@H]2[C@@H]3CCc4cc(O)... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:27:19 | 02_resolve_smiles | INFO | [19/1211] Resolving: TESTOSTERONE CYPIONATE
+2026-10-14 21:27:22 | 02_resolve_smiles | INFO |   OK TESTOSTERONE CYPIONATE -> C[C@]12CC[C@H]3[C@@H](CCC4=CC(=O)CC[C@@]... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:27:22 | 02_resolve_smiles | INFO | [20/1211] Resolving: STREPTOMYCIN SULFATE
+2026-10-14 21:27:25 | 02_resolve_smiles | INFO |   STREPTOMYCIN SULFATE: salt stripped (5 frags), removed: ['CN[C@@H]1[C@H](O[C@H]2[C@H](O[C@H]3[C@H](O)[C@@H](O)[C@H](N=C(N)N)[C@@H](O)[C@@H]3N=C(N)N)O[C@@H](C)[C@]2(O)C=O)O[C@@H](CO)[C@H](O)[C@H]1O', 'O=S(=O)(O)O', 'O=S(=O)(O)O', 'O=S(=O)(O)O']
+2026-10-14 21:27:25 | 02_resolve_smiles | INFO |   OK STREPTOMYCIN SULFATE -> CN[C@@H]1[C@H](O[C@H]2[C@H](O[C@H]3[C@H]... (method=exact_pref_name_match, frags=5)
+2026-10-14 21:27:25 | 02_resolve_smiles | INFO | [21/1211] Resolving: MEDROXYPROGESTERONE ACETATE
+2026-10-14 21:27:29 | 02_resolve_smiles | INFO |   OK MEDROXYPROGESTERONE ACETATE -> CC(=O)O[C@]1(C(C)=O)CC[C@H]2[C@@H]3C[C@H... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:27:29 | 02_resolve_smiles | INFO | [23/1211] Resolving: ESTRADIOL CYPIONATE
+2026-10-14 21:27:34 | 02_resolve_smiles | INFO |   OK ESTRADIOL CYPIONATE -> C[C@]12CC[C@@H]3c4ccc(O)cc4CC[C@H]3[C@@H... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:27:34 | 02_resolve_smiles | INFO | [24/1211] Resolving: Haloperidol Lactate
+2026-10-14 21:27:38 | 02_resolve_smiles | INFO |   Haloperidol Lactate: salt stripped (2 frags), removed: ['CC(O)C(=O)O']
+2026-10-14 21:27:38 | 02_resolve_smiles | INFO |   OK Haloperidol Lactate -> O=C(CCCN1CCC(O)(c2ccc(Cl)cc2)CC1)c1ccc(F... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:27:38 | 02_resolve_smiles | INFO | [26/1211] Resolving: PENICILLIN G PROCAINE
+2026-10-14 21:27:41 | 02_resolve_smiles | INFO |   PENICILLIN G PROCAINE: salt stripped (3 frags), removed: ['CCN(CC)CCOC(=O)c1ccc(N)cc1', 'O']
+2026-10-14 21:27:41 | 02_resolve_smiles | INFO |   OK PENICILLIN G PROCAINE -> CC1(C)S[C@@H]2[C@H](NC(=O)Cc3ccccc3)C(=O... (method=exact_pref_name_match, frags=3)
+2026-10-14 21:27:41 | 02_resolve_smiles | INFO | [27/1211] Resolving: BLEOMYCIN SULFATE
+2026-10-14 21:27:44 | 02_resolve_smiles | WARNING |   X BLEOMYCIN SULFATE: no_structure --  | No canonical_smiles in ChEMBL response
+2026-10-14 21:27:44 | 02_resolve_smiles | INFO | [29/1211] Resolving: ESTROGENS, CONJUGATED
+2026-10-14 21:27:47 | 02_resolve_smiles | WARNING |   X ESTROGENS, CONJUGATED: no_structure --  | No canonical_smiles in ChEMBL response
+2026-10-14 21:27:47 | 02_resolve_smiles | INFO | [30/1211] Resolving: capreomycin sulfate
+2026-10-14 21:27:50 | 02_resolve_smiles | INFO |   capreomycin sulfate: salt stripped (4 frags), removed: ['C[C@@H]1NC(=O)[C@@H](N)CNC(=O)[C@H](C2CCNC(=N)N2)NC(=O)/C(=C/NC(N)=O)NC(=O)[C@H](CNC(=O)CC(N)CCCN)NC1=O', 'O=S(=O)(O)O', 'O=S(=O)(O)O']
+2026-10-14 21:27:50 | 02_resolve_smiles | INFO |   OK capreomycin sulfate -> N=C1NCCC([C@@H]2NC(=O)/C(=C/NC(N)=O)NC(=... (method=exact_pref_name_match, frags=4)
+2026-10-14 21:27:50 | 02_resolve_smiles | INFO | [31/1211] Resolving: IRON DEXTRAN
+2026-10-14 21:27:57 | 02_resolve_smiles | WARNING |   X IRON DEXTRAN: no_structure --  | No canonical_smiles in ChEMBL response
+2026-10-14 21:27:57 | 02_resolve_smiles | INFO | [32/1211] Resolving: HYDROCORTISONE SODIUM SUCCINATE
+2026-10-14 21:28:00 | 02_resolve_smiles | INFO |   HYDROCORTISONE SODIUM SUCCINATE: salt stripped (2 frags), removed: ['[Na+]']
+2026-10-14 21:28:00 | 02_resolve_smiles | INFO |   OK HYDROCORTISONE SODIUM SUCCINATE -> C[C@]12CCC(=O)C=C1CC[C@@H]1[C@@H]2[C@@H]... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:28:00 | 02_resolve_smiles | INFO | [33/1211] Resolving: EDETATE CALCIUM DISODIUM
+2026-10-14 21:28:10 | 02_resolve_smiles | WARNING |   EDETATE CALCIUM DISODIUM: fallback to score-based selection -- verify manually if critical
+2026-10-14 21:28:10 | 02_resolve_smiles | INFO |   EDETATE CALCIUM DISODIUM: salt stripped (5 frags), removed: ['O', '[Ca+2]', '[Na+]', '[Na+]']
+2026-10-14 21:28:10 | 02_resolve_smiles | INFO |   OK EDETATE CALCIUM DISODIUM -> O=C([O-])CN(CCN(CC(=O)[O-])CC(=O)[O-])CC... (method=fallback_highest_score, frags=5)
+2026-10-14 21:28:10 | 02_resolve_smiles | INFO | [34/1211] Resolving: OXYTOCIN
+2026-10-14 21:28:19 | 02_resolve_smiles | INFO |   OK OXYTOCIN -> CC[C@H](C)[C@@H]1NC(=O)[C@H](Cc2ccc(O)cc... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:28:19 | 02_resolve_smiles | INFO | [39/1211] Resolving: Midazolam Hydrochloride
+2026-10-14 21:28:22 | 02_resolve_smiles | INFO |   Midazolam Hydrochloride: salt stripped (2 frags), removed: ['Cl']
+2026-10-14 21:28:22 | 02_resolve_smiles | INFO |   OK Midazolam Hydrochloride -> Cc1ncc2n1-c1ccc(Cl)cc1C(c1ccccc1F)=NC2... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:28:22 | 02_resolve_smiles | INFO | [40/1211] Resolving: METOCLOPRAMIDE HYDROCHLORIDE
+2026-10-14 21:28:26 | 02_resolve_smiles | INFO |   METOCLOPRAMIDE HYDROCHLORIDE: salt stripped (3 frags), removed: ['Cl', 'O']
+2026-10-14 21:28:26 | 02_resolve_smiles | INFO |   OK METOCLOPRAMIDE HYDROCHLORIDE -> CCN(CC)CCNC(=O)c1cc(Cl)c(N)cc1OC... (method=exact_pref_name_match, frags=3)
+2026-10-14 21:28:26 | 02_resolve_smiles | INFO | [43/1211] Resolving: DIPHENHYDRAMINE HYDROCHLORIDE
+2026-10-14 21:28:30 | 02_resolve_smiles | INFO |   DIPHENHYDRAMINE HYDROCHLORIDE: salt stripped (2 frags), removed: ['Cl']
+2026-10-14 21:28:30 | 02_resolve_smiles | INFO |   OK DIPHENHYDRAMINE HYDROCHLORIDE -> CN(C)CCOC(c1ccccc1)c1ccccc1... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:28:30 | 02_resolve_smiles | INFO | [45/1211] Resolving: LEUCOVORIN CALCIUM
+2026-10-14 21:28:33 | 02_resolve_smiles | INFO |   LEUCOVORIN CALCIUM: salt stripped (2 frags), removed: ['[Ca+2]']
+2026-10-14 21:28:33 | 02_resolve_smiles | INFO |   OK LEUCOVORIN CALCIUM -> Nc1nc(=O)c2c([nH]1)NCC(CNc1ccc(C(=O)N[C@... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:28:33 | 02_resolve_smiles | INFO | [46/1211] Resolving: cefuroxime sodium
+2026-10-14 21:28:36 | 02_resolve_smiles | INFO |   cefuroxime sodium: salt stripped (2 frags), removed: ['[Na+]']
+2026-10-14 21:28:36 | 02_resolve_smiles | INFO |   OK cefuroxime sodium -> CO/N=C(\C(=O)N[C@@H]1C(=O)N2C(C(=O)[O-])... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:28:36 | 02_resolve_smiles | INFO | [47/1211] Resolving: PROCHLORPERAZINE EDISYLATE
+2026-10-14 21:28:39 | 02_resolve_smiles | INFO |   PROCHLORPERAZINE EDISYLATE: salt stripped (2 frags), removed: ['O=S(=O)(O)CCS(=O)(=O)O']
+2026-10-14 21:28:39 | 02_resolve_smiles | INFO |   OK PROCHLORPERAZINE EDISYLATE -> CN1CCN(CCCN2c3ccccc3Sc3ccc(Cl)cc32)CC1... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:28:39 | 02_resolve_smiles | INFO | [70/1211] Resolving: CEFOTETAN DISODIUM
+2026-10-14 21:28:42 | 02_resolve_smiles | INFO |   CEFOTETAN DISODIUM: salt stripped (3 frags), removed: ['[Na+]', '[Na+]']
+2026-10-14 21:28:42 | 02_resolve_smiles | INFO |   OK CEFOTETAN DISODIUM -> CO[C@@]1(NC(=O)C2SC(=C(C(N)=O)C(=O)[O-])... (method=exact_pref_name_match, frags=3)
+2026-10-14 21:28:42 | 02_resolve_smiles | INFO | [73/1211] Resolving: ceftizoxime sodium
+2026-10-14 21:28:45 | 02_resolve_smiles | INFO |   ceftizoxime sodium: salt stripped (2 frags), removed: ['[Na+]']
+2026-10-14 21:28:45 | 02_resolve_smiles | INFO |   OK ceftizoxime sodium -> CO/N=C(\C(=O)N[C@@H]1C(=O)N2C(C(=O)[O-])... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:28:45 | 02_resolve_smiles | INFO | [79/1211] Resolving: DEFEROXAMINE MESYLATE
+2026-10-14 21:28:47 | 02_resolve_smiles | INFO |   DEFEROXAMINE MESYLATE: salt stripped (2 frags), removed: ['CS(=O)(=O)O']
+2026-10-14 21:28:47 | 02_resolve_smiles | INFO |   OK DEFEROXAMINE MESYLATE -> CC(=O)N(O)CCCCCNC(=O)CCC(=O)N(O)CCCCCNC(... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:28:47 | 02_resolve_smiles | INFO | [82/1211] Resolving: nalmefene hydrochloride
+2026-10-14 21:28:52 | 02_resolve_smiles | INFO |   nalmefene hydrochloride: salt stripped (2 frags), removed: ['Cl']
+2026-10-14 21:28:52 | 02_resolve_smiles | INFO |   OK nalmefene hydrochloride -> C=C1CC[C@@]2(O)[C@H]3Cc4ccc(O)c5c4[C@@]2... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:28:52 | 02_resolve_smiles | INFO | [85/1211] Resolving: HYDROXYPROGESTERONE CAPROATE
+2026-10-14 21:28:56 | 02_resolve_smiles | INFO |   OK HYDROXYPROGESTERONE CAPROATE -> CCCCCC(=O)O[C@]1(C(C)=O)CC[C@H]2[C@@H]3C... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:28:56 | 02_resolve_smiles | INFO | [86/1211] Resolving: FLUPHENAZINE DECANOATE
+2026-10-14 21:28:59 | 02_resolve_smiles | INFO |   OK FLUPHENAZINE DECANOATE -> CCCCCCCCCC(=O)OCCN1CCN(CCCN2c3ccccc3Sc3c... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:28:59 | 02_resolve_smiles | INFO | [87/1211] Resolving: LEUPROLIDE ACETATE
+2026-10-14 21:29:05 | 02_resolve_smiles | INFO |   LEUPROLIDE ACETATE: salt stripped (2 frags), removed: ['CC(=O)O']
+2026-10-14 21:29:05 | 02_resolve_smiles | INFO |   OK LEUPROLIDE ACETATE -> CCNC(=O)[C@@H]1CCCN1C(=O)[C@H](CCCNC(=N)... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:29:05 | 02_resolve_smiles | INFO | [88/1211] Resolving: ACETYLCHOLINE CHLORIDE
+2026-10-14 21:29:12 | 02_resolve_smiles | INFO |   ACETYLCHOLINE CHLORIDE: salt stripped (2 frags), removed: ['[Cl-]']
+2026-10-14 21:29:12 | 02_resolve_smiles | INFO |   OK ACETYLCHOLINE CHLORIDE -> CC(=O)OCC[N+](C)(C)C... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:29:12 | 02_resolve_smiles | INFO | [89/1211] Resolving: BRILLIANT BLUE G
+2026-10-14 21:29:15 | 02_resolve_smiles | INFO |   BRILLIANT BLUE G: salt stripped (2 frags), removed: ['[Na+]']
+2026-10-14 21:29:15 | 02_resolve_smiles | INFO |   OK BRILLIANT BLUE G -> CCOc1ccc(Nc2ccc(/C(=C3C=C/C(=[N+](/CC)Cc... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:29:15 | 02_resolve_smiles | INFO | [90/1211] Resolving: TRYPAN BLUE
+2026-10-14 21:29:19 | 02_resolve_smiles | INFO |   TRYPAN BLUE: salt stripped (5 frags), removed: ['[Na+]', '[Na+]', '[Na+]', '[Na+]']
+2026-10-14 21:29:19 | 02_resolve_smiles | INFO |   OK TRYPAN BLUE -> Cc1cc(-c2ccc(/N=N/c3c(S(=O)(=O)[O-])cc4c... (method=exact_pref_name_match, frags=5)
+2026-10-14 21:29:19 | 02_resolve_smiles | INFO | [91/1211] Resolving: TALC
+2026-10-14 21:29:24 | 02_resolve_smiles | INFO |   TALC: salt stripped (8 frags), removed: ['O=[Si]=O', 'O=[Si]=O', 'O=[Si]=O', '[O]=[Mg]', '[O]=[Mg]', '[O]=[Mg]', 'O']
+2026-10-14 21:29:24 | 02_resolve_smiles | INFO |   OK TALC -> O=[Si]=O... (method=exact_pref_name_match, frags=8)
+2026-10-14 21:29:24 | 02_resolve_smiles | INFO | [92/1211] Resolving: Procaine Hydrochloride
+2026-10-14 21:29:28 | 02_resolve_smiles | INFO |   Procaine Hydrochloride: salt stripped (2 frags), removed: ['Cl']
+2026-10-14 21:29:28 | 02_resolve_smiles | INFO |   OK Procaine Hydrochloride -> CCN(CC)CCOC(=O)c1ccc(N)cc1... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:29:28 | 02_resolve_smiles | INFO | [93/1211] Resolving: ziconotide acetate
+2026-10-14 21:29:31 | 02_resolve_smiles | WARNING |   X ziconotide acetate: no_structure --  | No canonical_smiles in ChEMBL response
+2026-10-14 21:29:31 | 02_resolve_smiles | INFO | [98/1211] Resolving: COPPER
+2026-10-14 21:29:35 | 02_resolve_smiles | WARNING |   X COPPER: no_structure --  | No canonical_smiles in ChEMBL response
+2026-10-14 21:29:35 | 02_resolve_smiles | INFO | [99/1211] Resolving: IOTHALAMATE MEGLUMINE
+2026-10-14 21:29:39 | 02_resolve_smiles | INFO |   IOTHALAMATE MEGLUMINE: salt stripped (2 frags), removed: ['CNC[C@H](O)[C@@H](O)[C@H](O)[C@H](O)CO']
+2026-10-14 21:29:39 | 02_resolve_smiles | INFO |   OK IOTHALAMATE MEGLUMINE -> CNC(=O)c1c(I)c(NC(C)=O)c(I)c(C(=O)O)c1I... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:29:39 | 02_resolve_smiles | INFO | [108/1211] Resolving: PORFIMER SODIUM
+2026-10-14 21:29:42 | 02_resolve_smiles | WARNING |   X PORFIMER SODIUM: no_structure --  | No canonical_smiles in ChEMBL response
+2026-10-14 21:29:42 | 02_resolve_smiles | INFO | [114/1211] Resolving: COPANLISIB
+2026-10-14 21:29:46 | 02_resolve_smiles | INFO |   OK COPANLISIB -> COc1c(OCCCN2CCOCC2)ccc2c1N=C(NC(=O)c1cnc... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:29:46 | 02_resolve_smiles | INFO | [117/1211] Resolving: FERRIC PYROPHOSPHATE CITRATE
+2026-10-14 21:29:52 | 02_resolve_smiles | WARNING |   X FERRIC PYROPHOSPHATE CITRATE: no_structure --  | No canonical_smiles in ChEMBL response
+2026-10-14 21:29:52 | 02_resolve_smiles | INFO | [118/1211] Resolving: Ephedrine Sulfate
+2026-10-14 21:30:02 | 02_resolve_smiles | INFO |   Ephedrine Sulfate: salt stripped (3 frags), removed: ['CN[C@@H](C)[C@H](O)c1ccccc1', 'O=S(=O)(O)O']
+2026-10-14 21:30:02 | 02_resolve_smiles | INFO |   OK Ephedrine Sulfate -> CN[C@@H](C)[C@H](O)c1ccccc1... (method=exact_pref_name_match, frags=3)
+2026-10-14 21:30:02 | 02_resolve_smiles | INFO | [119/1211] Resolving: Cefiderocol sulfate tosylate
+2026-10-14 21:30:09 | 02_resolve_smiles | INFO |   Cefiderocol sulfate tosylate: salt stripped (9 frags), removed: ['CC(C)(O/N=C(\\C(=O)N[C@@H]1C(=O)N2C(C(=O)O)=C(C[N+]3(CCNC(=O)c4ccc(O)c(O)c4Cl)CCCC3)CS[C@H]12)c1csc(N)n1)C(=O)O', 'CC(C)(O/N=C(\\C(=O)N[C@@H]1C(=O)N2C(C(=O)O)=C(C[N+]3(CCNC(=O)c4ccc(O)c(O)c4Cl)CCCC3)CS[C@H]12)c1csc(N)n1)C(=O)O', 'Cc1ccc(S(=O)(=O)O)cc1', 'Cc1ccc(S(=O)(=O)O)cc1', 'Cc1ccc(S(=O)(=O)O)cc1', 'Cc1ccc(S(=O)(=O)[O-])cc1', 'O=S(=O)([O-])[O-]', 'O']
+2026-10-14 21:30:09 | 02_resolve_smiles | INFO |   OK Cefiderocol sulfate tosylate -> CC(C)(O/N=C(\C(=O)N[C@@H]1C(=O)N2C(C(=O)... (method=exact_pref_name_match, frags=9)
+2026-10-14 21:30:09 | 02_resolve_smiles | INFO | [120/1211] Resolving: FLORBETABEN F-18
+2026-10-14 21:30:15 | 02_resolve_smiles | WARNING |   FLORBETABEN F-18: fallback to score-based selection -- verify manually if critical
+2026-10-14 21:30:15 | 02_resolve_smiles | INFO |   OK FLORBETABEN F-18 -> CNc1ccc(/C=C/c2ccc(OCCOCCOCCF)cc2)cc1... (method=fallback_highest_score, frags=1)
+2026-10-14 21:30:15 | 02_resolve_smiles | INFO | [126/1211] Resolving: RADIUM RA-223 DICHLORIDE
+2026-10-14 21:30:23 | 02_resolve_smiles | WARNING |   RADIUM RA-223 DICHLORIDE: fallback to score-based selection -- verify manually if critical
+2026-10-14 21:30:23 | 02_resolve_smiles | INFO |   OK RADIUM RA-223 DICHLORIDE -> [Cl][223Ra][Cl]... (method=fallback_highest_score, frags=1)
+2026-10-14 21:30:23 | 02_resolve_smiles | INFO | [127/1211] Resolving: GADOPENTETATE DIMEGLUMINE
+2026-10-14 21:30:34 | 02_resolve_smiles | WARNING |   X GADOPENTETATE DIMEGLUMINE: no_structure --  | No canonical_smiles in ChEMBL response
+2026-10-14 21:30:34 | 02_resolve_smiles | INFO | [128/1211] Resolving: peramivir
+2026-10-14 21:30:55 | 02_resolve_smiles | WARNING | Timeout on attempt 1/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:31:17 | 02_resolve_smiles | WARNING | Timeout on attempt 2/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:31:24 | 02_resolve_smiles | WARNING | HTTP 500 on attempt 3/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:31:24 | 02_resolve_smiles | WARNING |   X peramivir: api_error -- API request failed after all retries
+2026-10-14 21:31:24 | 02_resolve_smiles | INFO | [134/1211] Resolving: ASCORBIC ACID
+2026-10-14 21:31:30 | 02_resolve_smiles | WARNING | HTTP 500 on attempt 1/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:31:37 | 02_resolve_smiles | WARNING | HTTP 500 on attempt 2/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:32:00 | 02_resolve_smiles | WARNING | Timeout on attempt 3/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:32:00 | 02_resolve_smiles | WARNING |   X ASCORBIC ACID: api_error -- API request failed after all retries
+2026-10-14 21:32:00 | 02_resolve_smiles | INFO | [137/1211] Resolving: EPHEDRINE HYDROCHLORIDE
+2026-10-14 21:32:21 | 02_resolve_smiles | WARNING | Timeout on attempt 1/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:32:27 | 02_resolve_smiles | WARNING | HTTP 500 on attempt 2/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:32:34 | 02_resolve_smiles | WARNING | HTTP 500 on attempt 3/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:32:34 | 02_resolve_smiles | WARNING |   X EPHEDRINE HYDROCHLORIDE: api_error -- API request failed after all retries
+2026-10-14 21:32:34 | 02_resolve_smiles | INFO | [138/1211] Resolving: COPPER OXODOTREOTIDE CU-64
+2026-10-14 21:32:40 | 02_resolve_smiles | WARNING | HTTP 500 on attempt 1/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:32:46 | 02_resolve_smiles | WARNING | HTTP 500 on attempt 2/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:32:54 | 02_resolve_smiles | WARNING | HTTP 500 on attempt 3/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:32:54 | 02_resolve_smiles | WARNING |   X COPPER OXODOTREOTIDE CU-64: api_error -- API request failed after all retries
+2026-10-14 21:32:54 | 02_resolve_smiles | INFO | [139/1211] Resolving: DOTATATE
+2026-10-14 21:33:15 | 02_resolve_smiles | WARNING | Timeout on attempt 1/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:33:21 | 02_resolve_smiles | WARNING | HTTP 500 on attempt 2/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:33:28 | 02_resolve_smiles | WARNING | HTTP 500 on attempt 3/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:33:28 | 02_resolve_smiles | WARNING |   X DOTATATE: api_error -- API request failed after all retries
+2026-10-14 21:33:28 | 02_resolve_smiles | INFO | [140/1211] Resolving: OLICERIDINE
+2026-10-14 21:33:49 | 02_resolve_smiles | WARNING | Timeout on attempt 1/3: https://www.ebi.ac.uk/chembl/api/data/molecule/search
+2026-10-14 21:33:52 | 02_resolve_smiles | INFO |   OK OLICERIDINE -> COc1ccsc1CNCC[C@@]1(c2ccccn2)CCOC2(CCCC2... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:33:52 | 02_resolve_smiles | INFO | [141/1211] Resolving: POTASSIUM ACETATE
+2026-10-14 21:33:55 | 02_resolve_smiles | INFO |   POTASSIUM ACETATE: salt stripped (2 frags), removed: ['[K+]']
+2026-10-14 21:33:55 | 02_resolve_smiles | INFO |   OK POTASSIUM ACETATE -> CC(=O)[O-]... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:33:55 | 02_resolve_smiles | INFO | [142/1211] Resolving: CALCIUM CHLORIDE
+2026-10-14 21:34:01 | 02_resolve_smiles | INFO |   CALCIUM CHLORIDE: salt stripped (3 frags), removed: ['[Cl-]', '[Cl-]']
+2026-10-14 21:34:01 | 02_resolve_smiles | INFO |   OK CALCIUM CHLORIDE -> [Ca+2]... (method=exact_pref_name_match, frags=3)
+2026-10-14 21:34:01 | 02_resolve_smiles | INFO | [143/1211] Resolving: CHOLINE C-11
+2026-10-14 21:34:04 | 02_resolve_smiles | INFO |   CHOLINE C-11: salt stripped (2 frags), removed: ['[Cl-]']
+2026-10-14 21:34:04 | 02_resolve_smiles | INFO |   OK CHOLINE C-11 -> C[N+](C)([11CH3])CCO... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:34:04 | 02_resolve_smiles | INFO | [144/1211] Resolving: AMIFOSTINE
+2026-10-14 21:34:13 | 02_resolve_smiles | INFO |   OK AMIFOSTINE -> NCCCNCCSP(=O)(O)O... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:34:13 | 02_resolve_smiles | INFO | [145/1211] Resolving: Sodium Nitrite
+2026-10-14 21:34:18 | 02_resolve_smiles | INFO |   Sodium Nitrite: salt stripped (2 frags), removed: ['[Na+]']
+2026-10-14 21:34:18 | 02_resolve_smiles | INFO |   OK Sodium Nitrite -> O=N[O-]... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:34:18 | 02_resolve_smiles | INFO | [146/1211] Resolving: ANGIOTENSIN II
+2026-10-14 21:34:22 | 02_resolve_smiles | INFO |   OK ANGIOTENSIN II -> CC[C@H](C)[C@H](NC(=O)[C@H](Cc1ccc(O)cc1... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:34:22 | 02_resolve_smiles | INFO | [147/1211] Resolving: Sincalide
+2026-10-14 21:34:33 | 02_resolve_smiles | INFO |   OK Sincalide -> CSCC[C@H](NC(=O)[C@H](Cc1ccc(OS(=O)(=O)O... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:34:33 | 02_resolve_smiles | INFO | [148/1211] Resolving: PLAZOMICIN
+2026-10-14 21:34:43 | 02_resolve_smiles | INFO |   OK PLAZOMICIN -> CN[C@@H]1[C@@H](O)[C@@H](O[C@@H]2[C@@H](... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:34:43 | 02_resolve_smiles | INFO | [149/1211] Resolving: DEFIBROTIDE SODIUM
+2026-10-14 21:34:54 | 02_resolve_smiles | WARNING |   X DEFIBROTIDE SODIUM: no_structure --  | No canonical_smiles in ChEMBL response
+2026-10-14 21:34:54 | 02_resolve_smiles | INFO | [150/1211] Resolving: Flutemetamol F-18
+2026-10-14 21:34:57 | 02_resolve_smiles | WARNING |   Flutemetamol F-18: fallback to score-based selection -- verify manually if critical
+2026-10-14 21:34:57 | 02_resolve_smiles | INFO |   OK Flutemetamol F-18 -> CNc1ccc(-c2nc3ccc(O)cc3s2)cc1[18F]... (method=fallback_highest_score, frags=1)
+2026-10-14 21:34:57 | 02_resolve_smiles | INFO |   [Checkpoint saved at 150 compounds]
+2026-10-14 21:34:57 | 02_resolve_smiles | INFO | [151/1211] Resolving: CHROMIC CHLORIDE
+2026-10-14 21:35:00 | 02_resolve_smiles | WARNING |   X CHROMIC CHLORIDE: no_structure --  | No canonical_smiles in ChEMBL response
+2026-10-14 21:35:00 | 02_resolve_smiles | INFO | [152/1211] Resolving: IXABEPILONE
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO |   OK IXABEPILONE -> C/C(=C\c1csc(C)n1)[C@@H]1C[C@@H]2O[C@]2(... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO |   Manual overrides applied: 1
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO | ============================================================
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO | RESOLUTION SUMMARY
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO |   Total compounds         : 1211
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO |   Successfully resolved   : 1195 (98.7%)
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO |   - Newly resolved        : 50
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO |   - From checkpoint       : 1145
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO |   Failed                  : 16
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO |   Salt-stripped compounds : 509 (42.0%)
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO |   Fallback-to-score used  : 80
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO | ============================================================
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO | Output: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\compounds_with_smiles.csv
+2026-10-14 21:35:08 | 02_resolve_smiles | INFO | 02_resolve_smiles.py COMPLETE
+2026-10-14 21:41:29 | 02_resolve_smiles | INFO | ============================================================
+2026-10-14 21:41:29 | 02_resolve_smiles | INFO | SCRIPT: 02_resolve_smiles.py
+2026-10-14 21:41:29 | 02_resolve_smiles | INFO | PURPOSE: ChEMBL SMILES resolution for all labeled compounds
+2026-10-14 21:41:29 | 02_resolve_smiles | INFO | ============================================================
+2026-10-14 21:41:29 | 02_resolve_smiles | INFO | Loaded 1211 labeled compounds from C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\labeled_compounds.csv
+2026-10-14 21:41:29 | 02_resolve_smiles | INFO | Loaded checkpoint: 1211 previously resolved compounds
+2026-10-14 21:41:29 | 02_resolve_smiles | INFO | [128/1211] Resolving: peramivir
+2026-10-14 21:41:31 | 02_resolve_smiles | INFO |   peramivir: salt stripped (4 frags), removed: ['O', 'O', 'O']
+2026-10-14 21:41:31 | 02_resolve_smiles | INFO |   OK peramivir -> CCC(CC)[C@H](NC(C)=O)[C@@H]1[C@H](O)[C@@... (method=exact_pref_name_match, frags=4)
+2026-10-14 21:41:31 | 02_resolve_smiles | INFO | [134/1211] Resolving: ASCORBIC ACID
+2026-10-14 21:41:34 | 02_resolve_smiles | INFO |   OK ASCORBIC ACID -> O=C1O[C@H]([C@@H](O)CO)C(O)=C1O... (method=exact_pref_name_match, frags=1)
+2026-10-14 21:41:34 | 02_resolve_smiles | INFO | [137/1211] Resolving: EPHEDRINE HYDROCHLORIDE
+2026-10-14 21:41:37 | 02_resolve_smiles | INFO |   EPHEDRINE HYDROCHLORIDE: salt stripped (2 frags), removed: ['Cl']
+2026-10-14 21:41:37 | 02_resolve_smiles | INFO |   OK EPHEDRINE HYDROCHLORIDE -> CN[C@@H](C)[C@H](O)c1ccccc1... (method=exact_pref_name_match, frags=2)
+2026-10-14 21:41:37 | 02_resolve_smiles | INFO | [138/1211] Resolving: COPPER OXODOTREOTIDE CU-64
+2026-10-14 21:41:39 | 02_resolve_smiles | WARNING |   X COPPER OXODOTREOTIDE CU-64: no_structure --  | No canonical_smiles in ChEMBL response
+2026-10-14 21:41:39 | 02_resolve_smiles | INFO | [139/1211] Resolving: DOTATATE
+2026-10-14 21:41:41 | 02_resolve_smiles | WARNING |   DOTATATE: fallback to score-based selection -- verify manually if critical
+2026-10-14 21:41:41 | 02_resolve_smiles | WARNING |   X DOTATATE: no_structure -- No exact pref_name match; chose highest score (32.0) among 8 candidates | No canonical_smiles in ChEMBL response
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO |   Manual overrides applied: 1
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO | ============================================================
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO | RESOLUTION SUMMARY
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO |   Total compounds         : 1211
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO |   Successfully resolved   : 1209 (99.8%)
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO |   - Newly resolved        : 3
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO |   - From checkpoint       : 1206
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO |   Failed                  : 2
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO |   Salt-stripped compounds : 511 (42.2%)
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO |   Fallback-to-score used  : 81
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO | ============================================================
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO | Output: C:\Users\patel\Desktop\group_project\cardiotox-fusion\data\processed\compounds_with_smiles.csv
+2026-10-14 21:41:41 | 02_resolve_smiles | INFO | 02_resolve_smiles.py COMPLETE

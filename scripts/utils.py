@@ -295,3 +295,48 @@ def compute_class_weight(labels: np.ndarray) -> float:
     if n_pos == 0:
         raise ValueError("No positive samples found -- cannot compute class weight")
     return n_neg / n_pos
+
+
+def random_classifier_aucpr_interval(y_true, n_boot: int = 5000, seed: int = CFG.RANDOM_SEED, ci: float = 0.95):
+    """
+    95% bootstrap interval of AUC-PR for a classifier that scores compounds at random.
+
+    Resamples the test set with replacement and assigns uniform random scores. Its centre sits near the
+    positive-class prevalence (the AUC-PR floor); its width is the smallest effect any real model must
+    exceed on a test set of this size.
+    """
+    from sklearn.metrics import average_precision_score
+    y_true = np.asarray(y_true)
+    rs = np.random.RandomState(seed)
+    vals = []
+    for _ in range(n_boot):
+        yt = y_true[rs.randint(0, len(y_true), len(y_true))]
+        if yt.min() == yt.max():
+            continue
+        vals.append(average_precision_score(yt, rs.rand(len(yt))))
+    lo, hi = np.percentile(vals, [(1 - ci) / 2 * 100, (1 + ci) / 2 * 100])
+    return float(lo), float(hi)
+
+
+def scaffold_group_folds(groups, n_folds: int = 5, seed: int = 0) -> np.ndarray:
+    """
+    Scaffold-grouped fold assignment shared by the baselines (05_split_stability.py) and the deep models (07_train_deep.py).
+
+    Whole scaffold groups stay in one fold. Groups are shuffled with RandomState(seed), sorted largest-first
+    (stable, so ties keep the shuffled order) and each is put into the currently lightest fold.
+
+    Returns:
+        int array of fold ids (0..n_folds-1), one per sample.
+    """
+    groups = np.asarray(groups).astype(str)
+    uniq, inv = np.unique(groups, return_inverse=True)
+    sizes = np.bincount(inv)
+    order = np.random.RandomState(seed).permutation(len(uniq))
+    order = sorted(order, key=lambda i: -sizes[i])
+    load = np.zeros(n_folds)
+    fold_of_group = {}
+    for i in order:
+        f = int(np.argmin(load))
+        fold_of_group[i] = f
+        load[f] += sizes[i]
+    return np.array([fold_of_group[i] for i in inv])

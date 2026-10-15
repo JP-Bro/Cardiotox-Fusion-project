@@ -22,12 +22,13 @@ numpy>=1.24.0
 pandas>=2.0.0
 scikit-learn>=1.3.0
 scipy>=1.11.0
+h5py>=3.8.0              # reads the LINCS GCTX file
 
 # --- Chemistry ---
 rdkit>=2023.9.1
 
 # --- Deep learning (install PyTorch manually first, see above) ---
-# torch  -- install manually (see above)
+torch>=2.0.0              # install the build matching your CUDA first (see above); used by Phase 2 and utils.compute_class_weight
 # torch_geometric  -- install manually after torch
 
 # --- Data reading ---

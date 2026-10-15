@@ -1,6 +1,16 @@
 """
-03_rebuild_pipeline.py -- Master LINCS matching, landmark gene verification, connectivity skeleton deduplication, and 70/15/15 split generation.
-Addresses Dr. Bharat Manna's 6 open audit points.
+03_rebuild_pipeline.py -- LINCS matching, landmark gene extraction, skeleton deduplication, 70/15/15 splits.
+
+Rules enforced here (each is re-checked independently by scripts/verify_pipeline.py):
+  * Strict cohort: HA1E, 24 h, 10.0 uM, trt_cp; replicate Level-5 z-vectors are MEAN-aggregated.
+  * Landmark genes are taken from gene_info (pr_is_lm == 1), mapped to their real GCTX row indices.
+  * One compound per 14-char InChIKey connectivity block (charge-neutralised).
+  * One compound per LINCS pert_id: a LINCS perturbagen's expression may be attached to only ONE cohort
+    compound (InChIKey matches win over name matches). Otherwise two different cohort entries (e.g. a drug
+    and its phosphate prodrug) would share an identical expression vector, possibly across train/test and
+    with opposite labels.
+  * Scaffold split: Murcko without chirality, acyclic compounds get unique pseudo-scaffolds, packing by
+    compound count.
 """
 import os
 import sys
@@ -10,14 +20,26 @@ import pandas as pd
 import numpy as np
 import h5py
 from rdkit import Chem
-from rdkit.Chem import MolStandardize
+from rdkit.Chem import MolStandardize, rdMolDescriptors
 from rdkit.Chem.Scaffolds import MurckoScaffold
 from sklearn.model_selection import train_test_split
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import CFG
+from scripts.utils import random_classifier_aucpr_interval
 
 uncharger = MolStandardize.rdMolStandardize.Uncharger()
+FORMULA_REJECTED = []   # (query_name, pert_id, formula_dictrank, formula_lincs) name matches refused for a formula mismatch
+
+
+def _formula(smi):
+    """Molecular formula of the largest fragment after neutralisation (None if unparseable)."""
+    m = Chem.MolFromSmiles(smi) if isinstance(smi, str) else None
+    if m is None:
+        return None
+    frag = max(Chem.GetMolFrags(m, asMols=True), key=lambda x: x.GetNumHeavyAtoms())
+    return rdMolDescriptors.CalcMolFormula(uncharger.uncharge(frag))
+
 
 def get_inchikey_block(smi):
     if not isinstance(smi, str) or not smi:
@@ -90,17 +112,19 @@ def load_lincs_signatures():
         (sig_info['pert_type'] == 'trt_cp')
     ]
     print(f"Filtered sig_info has {len(sig_filtered)} signatures matching strict condition.")
+    sig_any = sig_info[sig_info['pert_type'] == 'trt_cp']
     
     pert_info = pd.read_csv(CFG.LINCS_PERT_INFO, sep='\t', dtype=str)
     pert_mapping = pert_info.set_index('pert_id')[['canonical_smiles', 'inchi_key', 'pert_iname']].to_dict('index')
     
-    return sig_filtered, pert_mapping
+    return sig_filtered, sig_any, pert_mapping
 
-def match_compounds(sig_filtered, pert_mapping):
+def match_compounds(sig_filtered, pert_mapping, verbose=True):
     smiles_df = pd.read_csv(CFG.SMILES_CSV)
     # Filter out empty parent_smiles
     smiles_df = smiles_df[smiles_df['parent_smiles'].notna() & (smiles_df['parent_smiles'] != '')].copy()
-    print(f"DICTrank compounds with valid SMILES: {len(smiles_df)}")
+    if verbose:
+        print(f"DICTrank compounds with valid SMILES: {len(smiles_df)}")
     
     lincs_inchikeys = {}
     lincs_names = {}
@@ -140,7 +164,22 @@ def match_compounds(sig_filtered, pert_mapping):
             matched_pert_ids.update(lincs_names[query_name.lower().strip()])
             match_method = 'name_exact'
             
-        valid_pert_ids = [pid for pid in matched_pert_ids if pid in pert_to_sigs]
+        # Deterministic choice: a compound can have several LINCS pert_ids (batches). Order by number of strict-cohort
+        # signatures (most first), then pert_id, so the result never depends on set/hash order.
+        valid_pert_ids = sorted((pid for pid in matched_pert_ids if pid in pert_to_sigs),
+                                key=lambda pid: (-len(pert_to_sigs[pid]), pid))
+        # Name-based matches are accepted only when LINCS's structure for the perturbagen has the SAME molecular
+        # formula (tautomer / salt / stereo differences are fine). A prodrug, ester or mixture component is a
+        # different molecule, so its expression must not stand in for the DICTrank structure.
+        if match_method != 'inchikey' and valid_pert_ids:
+            f_d, keep = _formula(parent_smi), []
+            for pid in valid_pert_ids:
+                f_l = _formula(pert_mapping[pid]['canonical_smiles'])
+                if f_d is not None and f_l == f_d:
+                    keep.append(pid)
+                elif verbose:
+                    FORMULA_REJECTED.append((query_name, pid, f_d, f_l))
+            valid_pert_ids = keep
         
         if valid_pert_ids:
             for pid in valid_pert_ids:
@@ -157,7 +196,8 @@ def match_compounds(sig_filtered, pert_mapping):
                 })
                 
     df_matched = pd.DataFrame(matched_records)
-    print(f"Matched {len(df_matched)} raw dictionary entries to LINCS signatures.")
+    if verbose:
+        print(f"Matched {len(df_matched)} raw dictionary entries to LINCS signatures.")
     return df_matched
 
 def deduplicate_and_resolve_conflicts(df_matched):
@@ -168,10 +208,12 @@ def deduplicate_and_resolve_conflicts(df_matched):
     # 1. Resolve label conflicts across identical InChIKey connectivity blocks
     # Rule: If any salt/form of a drug skeleton is flagged toxic (label 1), the skeleton is assigned label 1.
     block_labels = {}
+    conflicts = []
     for block, grp in df_matched.groupby('inchikey_block'):
         labels = grp['cardiotox_label'].unique()
         if len(labels) > 1:
             resolved_label = 1  # Toxic salt flags cardiotoxicity risk
+            conflicts.append(grp['query_name'].tolist())
             print(f"Resolved label conflict in InChIKey skeleton '{block}' ({grp['query_name'].tolist()}) -> Assigned Label 1")
         else:
             resolved_label = labels[0]
@@ -181,11 +223,26 @@ def deduplicate_and_resolve_conflicts(df_matched):
     
     # 2. Keep 1 representative compound per 14-character InChIKey connectivity block
     df_matched['name_len'] = df_matched['query_name'].str.len()
-    df_clean = df_matched.sort_values('name_len').drop_duplicates(subset=['inchikey_block'], keep='first').drop(columns=['name_len']).reset_index(drop=True)
-    
-    print(f"Final clean dataset: {len(df_clean)} unique chemical skeletons (14-char InChIKey blocks).")
+    df_blocks = df_matched.sort_values('name_len', kind='mergesort').drop_duplicates(subset=['inchikey_block'], keep='first').reset_index(drop=True)
+    n_blocks = len(df_blocks)
+
+    # 3. One cohort compound per LINCS pert_id (InChIKey match beats name match, then shorter name).
+    #    Without this, e.g. 'etoposide phosphate' (name-matched) re-used etoposide's signature and the two
+    #    entries landed in different splits with identical expression vectors.
+    df_blocks['_priority'] = (df_blocks['match_method'] != 'inchikey').astype(int)
+    df_blocks = df_blocks.sort_values(['_priority', 'name_len'], kind='mergesort').reset_index(drop=True)
+    dup_mask = df_blocks.duplicated(subset=['pert_id'], keep='first')
+    pert_dropped = df_blocks[dup_mask][['query_name', 'pert_id', 'cardiotox_label', 'match_method']].copy()
+    kept_for = df_blocks.drop_duplicates('pert_id').set_index('pert_id')['query_name']
+    pert_dropped['kept_instead'] = pert_dropped['pert_id'].map(kept_for)
+    for _, r in pert_dropped.iterrows():
+        print(f"Dropped '{r.query_name}' (label {r.cardiotox_label}, {r.match_method}): LINCS {r.pert_id} already used by '{r.kept_instead}'")
+    df_clean = df_blocks[~dup_mask].drop(columns=['name_len', '_priority']).reset_index(drop=True)
+
+    print(f"Final clean dataset: {len(df_clean)} unique chemical skeletons (14-char InChIKey blocks, one LINCS pert_id each).")
     print(f"Label balance: {df_clean['cardiotox_label'].value_counts().to_dict()}")
-    return df_clean
+    info = {'conflicts': conflicts, 'n_blocks': n_blocks, 'pert_dropped': pert_dropped}
+    return df_clean, info
 
 def extract_and_aggregate_expression(df_clean, landmark_indices, landmark_gene_ids):
     print("\n" + "=" * 70)
@@ -252,7 +309,7 @@ def generate_splits(df_clean):
     
     # Group compounds by scaffold
     scaf_groups = df_clean.groupby('scaffold')
-    scaf_counts = scaf_groups.size().sort_values(ascending=False)
+    scaf_counts = scaf_groups.size().sort_values(ascending=False, kind='mergesort')
     
     total_compounds = len(df_clean)
     train_target = int(total_compounds * 0.70)
@@ -294,58 +351,85 @@ def generate_splits(df_clean):
     
     return drug_split_df, scaf_split_df
 
-def write_audit_log(landmark_gene_ids, df_clean, drug_df, scaf_df):
+def write_audit_log(landmark_gene_ids, df_clean, drug_df, scaf_df, funnel, info):
     log_path = os.path.join(CFG.RESULTS_DIR, 'pipeline_rebuild_audit.md')
     os.makedirs(CFG.RESULTS_DIR, exist_ok=True)
-    
-    # Check leakages
-    train_blocks = set(drug_df[drug_df['split']=='train']['inchikey_block'])
-    test_blocks = set(drug_df[drug_df['split']=='test']['inchikey_block'])
-    val_blocks = set(drug_df[drug_df['split']=='val']['inchikey_block'])
-    
-    dt_leak = len(train_blocks & test_blocks)
-    dv_leak = len(train_blocks & val_blocks)
-    
-    content = f"""# Master Pipeline Rebuild & Data Audit Log
 
-## Point 1: Verified Landmark Genes (pr_is_lm == 1)
-- Source: `GSE70138_Broad_LINCS_gene_info_2017-03-06.txt.gz`
-- Verified total landmark genes: {len(landmark_gene_ids)}
-- Extracted exact GCTX row indices corresponding to `pr_is_lm == 1`.
+    def blocks(df, s):
+        return set(df[df['split'] == s]['inchikey_block'])
+    leak = {}
+    for name, df in [('drug', drug_df), ('scaffold', scaf_df)]:
+        leak[name] = (len(blocks(df, 'train') & blocks(df, 'test')), len(blocks(df, 'train') & blocks(df, 'val')),
+                      len(blocks(df, 'val') & blocks(df, 'test')))
+    test = scaf_df[scaf_df['split'] == 'test']
+    y_test = test['cardiotox_label'].values
+    lo, hi = random_classifier_aucpr_interval(y_test, seed=CFG.RANDOM_SEED)
+    n_acyc = int(scaf_df['scaffold'].str.startswith('acyclic_').sum())
+    conf = "; ".join(" / ".join(c) for c in info['conflicts']) or "none"
+    dropped = "; ".join(f"{r.query_name} (label {r.cardiotox_label}, {r.match_method}) -> LINCS {r.pert_id} already used by {r.kept_instead}"
+                        for _, r in info['pert_dropped'].iterrows()) or "none"
+    n_neg = int((df_clean['cardiotox_label'] == 0).sum())
 
-## Point 2 & 3: Neutralisation & InChIKey Skeleton Deduplication
-- Neutralised formal charges using RDKit `Uncharger`.
-- Resolved label conflict: ACYCLOVIR (0) vs ACYCLOVIR SODIUM (1) -> Assigned Label 1.
-- Grouped compounds by **14-character InChIKey connectivity block**.
-- Total clean unique chemical skeletons: **{len(df_clean)}**.
-- Drug-level cross-split structural leakage: **{dt_leak} leaks (0%)**.
+    content = f"""# Pipeline Rebuild & Data Audit Log (auto-generated by scripts/03_rebuild_pipeline.py)
 
-## Point 4: Scaffold Split Rebuild
-- Computed Murcko Scaffolds without chirality (`includeChirality=False`).
-- Handled 15 acyclic compounds by assigning individual pseudo-scaffold IDs.
-- Allocated scaffold clusters using compound-count-proportional greedy packing.
-- Scaffold Split compound counts:
-  - Train: {len(scaf_df[scaf_df['split']=='train'])}
-  - Validation: {len(scaf_df[scaf_df['split']=='val'])}
-  - Test: {len(scaf_df[scaf_df['split']=='test'])}
+## Cohort funnel
+| Stage | Count |
+|---|---|
+| Labeled DICTrank compounds (ambiguous dropped) | {funnel['labeled']} |
+| ...with a resolved structure (SMILES) | {funnel['with_smiles']} |
+| ...unique structures (14-char InChIKey blocks) | {funnel['smiles_blocks']} |
+| Unique skeletons with ANY LINCS trt_cp signature (any cell line / dose / time) | {funnel['any_blocks']} |
+| Unique skeletons with a STRICT signature (HA1E / {CFG.LINCS_DOSE} uM / {CFG.LINCS_TIME}) before pert_id dedup | {info['n_blocks']} |
+| **Final strict cohort (one LINCS pert_id each)** | **{len(df_clean)}** ({int(df_clean['cardiotox_label'].sum())} toxic / {n_neg} safe) |
 
-## Point 5: Sample Size & Statistical Power
-- Scaffold test set size: {len(scaf_df[scaf_df['split']=='test'])} compounds ({len(scaf_df[(scaf_df['split']=='test') & (scaf_df['cardiotox_label']==0)])} negatives).
-- Documented AUC-PR 95% Confidence Interval for Random Classifier: `[0.785, 0.915]`.
-- Evaluation expandability: Full DICTrank dataset (1,211 drugs, 343 negatives) is available for GNN structure branch benchmarking.
+## Landmark genes
+- Source: `gene_info.txt.gz`, `pr_is_lm == 1`: {len(landmark_gene_ids)} genes, mapped to their real GCTX row indices.
+
+## Deduplication and label conflicts
+- Formal charges neutralised with RDKit `Uncharger`; grouping on the 14-character InChIKey connectivity block.
+- Label-conflict skeletons (rule: any toxic form -> label 1): {conf}
+- Dropped because their LINCS perturbagen was already attached to another cohort compound: {dropped}
+- Cross-split skeleton overlap (train/test, train/val, val/test): drug split {leak['drug']}, scaffold split {leak['scaffold']}
+
+## Scaffold split
+- Murcko scaffolds without chirality; {n_acyc} acyclic compounds each given a unique pseudo-scaffold id; greedy packing by compound count.
+- Counts: train {len(scaf_df[scaf_df['split']=='train'])}, val {len(scaf_df[scaf_df['split']=='val'])}, test {len(test)}.
+
+## Statistical power
+- Scaffold test set: {len(test)} compounds, {int((y_test == 0).sum())} safe (prevalence {y_test.mean():.4f}).
+- Random-classifier AUC-PR 95% bootstrap interval on this test set: [{lo:.3f}, {hi:.3f}].
 """
-    with open(log_path, 'w') as f:
+    with open(log_path, 'w', encoding='utf-8') as f:
         f.write(content)
     print(f"\nSaved updated audit log to {log_path}")
 
 def main():
     lm_indices, lm_gene_ids = verify_landmark_genes()
-    sig_f, p_map = load_lincs_signatures()
+    sig_f, sig_any, p_map = load_lincs_signatures()
     df_m = match_compounds(sig_f, p_map)
-    df_c = deduplicate_and_resolve_conflicts(df_m)
+    df_any = match_compounds(sig_any, p_map, verbose=False)
+    smiles_df = pd.read_csv(CFG.SMILES_CSV)
+    valid = smiles_df[smiles_df['parent_smiles'].notna() & (smiles_df['parent_smiles'] != '')]
+    funnel = {
+        'labeled': len(smiles_df),
+        'with_smiles': len(valid),
+        'smiles_blocks': valid['parent_smiles'].map(get_inchikey_block).nunique(),
+        'any_blocks': df_any['inchikey_block'].nunique(),
+    }
+    print(f"Coverage funnel: {funnel}")
+    df_c, info = deduplicate_and_resolve_conflicts(df_m)
     extract_and_aggregate_expression(df_c, lm_indices, lm_gene_ids)
     drug_df, scaf_df = generate_splits(df_c)
-    write_audit_log(lm_gene_ids, df_c, drug_df, scaf_df)
+    write_audit_log(lm_gene_ids, df_c, drug_df, scaf_df, funnel, info)
+    with open(os.path.join(CFG.RESULTS_DIR, 'pipeline_rebuild_audit.md'), 'a', encoding='utf-8') as f:
+        f.write("\n## Name matches rejected for a molecular-formula mismatch\n")
+        f.write("A name-based LINCS match is accepted only if LINCS's structure has the same molecular formula as the DICTrank structure.\n\n")
+        seen = set()
+        for q, pid, fd, fl in FORMULA_REJECTED:
+            if (q, pid) not in seen:
+                seen.add((q, pid)); f.write(f"- REJECTED {q} (LINCS {pid}): DICTrank {fd} vs LINCS {fl}\n")
+        if not seen:
+            f.write("None.\n")
     print("\n" + "=" * 70)
     print("PIPELINE REBUILD COMPLETE & VERIFIED")
     print("=" * 70)

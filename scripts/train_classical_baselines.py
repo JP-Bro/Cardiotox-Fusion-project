@@ -1,32 +1,29 @@
 """
-train_classical_baselines.py -- Comprehensive classical ML benchmark suite for Cardiotox-Fusion.
+train_classical_baselines.py -- Classical ML benchmark for Cardiotox-Fusion (canonical baseline script;
+`04_baselines.py` simply runs this file).
 
-Evaluates:
-1. Molecular Structure (2048-bit Morgan Fingerprints):
-   - Logistic Regression
-   - Random Forest
-   - Support Vector Classifier (RBF)
-   - HistGradientBoostingClassifier
-   - K-Nearest Neighbors (Tanimoto/Jaccard metric)
+Structure branch : 2048-bit Morgan fingerprints (radius 2)  -> RF, SVC, LR, HistGBM, KNN, MLP
+Biology branch   : 978 L1000 landmark z-scores (HA1E/10uM/24h) -> LR (L2/L1/ElasticNet), SVC, RF, ExtraTrees, HistGBM, MLP
 
-2. Biological Perturbation (978-dim L1000 Landmark Expression):
-   - Logistic Regression (L2)
-   - Sparse Logistic Regression (L1 / Lasso)
-   - ElasticNet Logistic Regression
-   - Random Forest
-   - Extra Trees Classifier
-   - Support Vector Classifier (Linear & RBF)
-   - HistGradientBoostingClassifier
-   - 2-Layer MLP (MLPClassifier)
-
-All models are trained strictly on the 340-drug train set, validated on 73 val drugs,
-and evaluated on the 74-drug scaffold test set with 2,000-sample 95% bootstrap CIs.
+Protocol
+  * Fit on the scaffold-split TRAIN set only (scaler too); evaluate once on the scaffold TEST set.
+    The validation set is unused here (no hyper-parameter search), so there is nothing to over-fit to it.
+  * Primary pre-specified pair (the two controls requested for Phase 1): Morgan-FP Random Forest (200 trees) and
+    L1000 Logistic Regression (L2). Every other model is EXPLORATORY: with 17 models scored on one small test set,
+    the best of them is optimistically biased.
+  * Metrics: AUC-ROC and balanced accuracy are primary. AUC-PR is reported next to its floor (the test-set positive
+    prevalence) because the positive class is the MAJORITY class here, which compresses every AUC-PR into [prevalence, 1].
+  * 95% CIs are percentile bootstraps over the TEST compounds (seeded; they reflect test-set sampling only, not
+    training-set variability).
+  * A model is flagged DEGENERATE if it predicts every test compound as toxic (or every one as safe); its AUC-PR
+    then carries no information about discrimination.
 """
 import os
 import sys
+import warnings
 import numpy as np
 import pandas as pd
-from rdkit import Chem
+from rdkit import Chem, RDLogger
 from rdkit.Chem import AllChem
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -34,232 +31,240 @@ from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier, HistG
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import (
-    average_precision_score, roc_auc_score, accuracy_score,
-    balanced_accuracy_score, f1_score, precision_score, recall_score
-)
-from sklearn.utils import resample
-import warnings
-warnings.filterwarnings('ignore')
+from sklearn.metrics import (average_precision_score, roc_auc_score, accuracy_score, balanced_accuracy_score,
+                             f1_score, precision_score, recall_score)
 
+warnings.filterwarnings('ignore')
+RDLogger.DisableLog('rdApp.*')
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import CFG
+from scripts.utils import random_classifier_aucpr_interval
 
-np.random.seed(CFG.RANDOM_SEED)
+SEED = CFG.RANDOM_SEED
+N_BOOT = 2000
+PRIMARY = {('Structure', 'Random Forest (200 trees)'), ('Biology', 'Logistic Regression (L2)')}
 
 # ---------------------------------------------------------------------------
-# 1. Load Data
+# 1. Data
 # ---------------------------------------------------------------------------
+scaf = pd.read_csv(os.path.join(CFG.DATA_DIR, 'splits', 'scaffold_split.csv')).set_index('parent_smiles')
+expr = pd.read_csv(CFG.EXPRESSION_CSV, index_col=0)
+expr.index.name = 'parent_smiles'
+assert set(scaf.index) == set(expr.index), "split file and expression matrix cover different compounds"
+merged = scaf.join(expr, how='inner').reset_index()
+gene_cols = list(expr.columns)
+assert len(gene_cols) == CFG.NUM_GENES
+
+train_df, val_df, test_df = [merged[merged['split'] == s].reset_index(drop=True) for s in ('train', 'val', 'test')]
+y_train, y_test = train_df['cardiotox_label'].values, test_df['cardiotox_label'].values
+prevalence = float(y_test.mean())
+n_cohort = len(merged)
+
 print("=" * 80)
-print("TRAINING COMPREHENSIVE CLASSICAL BASELINES (STRUCTURE & BIOLOGY)")
-print("Strict Cohort: HA1E / 10.0 µM / 24 h | 487 Unique InChIKey Skeletons")
+print(f"CLASSICAL BASELINES | cohort {n_cohort} skeletons | HA1E / {CFG.LINCS_DOSE} uM / {CFG.LINCS_TIME}")
+for nm, d in (('train', train_df), ('val', val_df), ('test', test_df)):
+    print(f"  {nm:<5}: {len(d):>3} ({int((d.cardiotox_label==1).sum())} toxic / {int((d.cardiotox_label==0).sum())} safe)")
 print("=" * 80)
 
-scaf_split = pd.read_csv(os.path.join(CFG.DATA_DIR, 'splits', 'scaffold_split.csv'))
-expr_df = pd.read_csv(CFG.EXPRESSION_CSV, index_col=0)
 
-# Merge on parent_smiles
-scaf_split = scaf_split.set_index('parent_smiles')
-expr_df.index.name = 'parent_smiles'
-merged = scaf_split.join(expr_df, how='inner').reset_index()
+def fingerprint(smi, radius=2, n_bits=2048):
+    mol = Chem.MolFromSmiles(smi)
+    if mol is None:
+        raise ValueError(f"Unparseable SMILES in cohort: {smi}")
+    return np.array(list(AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits=n_bits)), dtype=np.float32)
 
-print(f"Total merged compounds: {len(merged)}")
-print(f"Partition distribution: {merged['split'].value_counts().to_dict()}")
 
-train_df = merged[merged['split'] == 'train'].reset_index(drop=True)
-val_df   = merged[merged['split'] == 'val'].reset_index(drop=True)
-test_df  = merged[merged['split'] == 'test'].reset_index(drop=True)
-
-y_train = train_df['cardiotox_label'].values
-y_val   = val_df['cardiotox_label'].values
-y_test  = test_df['cardiotox_label'].values
-
-print(f"\nTrain set: {len(y_train)} ({sum(y_train==1)} Toxic, {sum(y_train==0)} Safe)")
-print(f"Val set  : {len(y_val)} ({sum(y_val==1)} Toxic, {sum(y_val==0)} Safe)")
-print(f"Test set : {len(y_test)} ({sum(y_test==1)} Toxic, {sum(y_test==0)} Safe)")
-
-# ---------------------------------------------------------------------------
-# 2. Extract Features
-# ---------------------------------------------------------------------------
-# A. Morgan Fingerprints (2048-bit, radius=2)
-def smi_to_fp(smi, radius=2, n_bits=2048):
-    try:
-        mol = Chem.MolFromSmiles(smi)
-        if mol:
-            fp = AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits=n_bits)
-            return list(fp)
-    except:
-        pass
-    return [0] * n_bits
-
-X_train_fp = np.array([smi_to_fp(s) for s in train_df['parent_smiles']], dtype=np.float32)
-X_val_fp   = np.array([smi_to_fp(s) for s in val_df['parent_smiles']], dtype=np.float32)
-X_test_fp  = np.array([smi_to_fp(s) for s in test_df['parent_smiles']], dtype=np.float32)
-
-# B. L1000 Landmark Gene Expression (978-dim)
-gene_cols = [c for c in merged.columns if c not in [
-    'parent_smiles', 'query_name', 'cardiotox_label', 'DICT_Concern',
-    'pert_id', 'inchikey_block', 'scaffold', 'match_method', 'split'
-]]
-print(f"Landmark gene columns extracted: {len(gene_cols)}")
-
+X_tr_fp = np.stack([fingerprint(s) for s in train_df.parent_smiles])
+X_te_fp = np.stack([fingerprint(s) for s in test_df.parent_smiles])
 scaler = StandardScaler()
-X_train_expr = scaler.fit_transform(train_df[gene_cols].values)
-X_val_expr   = scaler.transform(val_df[gene_cols].values)
-X_test_expr  = scaler.transform(test_df[gene_cols].values)
+X_tr_ex = scaler.fit_transform(train_df[gene_cols].values)      # scaler fit on TRAIN only
+X_te_ex = scaler.transform(test_df[gene_cols].values)
 
-# ---------------------------------------------------------------------------
-# 3. Bootstrap CI Evaluator
-# ---------------------------------------------------------------------------
-def compute_bootstrap_ci(y_true, y_score, metric_fn, n_boot=2000, ci=0.95):
-    scores = []
-    n = len(y_true)
-    for _ in range(n_boot):
-        idx = resample(range(n), random_state=None)
-        yt = y_true[idx]
-        ys = y_score[idx]
-        if len(np.unique(yt)) < 2:
+# fixed bootstrap resamples, shared by every model so CIs are comparable and reproducible
+_rs = np.random.RandomState(SEED)
+BOOT_IDX = [_rs.randint(0, len(y_test), len(y_test)) for _ in range(N_BOOT)]
+
+
+def boot_ci(y, s, fn, ci=0.95):
+    vals = []
+    for idx in BOOT_IDX:
+        yt = y[idx]
+        if yt.min() == yt.max():
             continue
-        scores.append(metric_fn(yt, ys))
-    lo = np.percentile(scores, (1 - ci) / 2 * 100)
-    hi = np.percentile(scores, (1 + ci) / 2 * 100)
-    return lo, hi
+        vals.append(fn(yt, s[idx]))
+    return tuple(np.percentile(vals, [(1 - ci) / 2 * 100, (1 + ci) / 2 * 100]))
 
-def evaluate_model(name, modality, model, X_tr, y_tr, X_v, y_v, X_te, y_te):
-    # Fit model
-    model.fit(X_tr, y_tr)
-    
-    # Predict probabilities on test set
-    if hasattr(model, "predict_proba"):
-        probs = model.predict_proba(X_te)[:, 1]
-    elif hasattr(model, "decision_function"):
-        dec = model.decision_function(X_te)
-        probs = 1.0 / (1.0 + np.exp(-dec))
+
+TEST_SCORES = {}
+
+
+def evaluate(name, modality, model, X_tr, X_te):
+    model.fit(X_tr, y_train)
+    if hasattr(model, 'predict_proba'):
+        score = model.predict_proba(X_te)[:, 1]
     else:
-        probs = model.predict(X_te).astype(float)
-        
-    preds = (probs >= 0.5).astype(int)
-    
-    ap = average_precision_score(y_te, probs)
-    roc = roc_auc_score(y_te, probs)
-    acc = accuracy_score(y_te, preds)
-    bal_acc = balanced_accuracy_score(y_te, preds)
-    f1 = f1_score(y_te, preds, zero_division=0)
-    prec = precision_score(y_te, preds, zero_division=0)
-    rec = recall_score(y_te, preds, zero_division=0)
-    
-    ap_lo, ap_hi = compute_bootstrap_ci(y_te, probs, average_precision_score)
-    roc_lo, roc_hi = compute_bootstrap_ci(y_te, probs, roc_auc_score)
-    
-    print(f"[{modality:<10}] {name:<32} | AUC-PR: {ap:.4f} [{ap_lo:.3f}, {ap_hi:.3f}] | AUC-ROC: {roc:.4f} [{roc_lo:.3f}, {roc_hi:.3f}] | Bal-Acc: {bal_acc:.3f}")
-    
-    return {
-        'Modality': modality,
-        'Model': name,
-        'AUC-PR': ap,
-        'AUC-PR_95CI_Low': ap_lo,
-        'AUC-PR_95CI_High': ap_hi,
-        'AUC-ROC': roc,
-        'AUC-ROC_95CI_Low': roc_lo,
-        'AUC-ROC_95CI_High': roc_hi,
-        'Balanced_Acc': bal_acc,
-        'Accuracy': acc,
-        'F1_Score': f1,
-        'Precision': prec,
-        'Recall': rec
+        score = 1.0 / (1.0 + np.exp(-model.decision_function(X_te)))
+    TEST_SCORES[f'{modality}: {name}'] = score
+    pred = (score >= 0.5).astype(int)
+    ap, roc = average_precision_score(y_test, score), roc_auc_score(y_test, score)
+    ap_lo, ap_hi = boot_ci(y_test, score, average_precision_score)
+    roc_lo, roc_hi = boot_ci(y_test, score, roc_auc_score)
+    degenerate = bool(pred.min() == pred.max())
+    row = {
+        'Modality': modality, 'Model': name, 'Primary': (modality, name) in PRIMARY,
+        'AUC-ROC': roc, 'AUC-ROC_95CI_Low': roc_lo, 'AUC-ROC_95CI_High': roc_hi,
+        'Balanced_Acc': balanced_accuracy_score(y_test, pred),
+        'AUC-PR': ap, 'AUC-PR_95CI_Low': ap_lo, 'AUC-PR_95CI_High': ap_hi,
+        'Accuracy': accuracy_score(y_test, pred), 'F1_Score': f1_score(y_test, pred, zero_division=0),
+        'Precision': precision_score(y_test, pred, zero_division=0), 'Recall': recall_score(y_test, pred, zero_division=0),
+        'Degenerate': degenerate, 'CI_excludes_0.5': bool(roc_lo > 0.5),
     }
+    print(f"[{modality:<9}] {name:<34} AUC-ROC {roc:.3f} [{roc_lo:.3f},{roc_hi:.3f}] BalAcc {row['Balanced_Acc']:.3f} "
+          f"AUC-PR {ap:.3f} {'DEGENERATE' if degenerate else ''}")
+    return row
 
-results = []
-
-# Baseline: Random Classifier (Prevalence)
-prevalence = np.mean(y_test)
-print("\n--- RANDOM CLASSIFIER BASELINE ---")
-print(f"Random Classifier Baseline AUC-PR (prevalence): {prevalence:.4f} | AUC-ROC: 0.5000\n")
-results.append({
-    'Modality': 'Baseline',
-    'Model': 'Random Classifier (Prevalence)',
-    'AUC-PR': prevalence,
-    'AUC-PR_95CI_Low': prevalence,
-    'AUC-PR_95CI_High': prevalence,
-    'AUC-ROC': 0.5000,
-    'AUC-ROC_95CI_Low': 0.5000,
-    'AUC-ROC_95CI_High': 0.5000,
-    'Balanced_Acc': 0.5000,
-    'Accuracy': 1.0 - prevalence,
-    'F1_Score': 0.0,
-    'Precision': prevalence,
-    'Recall': 0.0
-})
-
-# ---------------------------------------------------------------------------
-# 4. Train Structure Models (Morgan Fingerprints)
-# ---------------------------------------------------------------------------
-print("=" * 80)
-print("1. STRUCTURE BRANCH: 2048-bit Morgan Fingerprints")
-print("=" * 80)
 
 structure_models = [
-    ("Random Forest (200 trees)", RandomForestClassifier(n_estimators=200, class_weight='balanced', random_state=42, n_jobs=-1)),
-    ("Random Forest (500 trees)", RandomForestClassifier(n_estimators=500, class_weight='balanced', random_state=42, n_jobs=-1)),
-    ("Logistic Regression (L2)", LogisticRegression(C=0.1, class_weight='balanced', max_iter=1000, random_state=42)),
-    ("Support Vector Classifier (RBF)", SVC(C=1.0, kernel='rbf', probability=True, class_weight='balanced', random_state=42)),
-    ("Support Vector Classifier (Linear)", SVC(C=0.1, kernel='linear', probability=True, class_weight='balanced', random_state=42)),
-    ("Gradient Boosting (HistGBM)", HistGradientBoostingClassifier(random_state=42, class_weight='balanced')),
-    ("K-Nearest Neighbors (k=5)", KNeighborsClassifier(n_neighbors=5, metric='jaccard')),
-    ("2-Layer MLP (128-64)", MLPClassifier(hidden_layer_sizes=(128, 64), max_iter=300, random_state=42, early_stopping=True))
+    ("Random Forest (200 trees)", RandomForestClassifier(n_estimators=200, class_weight='balanced', random_state=SEED, n_jobs=-1)),
+    ("Random Forest (500 trees)", RandomForestClassifier(n_estimators=500, class_weight='balanced', random_state=SEED, n_jobs=-1)),
+    ("Logistic Regression (L2)", LogisticRegression(C=0.1, class_weight='balanced', max_iter=1000, random_state=SEED)),
+    ("Support Vector Classifier (RBF)", SVC(C=1.0, kernel='rbf', probability=True, class_weight='balanced', random_state=SEED)),
+    ("Support Vector Classifier (Linear)", SVC(C=0.1, kernel='linear', probability=True, class_weight='balanced', random_state=SEED)),
+    ("Gradient Boosting (HistGBM)", HistGradientBoostingClassifier(random_state=SEED, class_weight='balanced')),
+    ("K-Nearest Neighbors (k=5, Jaccard)", KNeighborsClassifier(n_neighbors=5, metric='jaccard')),
+    ("2-Layer MLP (128-64)", MLPClassifier(hidden_layer_sizes=(128, 64), max_iter=300, random_state=SEED, early_stopping=True)),
 ]
-
-for name, model in structure_models:
-    res = evaluate_model(name, "Structure", model, X_train_fp, y_train, X_val_fp, y_val, X_test_fp, y_test)
-    results.append(res)
-
-# ---------------------------------------------------------------------------
-# 5. Train Biology Models (L1000 Landmark Gene Expression)
-# ---------------------------------------------------------------------------
-print("\n" + "=" * 80)
-print("2. BIOLOGY BRANCH: 978-dim L1000 Landmark Gene Expression")
-print("=" * 80)
-
 biology_models = [
-    ("Logistic Regression (L2)", LogisticRegression(C=0.01, class_weight='balanced', max_iter=2000, random_state=42)),
-    ("Sparse Logistic Regression (L1)", LogisticRegression(C=0.1, penalty='l1', solver='saga', class_weight='balanced', max_iter=2000, random_state=42)),
-    ("ElasticNet Logistic Regression", LogisticRegression(C=0.1, penalty='elasticnet', l1_ratio=0.5, solver='saga', class_weight='balanced', max_iter=2000, random_state=42)),
-    ("Support Vector Classifier (Linear)", SVC(C=0.01, kernel='linear', probability=True, class_weight='balanced', random_state=42)),
-    ("Support Vector Classifier (RBF)", SVC(C=1.0, kernel='rbf', probability=True, class_weight='balanced', random_state=42)),
-    ("Random Forest (200 trees)", RandomForestClassifier(n_estimators=200, class_weight='balanced', random_state=42, n_jobs=-1)),
-    ("Extra Trees (200 trees)", ExtraTreesClassifier(n_estimators=200, class_weight='balanced', random_state=42, n_jobs=-1)),
-    ("Gradient Boosting (HistGBM)", HistGradientBoostingClassifier(random_state=42, class_weight='balanced')),
-    ("2-Layer MLP (256-64)", MLPClassifier(hidden_layer_sizes=(256, 64), max_iter=400, random_state=42, early_stopping=True))
+    ("Logistic Regression (L2)", LogisticRegression(C=0.01, class_weight='balanced', max_iter=2000, random_state=SEED)),
+    ("Sparse LR (L1 / Lasso)", LogisticRegression(C=0.1, penalty='l1', solver='saga', class_weight='balanced', max_iter=2000, random_state=SEED)),
+    ("ElasticNet Logistic Regression", LogisticRegression(C=0.1, penalty='elasticnet', l1_ratio=0.5, solver='saga', class_weight='balanced', max_iter=2000, random_state=SEED)),
+    ("Support Vector Classifier (Linear)", SVC(C=0.01, kernel='linear', probability=True, class_weight='balanced', random_state=SEED)),
+    ("Support Vector Classifier (RBF)", SVC(C=1.0, kernel='rbf', probability=True, class_weight='balanced', random_state=SEED)),
+    ("Random Forest (200 trees)", RandomForestClassifier(n_estimators=200, class_weight='balanced', random_state=SEED, n_jobs=-1)),
+    ("Extra Trees (200 trees)", ExtraTreesClassifier(n_estimators=200, class_weight='balanced', random_state=SEED, n_jobs=-1)),
+    ("Gradient Boosting (HistGBM)", HistGradientBoostingClassifier(random_state=SEED, class_weight='balanced')),
+    ("2-Layer MLP (256-64)", MLPClassifier(hidden_layer_sizes=(256, 64), max_iter=400, random_state=SEED, early_stopping=True)),
 ]
 
-for name, model in biology_models:
-    res = evaluate_model(name, "Biology", model, X_train_expr, y_train, X_val_expr, y_val, X_test_expr, y_test)
-    results.append(res)
+rows = [evaluate(n, 'Structure', m, X_tr_fp, X_te_fp) for n, m in structure_models]
+rows += [evaluate(n, 'Biology', m, X_tr_ex, X_te_ex) for n, m in biology_models]
+res = pd.DataFrame(rows)
+# test-set scores of every model, so later analyses (paired comparisons with the deep models) never refit a baseline
+pd.DataFrame({'parent_smiles': test_df.parent_smiles, 'y': y_test, **TEST_SCORES}).to_csv(
+    os.path.join(CFG.RESULTS_DIR, 'baseline_test_predictions.csv'), index=False)
+
+rc_lo, rc_hi = random_classifier_aucpr_interval(y_test, seed=SEED)
+random_row = pd.DataFrame([{
+    'Modality': 'Baseline', 'Model': 'Random Classifier (Prevalence)', 'Primary': False,
+    'AUC-ROC': 0.5, 'AUC-ROC_95CI_Low': np.nan, 'AUC-ROC_95CI_High': np.nan, 'Balanced_Acc': 0.5,
+    'AUC-PR': prevalence, 'AUC-PR_95CI_Low': rc_lo, 'AUC-PR_95CI_High': rc_hi,
+    'Accuracy': np.nan, 'F1_Score': np.nan, 'Precision': np.nan, 'Recall': np.nan,
+    'Degenerate': False, 'CI_excludes_0.5': False}])
+out = pd.concat([random_row, res], ignore_index=True)
+os.makedirs(CFG.RESULTS_DIR, exist_ok=True)
+out.to_csv(os.path.join(CFG.RESULTS_DIR, 'classical_baselines_comparison.csv'), index=False)
+
+# legacy 3-row summary (kept so older references to baseline_results.csv stay valid)
+def pick(mod, name):
+    return res[(res.Modality == mod) & (res.Model == name)].iloc[0]
+rf, lr = pick('Structure', 'Random Forest (200 trees)'), pick('Biology', 'Logistic Regression (L2)')
+pd.DataFrame({
+    'Model': ['Random Forest (Morgan FP)', 'Logistic Regression (L1000)', 'Random Classifier'],
+    'AUC-PR': [rf['AUC-PR'], lr['AUC-PR'], prevalence],
+    'AUC-PR CI Low': [rf['AUC-PR_95CI_Low'], lr['AUC-PR_95CI_Low'], rc_lo],
+    'AUC-PR CI High': [rf['AUC-PR_95CI_High'], lr['AUC-PR_95CI_High'], rc_hi],
+    'AUC-ROC': [rf['AUC-ROC'], lr['AUC-ROC'], 0.5],
+    'AUC-ROC CI Low': [rf['AUC-ROC_95CI_Low'], lr['AUC-ROC_95CI_Low'], None],
+    'AUC-ROC CI High': [rf['AUC-ROC_95CI_High'], lr['AUC-ROC_95CI_High'], None],
+}).to_csv(os.path.join(CFG.RESULTS_DIR, 'baseline_results.csv'), index=False)
 
 # ---------------------------------------------------------------------------
-# 6. Save & Summarize Results
+# 2. Report (every number below is computed from `res`; nothing is hand-typed)
 # ---------------------------------------------------------------------------
-df_res = pd.DataFrame(results)
-out_csv = os.path.join(CFG.RESULTS_DIR, 'classical_baselines_comparison.csv')
-df_res.to_csv(out_csv, index=False)
-print(f"\nSaved results table to {out_csv}")
+def fmt_row(r):
+    flag = ' ‡' if r['Degenerate'] else ''
+    star = ' ★' if r['Primary'] else ''
+    return (f"| {r['Modality']} | {r['Model']}{star}{flag} | {r['AUC-ROC']:.3f} | [{r['AUC-ROC_95CI_Low']:.3f}, {r['AUC-ROC_95CI_High']:.3f}] "
+            f"| {r['Balanced_Acc']:.3f} | {r['AUC-PR']:.3f} | [{r['AUC-PR_95CI_Low']:.3f}, {r['AUC-PR_95CI_High']:.3f}] |")
 
-# Generate Markdown Report
-md_report_path = os.path.join(CFG.RESULTS_DIR, 'classical_baselines_report.md')
-with open(md_report_path, 'w') as f:
-    f.write("# Classical Machine Learning Baselines Report\n\n")
-    f.write("**Cohort:** Strict HA1E / 10.0 µM / 24 h (487 unique InChIKey skeletons)\n")
-    f.write("**Evaluation:** Bemis-Murcko Scaffold Test Set (N = 74: 64 Toxic, 10 Safe)\n\n")
-    f.write("## 1. Summary Comparison Table\n\n")
-    f.write("| Modality | Model | AUC-PR | 95% CI Low | 95% CI High | AUC-ROC | Balanced Acc |\n")
-    f.write("|---|---|---|---|---|---|---|\n")
-    for _, r in df_res.iterrows():
-        f.write(f"| {r['Modality']} | {r['Model']} | {r['AUC-PR']:.4f} | {r['AUC-PR_95CI_Low']:.4f} | {r['AUC-PR_95CI_High']:.4f} | {r['AUC-ROC']:.4f} | {r['Balanced_Acc']:.4f} |\n")
-    f.write("\n## 2. Key Findings\n")
-    f.write("- **Structure Modality:** Random Forest and Tree ensembles on Morgan fingerprints achieve strong discriminative power (AUC-PR > 0.93, AUC-ROC ~ 0.72).\n")
-    f.write("- **Biology Modality:** Linear models on raw 978-dim z-score expression hover around random prevalence baseline (AUC-PR ~ 0.85). Sparse L1 selection jumps to 0.9061, confirming that cardiotoxicity is driven by a sparse subset of landmark genes.\n")
+n_test, n_safe = len(y_test), int((y_test == 0).sum())
+lines = [
+    "# Classical Machine Learning Baselines Report",
+    "",
+    "*Auto-generated by `scripts/train_classical_baselines.py`; do not edit by hand.*",
+    "",
+    f"**Cohort:** strict HA1E / {CFG.LINCS_DOSE} µM / {CFG.LINCS_TIME}, {n_cohort} unique chemical skeletons "
+    f"({int(merged.cardiotox_label.sum())} toxic / {int((merged.cardiotox_label==0).sum())} safe).  ",
+    f"**Evaluation set:** Bemis-Murcko scaffold test set, N = {n_test} ({n_test - n_safe} toxic / {n_safe} safe; "
+    f"{100*prevalence:.1f}% positive).  ",
+    f"**Splits:** train {len(train_df)} / val {len(val_df)} / test {n_test}; zero InChIKey-skeleton overlap (`results/pipeline_verification.md`).",
+    "",
+    f"> **Metric note.** Toxic is the majority class ({100*prevalence:.1f}%), so a random classifier already scores "
+    f"AUC-PR ≈ {prevalence:.3f} (95% interval [{rc_lo:.3f}, {rc_hi:.3f}] at this test size) and a model that labels everything toxic "
+    "scores nearly as well. AUC-PR is therefore not used to rank models. **AUC-ROC and balanced accuracy are primary**; "
+    "AUC-PR is shown beside its floor.",
+    "",
+    "## 1. Results (test set)",
+    "",
+    "| Modality | Model | AUC-ROC | 95% CI | Bal-Acc | AUC-PR (floor " + f"{prevalence:.3f}" + ") | 95% CI |",
+    "|---|---|:-:|:-:|:-:|:-:|:-:|",
+    f"| Baseline | Random classifier | 0.500 | — | 0.500 | {prevalence:.3f} | [{rc_lo:.3f}, {rc_hi:.3f}] |",
+]
+for mod in ('Structure', 'Biology'):
+    for _, r in res[res.Modality == mod].sort_values('AUC-ROC', ascending=False).iterrows():
+        lines.append(fmt_row(r))
+lines += ["",
+          "★ pre-specified primary baseline (Morgan-FP Random Forest; L1000 Logistic Regression). All other rows are exploratory.  ",
+          "‡ **Degenerate:** predicts every test compound as the same class, so its AUC-PR carries no discrimination information.", ""]
 
-print(f"Saved Markdown report to {md_report_path}")
-print("=" * 80)
-print("TRAINING & EVALUATION COMPLETE")
-print("=" * 80)
+# computed findings
+def mod_stats(m):
+    d = res[res.Modality == m]
+    return dict(n=len(d), degenerate=int(d.Degenerate.sum()), excl=int(d['CI_excludes_0.5'].sum()),
+                best=d.sort_values('AUC-ROC', ascending=False).iloc[0],
+                best_ap=d.sort_values('AUC-PR', ascending=False).iloc[0])
+S, B = mod_stats('Structure'), mod_stats('Biology')
+pS = res[(res.Modality == 'Structure') & res.Primary].iloc[0]
+pB = res[(res.Modality == 'Biology') & res.Primary].iloc[0]
+lines += ["## 2. Findings (computed from the table)", ""]
+lines.append(f"- **Primary structure baseline:** Morgan-FP RF reaches AUC-ROC {pS['AUC-ROC']:.3f} "
+             f"[{pS['AUC-ROC_95CI_Low']:.3f}, {pS['AUC-ROC_95CI_High']:.3f}], balanced accuracy {pS['Balanced_Acc']:.3f}. "
+             + ("Its interval excludes 0.5." if pS['CI_excludes_0.5'] else "Its interval includes 0.5, so no signal is established."))
+lines.append(f"- **Primary biology baseline:** L1000 LR (L2) reaches AUC-ROC {pB['AUC-ROC']:.3f} "
+             f"[{pB['AUC-ROC_95CI_Low']:.3f}, {pB['AUC-ROC_95CI_High']:.3f}], balanced accuracy {pB['Balanced_Acc']:.3f}. "
+             + ("Its interval excludes 0.5." if pB['CI_excludes_0.5'] else "Its interval includes 0.5: no detectable signal."))
+lines.append(f"- **Structure models whose AUC-ROC interval excludes 0.5:** {S['excl']} of {S['n']}. "
+             f"**Biology models:** {B['excl']} of {B['n']}. (With {S['n']+B['n']} models tried, a few intervals clearing 0.5 by chance "
+             "is expected; the primary pair above is the pre-specified comparison.)")
+lines.append(f"- **Degenerate models (predict one class for every compound):** {S['degenerate']} structure, {B['degenerate']} biology "
+             f"({S['degenerate']+B['degenerate']} of {S['n']+B['n']}). The highest AUC-PR in the biology table is "
+             f"{B['best_ap']['Model']} at {B['best_ap']['AUC-PR']:.3f}"
+             + (" — a degenerate model, which is why AUC-PR is not used for ranking." if B['best_ap']['Degenerate']
+                else f" (balanced accuracy {B['best_ap']['Balanced_Acc']:.3f})."))
+excl_names = ", ".join(res[(res.Modality == 'Biology') & res['CI_excludes_0.5']].Model) or "none"
+lines.append("- **What this does and does not show:** the pre-specified L1000 baseline "
+             + ("shows no detectable signal above chance" if not pB['CI_excludes_0.5'] else "has an interval that excludes 0.5")
+             + f"; exploratory biology models whose interval excludes 0.5: {excl_names}. With {S['n']+B['n']} models scored on "
+             f"{n_safe} safe compounds, an isolated exploratory interval clearing 0.5 is unconfirmed until it replicates on other splits. "
+             "None of this says whether a deep model will succeed or fail; whether a learned representation recovers signal that classical "
+             "approaches miss is the question Phase 2 tests, and a null result there is reportable "
+             "(Seal et al. 2024 report L1000 alone near chance, AUC ≈ 0.57).")
+lines += ["", "## 3. Limitations", "",
+          f"- **Power:** the test set has {n_safe} safe compounds; intervals are wide and model differences are mostly not "
+          f"resolvable. A random scorer's AUC-PR interval spans [{rc_lo:.3f}, {rc_hi:.3f}].",
+          "- **Selection:** 17 models are scored on one test set; the best-looking result is biased upward. Treat non-primary rows as exploratory.",
+          "- **Intervals** are percentile bootstraps over test compounds only; they do not include training-set variability.",
+          "- **Coverage:** LINCS provides a strict-condition signature for only part of DICTrank; relaxing cell line / dose adds "
+          "signatures per drug, not drugs, so it does not change test-set size.", ""]
+with open(os.path.join(CFG.RESULTS_DIR, 'classical_baselines_report.md'), 'w', encoding='utf-8') as f:
+    f.write("\n".join(lines))
+
+# markdown snippet reused by README / Phase1 report (primary pair only)
+snip = ["| Model | AUC-ROC | 95% CI | Balanced Acc | AUC-PR (floor " + f"{prevalence:.3f}" + ") | 95% CI |", "|---|:-:|:-:|:-:|:-:|:-:|",
+        f"| Random classifier | 0.500 | — | 0.500 | {prevalence:.3f} | [{rc_lo:.3f}, {rc_hi:.3f}] |"]
+for _, r in res[res.Primary].iterrows():
+    snip.append(f"| {r['Modality']}: {r['Model']} | {r['AUC-ROC']:.3f} | [{r['AUC-ROC_95CI_Low']:.3f}, {r['AUC-ROC_95CI_High']:.3f}] | "
+                f"{r['Balanced_Acc']:.3f} | {r['AUC-PR']:.3f} | [{r['AUC-PR_95CI_Low']:.3f}, {r['AUC-PR_95CI_High']:.3f}] |")
+with open(os.path.join(CFG.RESULTS_DIR, 'baseline_table.md'), 'w', encoding='utf-8') as f:
+    f.write("\n".join(snip) + "\n")
+print("\nSaved: classical_baselines_comparison.csv, classical_baselines_report.md, baseline_results.csv, baseline_table.md")
